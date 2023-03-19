@@ -6,7 +6,7 @@ function App() {
   return (
     <div className="App">
       <h1 id="textblock-title2">
-        Hello,on this occasion <br></br>I learned to perform parallax
+        Hello, on this occasion <br></br>I learned to perform parallax
       </h1>
       <Parallax pages={2} style={{ top: '0', left: '0' }} class="animation">
         <ParallaxLayer offset={0} speed={0.25}>
