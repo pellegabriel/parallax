@@ -2,6 +2,7 @@ import { Parallax, ParallaxLayer } from '@react-spring/parallax'
 import { useState } from 'react'
 import TextBlock from './textBlock';
 import './App.css';
+import logoImage from './images/logo.png';
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -52,6 +53,12 @@ function App() {
         {/* Sección 1 - Arriba */}
         <ParallaxLayer offset={0.1} speed={0.3}>
           <div className="company-info section-top">
+            <div className="company-logo">
+              <img src={logoImage} alt="The Cave Logo" />
+            </div>
+            <div className="company-logo-desktop">
+              <img src={logoImage} alt="The Cave Logo Desktop" />
+            </div>
             <h2 className="company-title">The Cave</h2>
             <p className="company-description">
               Bienvenido a The Cave, donde la innovación encuentra su hogar. 

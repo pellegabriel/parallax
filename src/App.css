@@ -231,6 +231,64 @@
   animation: fadeInUp 1.5s ease-out forwards;
 }
 
+/* Logo para mobile */
+.company-logo {
+  display: none; /* Oculto por defecto para desktop */
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 30px auto;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid rgba(59, 106, 247, 0.3);
+  box-shadow: 0 8px 32px rgba(59, 106, 247, 0.2);
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUpText 1.2s ease-out forwards;
+  animation-delay: calc(var(--delay, 0s) + 0.1s);
+  transition: all 0.3s ease;
+}
+
+.company-logo:hover {
+  border-color: rgba(59, 106, 247, 0.6);
+  transform: translateY(30px) scale(1.05);
+  box-shadow: 0 12px 48px rgba(59, 106, 247, 0.4);
+}
+
+.company-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Logo para desktop - usando estilos del team-avatar */
+.company-logo-desktop {
+  display: none; /* Oculto por defecto, se mostrará solo en desktop */
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 40px auto;
+  border: 3px solid rgba(59, 106, 247, 0.3);
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 32px rgba(59, 106, 247, 0.2);
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUpText 1.2s ease-out forwards;
+  animation-delay: calc(var(--delay, 0s) + 0.1s);
+}
+
+.company-logo-desktop:hover {
+  border-color: rgba(59, 106, 247, 0.6);
+  transform: translateY(30px) scale(1.05);
+  box-shadow: 0 12px 48px rgba(59, 106, 247, 0.4);
+}
+
+.company-logo-desktop img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 /* Animaciones de entrada */
 @keyframes fadeInUp {
   0% {
@@ -362,6 +420,11 @@
     height: 40px;
   }
   
+  /* Mostrar logo solo en mobile */
+  .company-logo {
+    display: flex !important;
+  }
+  
   /* Texto centrado y responsive */
   .company-info {
     width: calc(100vw - 60px - 24px); /* viewport - sidebar - (ml extra + mr) */
@@ -388,15 +451,15 @@
   }
   
   .section-top {
-    top: 12vh;
+    top: 0;
   }
   
   .section-middle {
-    top: 24vh;
+    top: 0;
   }
   
   .section-bottom {
-    top: 50vh;
+    top: 0;
     z-index: 100;
   }
   
@@ -533,6 +596,11 @@
   .top-header { display: none; }
   .hamburger { display: inline-flex; align-items: center; justify-content: center; }
 
+  /* Mostrar logo solo en mobile */
+  .company-logo {
+    display: flex !important;
+  }
+
   .company-info {
     width: 88vw;
     max-width: 560px;
@@ -545,15 +613,22 @@
   .section-middle,
   .section-bottom {
     position: absolute;
-    top: 50vh; /* referencia vertical */
+    top: 0; /* referencia vertical */
     left: 50vw; /* referencia horizontal */
-    transform: translate(-50%, -50%); /* centro exacto */
+    transform: translate(-50%, 0); /* centro horizontal, top 0 */
   }
 
   .section-top.company-info,
   .section-middle.company-info,
   .section-bottom.company-info {
     animation: fadeInUpCenter 1.2s ease-out forwards;
+  }
+
+  /* Logo responsive para mobile */
+  .company-logo {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 20px auto;
   }
 
   /* Espaciado vertical via offset del Parallax ya define aparición; suavizamos tamaños */
@@ -566,6 +641,11 @@
 @media (min-width: 901px) {
   .hamburger { display: none; }
   .sidebar { display: none; }
+  
+  /* Mostrar logo desktop solo en desktop */
+  .company-logo-desktop {
+    display: block !important;
+  }
 }
 
 /* Estilos para la sección del equipo */
