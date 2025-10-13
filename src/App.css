@@ -136,10 +136,6 @@
   background-image: url(./images/mountains.png);
 }
 
-#logoland {
-  background-image: url(./images/logo.png);
-}
-
 #jungle1 {
   background-image: url(./images/jungle1.png);
 }
@@ -541,37 +537,6 @@
   padding-top: 64px;
 }
 
-/* Capas de degradado superpuestas para oscurecer las imágenes */
-.parallax-overlay {
-  width: 100%;
-  height: 1370px;
-  position: absolute;
-  z-index: 6;
-  pointer-events: none;
-}
-
-.parallax-overlay.parallax {
-  position: fixed;
-  z-index: 6;
-}
-
-/* Diferentes intensidades de degradado */
-.overlay-minimal {
-  background: linear-gradient(to bottom, transparent 0%, rgba(10, 31, 26, 0.05) 50%, rgba(10, 31, 26, 0.15) 80%, rgba(10, 31, 26, 0.2) 100%);
-}
-
-.overlay-light {
-  background: linear-gradient(to bottom, transparent 0%, rgba(10, 31, 26, 0.1) 40%, rgba(10, 31, 26, 0.3) 80%, rgba(10, 31, 26, 0.5) 100%);
-}
-
-.overlay-medium {
-  background: linear-gradient(to bottom, transparent 0%, rgba(10, 31, 26, 0.2) 30%, rgba(10, 31, 26, 0.4) 70%, rgba(10, 31, 26, 0.6) 100%);
-}
-
-.overlay-strong {
-  background: linear-gradient(to bottom, transparent 0%, rgba(10, 31, 26, 0.3) 20%, rgba(10, 31, 26, 0.6) 60%, rgba(10, 31, 26, 0.8) 100%);
-}
-
 /* Responsivo: 
    - Desktop: ocultar sidebar, mostrar header
    - Mobile: mostrar sidebar, ocultar header */
@@ -669,11 +634,7 @@
   /* Espaciado vertical via offset del Parallax ya define aparición; suavizamos tamaños */
   .company-title { font-size: 26px; margin-bottom: 12px; }
   .company-description { font-size: 15px; line-height: 1.6; margin-bottom: 16px; }
-  .company-tagline { 
-    font-size: 13px; 
-    color: #0067a0bd;
-    text-align: center;
-  }
+  .company-tagline { font-size: 13px; }
 }
 
 /* Desktop: se oculta el botón hamburguesa y sidebar */
@@ -693,10 +654,12 @@
   z-index: 100;
   padding: 80px 20px 120px 20px;
   text-align: center;
-  opacity: 1;
-  transform: translateY(0);
+  opacity: 0;
+  transform: translateY(50px);
+  animation: fadeInUp 1.5s ease-out forwards;
+  animation-delay: 1.2s;
   margin-bottom: 40px;
-  background: #00211f;
+  background: linear-gradient(to bottom, transparent, rgba(10, 31, 26, 0.1) 20%, rgba(10, 31, 26, 0.3) 40%, rgba(10, 31, 26, 0.8) 70%, #0a1f1a 100%);
   min-height: 100vh;
 }
 
@@ -709,8 +672,10 @@
   letter-spacing: -1px;
   line-height: 1.2;
   text-shadow: 0 2px 20px rgba(59, 106, 247, 0.3);
-  opacity: 1;
-  transform: translateY(0);
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUpText 1.2s ease-out forwards;
+  animation-delay: 1.4s;
 }
 
 .team-grid {
@@ -726,10 +691,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  opacity: 1;
-  transform: translateY(0);
+  opacity: 0;
+  transform: translateY(40px);
+  animation: fadeInUp 1.2s ease-out forwards;
 }
 
+.team-member:nth-child(1) {
+  animation-delay: 1.6s;
+}
+
+.team-member:nth-child(2) {
+  animation-delay: 1.8s;
+}
+
+.team-member:nth-child(3) {
+  animation-delay: 2.0s;
+}
 
 .team-avatar {
   width: 150px;
@@ -776,7 +753,6 @@
   .team-section {
     padding: 60px 20px 100px 20px;
     margin-bottom: 60px;
-    background:linear-gradient(to bottom, transparent 1%, #00211f 9%);
   }
   
   .team-title {
