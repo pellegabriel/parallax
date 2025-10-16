@@ -2,7 +2,7 @@ import { Parallax, ParallaxLayer } from '@react-spring/parallax'
 import { useState } from 'react'
 import TextBlock from './textBlock';
 import './App.css';
-import logoImage from './images/logo.png';
+import logoImage from './images/logo.svg';
 import missionImage from './images/manos.jpg';
 import gabiImage from './images/gabi.jpg';
 import tomyImage from './images/tomy.jpg';
@@ -62,12 +62,14 @@ function App() {
               <img src={logoImage} alt="The Cave Logo Desktop" />
             </div>
             <div className="company-text">
-              <h2 className="company-title">BIenvenid<span style={{ color: '#031927' }}>x</span></h2>
+              <h2 className="company-title">
+                BIenvenid<span style={{ color: '#031927' }}>x</span> a
+              </h2>
+              <span className="brand-large">the cave </span>
               <p className="company-description">
-La innovación encuentra su hogar en cada idea que se transforma en experiencia digital. Creamos soluciones que impulsan el cambio y conectan personas con tecnología.
-Nuestro propósito es convertir la creatividad en impacto real, superando los límites del presente.
+                La innovación encuentra su hogar en cada idea que se transforma en experiencia digital. Creamos soluciones que impulsan el cambio y conectan personas con tecnología.
+                Nuestro propósito es convertir la creatividad en impacto real, superando los límites del presente.
               </p>
-
             </div>
           </div>
         </ParallaxLayer>

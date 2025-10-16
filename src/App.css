@@ -363,7 +363,7 @@
 }
 
 .section-middle {
-  top: 15vh;
+  top: 28vh;
   left: auto;
   margin-left: 10%;
   margin-right:   10%;
@@ -461,14 +461,12 @@
 }
 
 .company-title {
-  color: #ffffff;
-  /* Increased title size */
-  font-size: 64px;
+  color: #d3e4ff;
+  font-size: 54px;
   font-weight: 300;
-  /* use global Montserrat */
-  margin-bottom: 24px;
+  margin-bottom: 0px; /* Aumentado de -25px a -35px */
   letter-spacing: -1px;
-  line-height: 1.2;
+  line-height: 0.9; /* Reducido aún más */
   text-shadow: 0 2px 20px rgba(59, 106, 247, 0.3);
   opacity: 0;
   transform: translateY(30px);
@@ -476,15 +474,23 @@
   animation-delay: inherit;
 }
 
+/* Large brand word under the title */
+.brand-large {
+  display: block;
+  color: #031927;
+  font-size: 100px;
+  line-height: 0.95;
+  margin: 6px 0 12px 0;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
 .company-description {
   color: rgba(174, 192, 248, 0.9);
-  /* Increased body size for better readability */
   font-size: 30px;
   line-height: 1.7;
-  /* use global Montserrat */
-  font-weight: 400;
+  font-weight: 100; /* Cambiado de 400 a 300 para más fino */
   margin-bottom: 32px;
-  /* max-width removed to isolate widths for top and middle sections */
   opacity: 0;
   transform: translateY(30px);
   animation: fadeInUpText 1.2s ease-out forwards;
@@ -593,7 +599,7 @@
   
   .company-title {
     font-size: 28px;
-    margin-bottom: 14px;
+    margin-bottom: 8px;
   }
   
   .company-description {
@@ -604,6 +610,11 @@
   
   .company-tagline {
     font-size: 13px;
+  }
+
+  .brand-large {
+    font-size: 40px;
+    margin: 6px 0 10px 0;
   }
 }
 
