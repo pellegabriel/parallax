@@ -3,13 +3,18 @@ import { useState } from 'react'
 import TextBlock from './textBlock';
 import './App.css';
 import logoImage from './images/logo.png';
+import missionImage from './images/manos.jpg';
+import gabiImage from './images/gabi.jpg';
+import tomyImage from './images/tomy.jpg';
+import lucasImage from './images/lucas.jpg';
+import SocialButtons from './SocialButtons';
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   return (
     <div className="App">
       {/* Header horizontal - Desktop */}
-      <header className="top-header">
+      {/* <header className="top-header">
         <div className="header-logo">The Cave</div>
         <nav className="header-nav">
           <a href="#home" className="header-link">Inicio</a>
@@ -17,11 +22,11 @@ function App() {
           <a href="#services" className="header-link">Servicios</a>
           <a href="#contact" className="header-link">Contacto</a>
         </nav>
-      </header>
+      </header> */}
       {/* Botón hamburguesa - Mobile */}
-      <button className="hamburger" aria-label="Abrir menú" onClick={() => setMenuOpen((v) => !v)}>
+      {/* <button className="hamburger" aria-label="Abrir menú" onClick={() => setMenuOpen((v) => !v)}>
         ☰
-      </button>
+      </button> */}
       <Parallax pages={2} style={{ top: '0', left: '0' }} class="animation">
         <ParallaxLayer offset={0} speed={0.25}>
           <div class="animation_layer parallax" id="artback"></div>
@@ -56,64 +61,74 @@ function App() {
             <div className="company-logo-desktop">
               <img src={logoImage} alt="The Cave Logo Desktop" />
             </div>
-            <h2 className="company-title">The Cave</h2>
-            <p className="company-description">
-              Bienvenido a The Cave, donde la innovación encuentra su hogar. 
-              Somos pioneros en transformar ideas revolucionarias en 
-              realidades digitales que cambian el mundo.
-            </p>
-            <p className="company-tagline">
-              "El futuro comienza aquí"
-            </p>
+            <div className="company-text">
+              <h2 className="company-title">The Cave</h2>
+              <p className="company-description">
+                Bienvenido a The Cave, donde la innovación encuentra su hogar. 
+                Somos pioneros en transformar ideas revolucionarias en 
+                realidades digitales que cambian el mundo.
+              </p>
+              <p className="company-tagline">
+                "El futuro comienza aquí"
+              </p>
+            </div>
           </div>
         </ParallaxLayer>
 
         {/* Sección 2 - Medio */}
         <ParallaxLayer offset={0.5} speed={0.2}>
           <div className="company-info section-middle">
-            <h2 className="company-title">Nuestra Misión</h2>
-            <p className="company-description">
-              En The Cave, creemos que cada proyecto es una oportunidad 
-              para superar límites. Nuestro equipo multidisciplinario 
-              combina creatividad, tecnología y estrategia para entregar 
-              soluciones excepcionales.
-            </p>
-            <p className="company-tagline">
-              "Innovación sin límites"
-            </p>
+            <div className="company-middle-row">
+   
+              <div className="company-middle-text">
+                <h2 className="company-title">Nuestra Misión</h2>
+                <p className="company-description">
+                  En The Cave, creemos que cada proyecto es una oportunidad 
+                  para superar límites. Nuestro equipo multidisciplinario 
+                  combina creatividad, tecnología y estrategia para entregar 
+                  soluciones excepcionales.
+                </p>
+                <p className="company-tagline">
+                  "Innovación sin límites"
+                </p>
+              </div>
+                         <div className="company-rect-image">
+                <img src={missionImage} alt="Nuestra misión" />
+              </div>
+            </div>
           </div>
         </ParallaxLayer>
 
         {/* Sección del Equipo */}
-        <ParallaxLayer offset={1.2} speed={0.1} style={{ zIndex: 200 }}>
+        <ParallaxLayer offset={1.0} speed={0.1} style={{ zIndex: 200, width: '100%', height: '100%', overflow: 'visible' }}>
           <div className="team-section">
             <h2 className="team-title">Nuestro Equipo</h2>
             <div className="team-grid">
               <div className="team-member">
                 <div className="team-avatar">
-                  <img src="/api/placeholder/150/150" alt="CEO" />
+                  <img src={gabiImage} alt="Gabi - CEO" />
                 </div>
-                <h3 className="team-name">CEO</h3>
+                <h3 className="team-name">Gabriel Pelle</h3>
                 <p className="team-position">Chief Executive Officer</p>
               </div>
               <div className="team-member">
                 <div className="team-avatar">
-                  <img src="/api/placeholder/150/150" alt="CTO" />
+                  <img src={tomyImage} alt="Tomy - CTO" />
                 </div>
-                <h3 className="team-name">CTO</h3>
+                <h3 className="team-name">Tomas Montesinos</h3>
                 <p className="team-position">Chief Technology Officer</p>
               </div>
               <div className="team-member">
                 <div className="team-avatar">
-                  <img src="/api/placeholder/150/150" alt="CMO" />
+                  <img src={lucasImage} alt="Lucas - CMO" />
                 </div>
-                <h3 className="team-name">CMO</h3>
+                <h3 className="team-name">Lucas Martin</h3>
                 <p className="team-position">Chief Marketing Officer</p>
               </div>
             </div>
           </div>
         </ParallaxLayer>
-        <ParallaxLayer offset={1.2} speed={0} factor={0.8} style={{ zIndex: 5 }}>
+        <ParallaxLayer offset={1.0} speed={0} factor={1.0} style={{ zIndex: 5 }}>
           <div id="bottom-cover"></div>
         </ParallaxLayer>
       </Parallax>
@@ -125,6 +140,9 @@ function App() {
         <button className="sidebar-button">📱</button>
         <button className="sidebar-button">ℹ️</button>
       </div>
+
+      {/* Botones de redes sociales flotantes */}
+      <SocialButtons />
     </div>
     
   );

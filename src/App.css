@@ -32,7 +32,7 @@
 
 #textblock-title2 {
   color: #aec0f8;
-  font-size: 65px;
+  font-size: 80px;
   font-weight: 300;
   font-family: "Helvetica Neue";
   display: flex;
@@ -45,14 +45,14 @@
 
 #textblock-title {
   color: #3b6af7;
-  font-size: 35px;
+  font-size: 46px;
   font-weight: 600;
   font-family: "Helvetica Neue";
 }
 
 #textblock-content {
   color: #3b6af7;
-  font-size: 20px;
+  font-size: 24px;
 }
 
 #textblock-footer {
@@ -105,7 +105,7 @@
     padding: 30px 10px 40px 10px;
   }
   #textblock-title2 {
-    font-size: 40px;
+    font-size: 56px;
     padding-top: 60px;
   }
 }
@@ -117,14 +117,14 @@
     padding: 15px 2vw 25px 2vw;
   }
   #textblock-title2 {
-    font-size: 28px;
+    font-size: 40px;
     padding-top: 30px;
   }
   #textblock-title {
-    font-size: 22px;
+    font-size: 30px;
   }
   #textblock-content {
-    font-size: 15px;
+    font-size: 18px;
   }
 }
 
@@ -162,6 +162,13 @@
 
 #manonmountain {
   background-image: url(./images/man_on_mountain.png);
+}
+
+/* Make the man-on-mountain background appear larger (approx 3x) */
+#manonmountain {
+  /* override background-size from the generic .animation_layer; increase so the character looks larger */
+  background-size: auto 3114px; /* ~3x of original 1038px */
+  height: 4110px; /* increase height proportionally so the image isn't cropped (approx 3x of 1370px) */
 }
 
 /* Navbar lateral */
@@ -235,6 +242,40 @@
   animation: fadeInUp 1.5s ease-out forwards;
 }
 
+/* Desktop layout: place logo and company text in a row */
+@media (min-width: 901px) {
+  .company-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 32px;
+    max-width: none; /* allow bigger width on desktop */
+    padding: 0 24px;
+  }
+
+  /* Ensure desktop logo (left) shows and mobile logo stays hidden */
+  .company-logo {
+    display: none !important;
+  }
+
+  .company-logo-desktop {
+    display: block;
+    flex: 0 0 auto;
+  }
+
+  /* Text block on the right */
+  .company-text {
+    display: block;
+    flex: 1 1 auto;
+    min-width: 100%;
+  }
+
+  /* Make sure title and description align left when in row */
+  .company-title, .company-description, .company-tagline {
+    text-align: left;
+  }
+}
+
 /* Logo para mobile */
 .company-logo {
   display: none; /* Oculto por defecto para desktop */
@@ -267,11 +308,12 @@
 /* Logo para desktop - usando estilos del team-avatar */
 .company-logo-desktop {
   display: none; /* Oculto por defecto, se mostrará solo en desktop */
-  width: 150px;
-  height: 150px;
+  /* Tripled size as requested */
+  width: 350px;
+  height: 350px;
   border-radius: 50%;
   overflow: hidden;
-  margin: 0 auto 40px auto;
+  margin: 0 10px 40px 150px;
   border: 3px solid rgba(59, 106, 247, 0.3);
   transition: all 0.3s ease;
   box-shadow: 0 8px 32px rgba(59, 106, 247, 0.2);
@@ -308,19 +350,69 @@
 /* Delays escalonados para cada sección */
 .section-top {
   top: 5vh;
-  left: 200px;
   animation-delay: 0.3s;
   z-index: 100;
 }
 
 .section-middle {
   top: 15vh;
-  right: 60px;
   left: auto;
-  margin-left: auto;
-  margin-right: 60px;
+  margin-left: 10%;
+  margin-right:   10%;
   animation-delay: 0.6s;
   z-index: 100;
+}
+
+/* Middle section layout: image left, text right on desktop; stacked on mobile */
+.company-middle-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start; /* align content to the top of the row */
+  gap: 28px;
+}
+
+.company-rect-image {
+  flex: 0 0 380px; /* rectangular image width */
+  height: auto; /* allow natural height so the image is not cropped */
+  overflow: visible; /* show full image */
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  background: #08151a; /* subtle background if image has different aspect */
+  align-self: flex-start; /* keep the image aligned to the top */
+  transform: none; /* keep image in its natural position */
+}
+.company-rect-image img {
+  width: 100%;
+  height: auto; /* keep aspect ratio */
+  object-fit: contain; /* ensure entire image is visible */
+  display: block;
+}
+
+.company-middle-text {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* keep text at top of this column */
+  /* move the text block upward so it sits near the top of the middle section */
+  transform: translateY(-40px);
+  /* small visual nudge for spacing */
+  padding-top: 2px;
+}
+
+@media (max-width: 900px) {
+  .company-middle-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .company-rect-image {
+    width: 88%;
+    height: auto;
+    margin: 0 auto;
+    transform: none;
+  }
+  .company-middle-text {
+    transform: translateY(-16px); /* smaller upward shift on mobile */
+  }
 }
 
 .section-bottom {
@@ -348,7 +440,8 @@
 
 .company-title {
   color: #ffffff;
-  font-size: 48px;
+  /* Increased title size */
+  font-size: 64px;
   font-weight: 300;
   font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
   margin-bottom: 24px;
@@ -363,21 +456,31 @@
 
 .company-description {
   color: rgba(174, 192, 248, 0.9);
-  font-size: 18px;
+  /* Increased body size for better readability */
+  font-size: 30px;
   line-height: 1.7;
   font-family: 'Inter', 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 400;
   margin-bottom: 32px;
-  max-width: 480px;
+  /* max-width removed to isolate widths for top and middle sections */
   opacity: 0;
   transform: translateY(30px);
   animation: fadeInUpText 1.2s ease-out forwards;
   animation-delay: calc(var(--delay, 0s) + 0.2s);
 }
 
+/* Scoped widths so top and middle can be changed independently */
+.company-text .company-description {
+  max-width: 50%; /* original top description width */
+}
+
+.company-middle-text .company-description {
+}
+
 .company-tagline {
   color: #3b6af7;
-  font-size: 16px;
+  /* Slightly larger tagline */
+  font-size: 18px;
   font-weight: 500;
   font-family: 'Inter', 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
   font-style: italic;
@@ -663,17 +766,19 @@
   .company-logo {
     width: 70px;
     height: 70px;
-    margin: 0 auto 20px auto;
   }
 
   /* Espaciado vertical via offset del Parallax ya define aparición; suavizamos tamaños */
   .company-title { font-size: 26px; margin-bottom: 12px; }
-  .company-description { font-size: 15px; line-height: 1.6; margin-bottom: 16px; }
+  .company-description { font-size: 16px; line-height: 1.6; margin-bottom: 16px; }
   .company-tagline { 
-    font-size: 13px; 
-    color: #0067a0bd;
+    font-size: 14px; 
+    color: #00385645;
     text-align: center;
   }
+
+  /* slightly larger mobile title to keep proportion with desktop increases */
+  .company-title { font-size: 30px; margin-bottom: 14px; }
 }
 
 /* Desktop: se oculta el botón hamburguesa y sidebar */
@@ -774,21 +879,28 @@
 /* Responsive para la sección del equipo */
 @media (max-width: 900px) {
   .team-section {
-    padding: 60px 20px 100px 20px;
-    margin-bottom: 60px;
-    background:linear-gradient(to bottom, transparent 1%, #00211f 9%);
+    padding: 40px 15px 80px 15px;
+    margin-bottom: 40px;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 33, 31, 0.3) 10%, #00211f 30%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   
   .team-title {
     font-size: 32px;
     margin-bottom: 40px;
+    padding-top: 0;
   }
   
   .team-grid {
     gap: 40px;
     flex-direction: column;
     align-items: center;
-    padding-bottom: 40px;
+    padding-bottom: 60px;
+    flex: 1;
+    justify-content: center;
   }
   
   .team-avatar {
@@ -810,18 +922,23 @@
 
 @media (max-width: 600px) {
   .team-section {
-    padding: 40px 15px 80px 15px;
-    margin-bottom: 40px;
+    padding: 30px 10px 60px 10px;
+    margin-bottom: 30px;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 33, 31, 0.4) 5%, #00211f 25%);
+    min-height: 100vh;
   }
   
   .team-title {
     font-size: 28px;
     margin-bottom: 30px;
+    padding-top: 0;
   }
   
   .team-grid {
     gap: 30px;
-    padding-bottom: 30px;
+    padding-bottom: 50px;
+    flex: 1;
+    justify-content: center;
   }
   
   .team-avatar {
@@ -837,5 +954,144 @@
   .team-position {
     font-size: 13px;
     margin-bottom: 15px;
+  }
+}
+
+/* Botones de redes sociales flotantes */
+.social-buttons {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.social-button {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.social-button svg {
+  width: 24px;
+  height: 24px;
+  transition: all 0.3s ease;
+}
+
+.social-button:hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.social-button:hover svg {
+  transform: scale(1.1);
+}
+
+/* Estilos específicos para cada red social */
+.social-button.linkedin {
+  background: rgba(0, 119, 181, 0.9);
+  color: white;
+}
+
+.social-button.linkedin:hover {
+  background: rgba(0, 119, 181, 1);
+  border-color: rgba(0, 119, 181, 0.8);
+}
+
+.social-button.whatsapp {
+  background: rgba(37, 211, 102, 0.9);
+  color: white;
+}
+
+.social-button.whatsapp:hover {
+  background: rgba(37, 211, 102, 1);
+  border-color: rgba(37, 211, 102, 0.8);
+}
+
+.social-button.instagram {
+  background: linear-gradient(45deg, rgba(225, 48, 108, 0.9), rgba(255, 192, 0, 0.9));
+  color: white;
+}
+
+.social-button.instagram:hover {
+  background: linear-gradient(45deg, rgba(225, 48, 108, 1), rgba(255, 192, 0, 1));
+  border-color: rgba(225, 48, 108, 0.8);
+}
+
+/* Efecto de pulso sutil */
+.social-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  background: inherit;
+  opacity: 0;
+  animation: pulse 3s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+/* Responsive para mobile */
+@media (max-width: 900px) {
+  .social-buttons {
+    bottom: 20px;
+    right: 20px;
+    gap: 12px;
+  }
+  
+  .social-button {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .social-button svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .social-buttons {
+    bottom: 15px;
+    right: 15px;
+    gap: 10px;
+  }
+  
+  .social-button {
+    width: 44px;
+    height: 44px;
+  }
+  
+  .social-button svg {
+    width: 18px;
+    height: 18px;
   }
 }
