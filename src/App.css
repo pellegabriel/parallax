@@ -1,11 +1,14 @@
-#footer-end, .footer-end {
+/* Global font is set in index.css (using Koulen) */
+
+/* footer */
+.footer-end, #footer-end, .footer-end {
   width: 100%;
   background: #0a1a2f;
   color: #aec0f8;
   text-align: center;
   padding: 32px 0 24px 0;
   font-size: 18px;
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: inherit;
   position: relative;
   z-index: 30;
 }
@@ -34,7 +37,7 @@
   color: #aec0f8;
   font-size: 80px;
   font-weight: 300;
-  font-family: "Helvetica Neue";
+  font-family: inherit;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -47,7 +50,7 @@
   color: #3b6af7;
   font-size: 46px;
   font-weight: 600;
-  font-family: "Helvetica Neue";
+  font-family: inherit;
 }
 
 #textblock-content {
@@ -284,7 +287,8 @@
   margin: 0 auto 30px auto;
   border-radius: 50%;
   overflow: hidden;
-  border: 3px solid rgba(59, 106, 247, 0.3);
+    border: 10px solid #031927;
+
   box-shadow: 0 8px 32px rgba(59, 106, 247, 0.2);
   opacity: 0;
   transform: translateY(30px);
@@ -294,15 +298,17 @@
 }
 
 .company-logo:hover {
-  border-color: rgba(59, 106, 247, 0.6);
-  transform: translateY(30px) scale(1.05);
-  box-shadow: 0 12px 48px rgba(59, 106, 247, 0.4);
+  /* Keep the custom 10px border visible on hover and use shadow/scale for effect */
+  border: 10px solid #031927;
+  transform: translateY(30px) scale(1.03);
+  box-shadow: 0 20px 60px rgba(3,25,39,0.45), 0 6px 18px rgba(59,106,247,0.12);
 }
 
 .company-logo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  
 }
 
 /* Logo para desktop - usando estilos del team-avatar */
@@ -313,8 +319,9 @@
   height: 350px;
   border-radius: 50%;
   overflow: hidden;
+    border: 10px solid #031927;
+
   margin: 0 10px 40px 150px;
-  border: 3px solid rgba(59, 106, 247, 0.3);
   transition: all 0.3s ease;
   box-shadow: 0 8px 32px rgba(59, 106, 247, 0.2);
   opacity: 0;
@@ -324,9 +331,10 @@
 }
 
 .company-logo-desktop:hover {
-  border-color: rgba(59, 106, 247, 0.6);
-  transform: translateY(30px) scale(1.05);
-  box-shadow: 0 12px 48px rgba(59, 106, 247, 0.4);
+  /* Keep the custom 10px border visible on hover and use shadow/scale for effect */
+  border: 10px solid #031927;
+  transform: translateY(30px) scale(1.04);
+  box-shadow: 0 22px 70px rgba(3,25,39,0.5), 0 8px 22px rgba(59,106,247,0.12);
 }
 
 .company-logo-desktop img {
@@ -372,20 +380,32 @@
 }
 
 .company-rect-image {
-  flex: 0 0 380px; /* rectangular image width */
-  height: auto; /* allow natural height so the image is not cropped */
-  overflow: visible; /* show full image */
-  border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-  background: #08151a; /* subtle background if image has different aspect */
-  align-self: flex-start; /* keep the image aligned to the top */
-  transform: none; /* keep image in its natural position */
+  /* blob-like shape instead of rectangle */
+  flex: 0 0 320px;
+  width: 320px;
+  height: 420px; /* fixed visual height to form the blob */
+  overflow: hidden;
+  /* asymmetric border-radius to create an organic puddle/blob shape */
+  border-radius: 48% 32% 40% 60% / 60% 40% 55% 45%;
+  box-shadow: 0 18px 48px rgba(0,0,0,0.45);
+  background: #08151a;
+  align-self: flex-end; /* anchor image visually to the content baseline */
+  transform: translateY(12px); /* slight drop so it feels grounded */
+  margin-left: 12px;
+  box-sizing: border-box;
+  transition: transform 220ms ease, box-shadow 220ms ease;
 }
 .company-rect-image img {
   width: 100%;
-  height: auto; /* keep aspect ratio */
-  object-fit: contain; /* ensure entire image is visible */
+  height: 100%;
+  object-fit: cover; /* fill the blob shape */
   display: block;
+}
+
+.company-rect-image:hover {
+  /* preserve border and add depth + slight lift */
+  transform: translateY(8px) scale(1.02);
+  box-shadow: 0 26px 64px rgba(3,25,39,0.45), 0 8px 22px rgba(59,106,247,0.12);
 }
 
 .company-middle-text {
@@ -409,6 +429,8 @@
     height: auto;
     margin: 0 auto;
     transform: none;
+    /* softer blob on mobile */
+    border-radius: 40% 30% 45% 55% / 55% 35% 45% 45%;
   }
   .company-middle-text {
     transform: translateY(-16px); /* smaller upward shift on mobile */
@@ -443,7 +465,7 @@
   /* Increased title size */
   font-size: 64px;
   font-weight: 300;
-  font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+  /* use global Montserrat */
   margin-bottom: 24px;
   letter-spacing: -1px;
   line-height: 1.2;
@@ -459,7 +481,7 @@
   /* Increased body size for better readability */
   font-size: 30px;
   line-height: 1.7;
-  font-family: 'Inter', 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+  /* use global Montserrat */
   font-weight: 400;
   margin-bottom: 32px;
   /* max-width removed to isolate widths for top and middle sections */
@@ -474,15 +496,14 @@
   max-width: 50%; /* original top description width */
 }
 
-.company-middle-text .company-description {
-}
+
 
 .company-tagline {
-  color: #3b6af7;
+  color: #e5edffbe;
   /* Slightly larger tagline */
   font-size: 18px;
   font-weight: 500;
-  font-family: 'Inter', 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+  /* use global Montserrat */
   font-style: italic;
   text-align: left;
   margin-top: 16px;
@@ -615,7 +636,7 @@
 
 .header-logo {
   color: #aec0f8;
-  font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: inherit;
   font-weight: 600;
   letter-spacing: 0.5px;
 }
@@ -628,7 +649,7 @@
 .header-link {
   color: #aec0f8;
   text-decoration: none;
-  font-family: 'Inter', 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: inherit;
   font-size: 14px;
   padding: 8px 10px;
   border-radius: 8px;
@@ -796,7 +817,7 @@
 .team-section {
   position: relative;
   z-index: 100;
-  padding: 80px 20px 120px 20px;
+  padding: 10px 20px 120px 20px;
   text-align: center;
   opacity: 1;
   transform: translateY(0);
@@ -809,7 +830,7 @@
   color: #ffffff;
   font-size: 42px;
   font-weight: 300;
-  font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: inherit;
   margin-bottom: 60px;
   letter-spacing: -1px;
   line-height: 1.2;
@@ -863,7 +884,7 @@
   color: #ffffff;
   font-size: 24px;
   font-weight: 600;
-  font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: inherit;
   margin-bottom: 8px;
   letter-spacing: 0.5px;
 }
@@ -872,7 +893,7 @@
   color: rgba(174, 192, 248, 0.8);
   font-size: 16px;
   font-weight: 400;
-  font-family: 'Inter', 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: inherit;
   font-style: italic;
 }
 
@@ -1094,4 +1115,9 @@
     width: 18px;
     height: 18px;
   }
+}
+
+/* Headings inherit the site's font (set in index.css via @font-face) */
+h1, h2, h3, h4, h5, h6 {
+  font-family: inherit;
 }

@@ -1,7 +1,7 @@
 import { Linkedin, MessageCircle, Instagram } from "lucide-react"
 import { useState } from "react"
 
-export function SocialButtons() {
+export function SocialButtons({ inline = false }) {
   const [hoveredButton, setHoveredButton] = useState(null)
 
   const buttons = [
@@ -31,8 +31,14 @@ export function SocialButtons() {
     },
   ]
 
+  const containerStyle = inline
+    ? { position: 'relative', display: 'flex', flexDirection: 'row', gap: 20, marginTop: 28, alignItems: 'center' }
+    : { position: 'fixed', right: 16, bottom: 32, zIndex: 50, display: 'flex', flexDirection: 'column', gap: 12 }
+
+  const size = inline ? 64 : 56
+
   return (
-    <div style={{ position: 'fixed', right: 16, bottom: 32, zIndex: 50, display: 'flex', flexDirection: 'column', gap: 12 }}>
+    <div style={containerStyle}>
       {buttons.map((button, index) => {
         const Icon = button.icon
         const isHovered = hoveredButton === button.id
@@ -70,19 +76,21 @@ export function SocialButtons() {
             <div
               style={{
                 position: 'relative',
-                height: 56,
-                width: 56,
+                height: size,
+                width: size,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 borderRadius: 12,
+                boxSizing: 'border-box',
+                border: '5px solid #031927',
                 background: isHovered ? 'linear-gradient(135deg, #2563eb, #1e40af)' : 'linear-gradient(135deg, #3b82f6, #2563eb)',
                 boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
                 transition: 'all 300ms',
                 transform: isHovered ? 'scale(1.05)' : 'scale(1)'
               }}
             >
-              <Icon style={{ height: 24, width: 24, color: '#fff', transition: 'transform 300ms', transform: isHovered ? 'scale(1.05)' : 'scale(1)' }} />
+              <Icon style={{ height: size * 0.55, width: size * 0.55, color: '#fff', transition: 'transform 300ms', transform: isHovered ? 'scale(1.05)' : 'scale(1)' }} />
             </div>
 
             {/* Label tooltip */}

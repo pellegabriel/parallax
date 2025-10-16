@@ -27,7 +27,7 @@ function App() {
       {/* <button className="hamburger" aria-label="Abrir menú" onClick={() => setMenuOpen((v) => !v)}>
         ☰
       </button> */}
-      <Parallax pages={2} style={{ top: '0', left: '0' }} class="animation">
+  <Parallax pages={1.9} style={{ top: '0', left: '0' }} class="animation">
         <ParallaxLayer offset={0} speed={0.25}>
           <div class="animation_layer parallax" id="artback"></div>
         </ParallaxLayer>
@@ -62,35 +62,32 @@ function App() {
               <img src={logoImage} alt="The Cave Logo Desktop" />
             </div>
             <div className="company-text">
-              <h2 className="company-title">The Cave</h2>
+              <h2 className="company-title">BIenvenid<span style={{ color: '#031927' }}>x</span></h2>
               <p className="company-description">
-                Bienvenido a The Cave, donde la innovación encuentra su hogar. 
-                Somos pioneros en transformar ideas revolucionarias en 
-                realidades digitales que cambian el mundo.
+La innovación encuentra su hogar en cada idea que se transforma en experiencia digital. Creamos soluciones que impulsan el cambio y conectan personas con tecnología.
+Nuestro propósito es convertir la creatividad en impacto real, superando los límites del presente.
               </p>
-              <p className="company-tagline">
-                "El futuro comienza aquí"
-              </p>
+
             </div>
           </div>
         </ParallaxLayer>
 
         {/* Sección 2 - Medio */}
-        <ParallaxLayer offset={0.5} speed={0.2}>
+        <ParallaxLayer offset={0.40} speed={0.2}>
           <div className="company-info section-middle">
             <div className="company-middle-row">
    
               <div className="company-middle-text">
-                <h2 className="company-title">Nuestra Misión</h2>
                 <p className="company-description">
-                  En The Cave, creemos que cada proyecto es una oportunidad 
-                  para superar límites. Nuestro equipo multidisciplinario 
-                  combina creatividad, tecnología y estrategia para entregar 
-                  soluciones excepcionales.
+Creemos que cada proyecto es una oportunidad para superar límites. Nuestro equipo combina estrategia, diseño y tecnología para convertir desafíos en soluciones que dejan huella.
                 </p>
-                <p className="company-tagline">
-                  "Innovación sin límites"
-                </p>
+                  <p className="company-tagline">
+                  ATTE: EQUIPO DE THE CAVE
+                  </p>
+                  {/* Inline social buttons for middle section */}
+                  <div style={{ marginTop: 18 }}>
+                    <SocialButtons inline={true} />
+                  </div>
               </div>
                          <div className="company-rect-image">
                 <img src={missionImage} alt="Nuestra misión" />
