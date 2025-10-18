@@ -236,6 +236,10 @@
 
 .App {
   padding-top: 64px;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 /* Fixed page frame border */
@@ -265,18 +269,27 @@
   backdrop-filter: blur(6px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.4);
   z-index: 10000;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100vw;
 }
 .header-logo {
   font-weight: 800;
   color: #e6eeff;
   letter-spacing: 1px;
+  font-size: clamp(16px, 3vw, 20px);
 }
-.header-nav { display: flex; gap: 16px; }
+.header-nav { 
+  display: flex; 
+  gap: 16px; 
+}
 .header-link {
   color: #e6eeff;
   text-decoration: none;
   font-weight: 600;
   opacity: 0.9;
+  font-size: clamp(14px, 2.5vw, 16px);
+  white-space: nowrap;
 }
 .header-link:hover { opacity: 1; text-decoration: underline; }
 
@@ -328,23 +341,38 @@
 }
 .contact-section {
   width: min(720px, 92%);
+  max-width: 100%;
   margin: 80px auto;
   padding: 24px 20px 28px 20px;
-  background: rgba(255,255,255,0.06);
+  background: rgb(13, 25, 72);
   border: 1px solid rgba(255,255,255,0.15);
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.25);
   color: #e6eeff;
+  box-sizing: border-box;
 }
-.contact-section h2 { margin: 0 0 12px 0; }
-.contact-form { display: grid; gap: 12px; }
+.contact-section h2 { 
+  margin: 0 0 12px 0; 
+}
+.contact-form { 
+  display: grid; 
+  gap: 12px; 
+  width: 100%;
+}
 .contact-form input, .contact-form textarea {
   width: 100%;
+  max-width: 100%;
   padding: 12px 14px;
   border-radius: 10px;
   border: 1px solid rgba(255,255,255,0.2);
   background: rgba(0,0,0,0.25);
   color: #e6eeff;
+  box-sizing: border-box;
+  font-size: 16px; /* Prevents zoom on iOS */
+}
+.contact-form textarea {
+  resize: vertical;
+  min-height: 120px;
 }
 .contact-form button {
   margin-top: 6px;
@@ -353,14 +381,97 @@
   border: 1px solid rgba(59,106,247,0.6);
   background: linear-gradient(90deg, #3B6AF7, #1B71FF);
   color: white;
-  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease;
 }
+.contact-form button:hover {
+  transform: translateY(-2px);
+}
+
+/* Contact skeleton */
+.contact-skeleton { 
+  display: grid; 
+  gap: 8px; 
+  margin-top: 12px; 
+  width: 100%;
+  max-width: 100%;
+}
+.skeleton {
+  background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+  background-size: 200% 100%;
+  border-radius: 10px;
+  animation: shimmer 1.2s infinite;
+  box-sizing: border-box;
+}
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+/* Mobile responsive adjustments */
+@media (max-width: 900px) {
+  .contact-section {
+    margin: 60px auto;
+    padding: 20px 16px 24px 16px;
+    width: min(100%, calc(100vw - 32px));
+  }
+  .contact-section h2 {
+    font-size: 24px;
+  }
+  .contact-form input, .contact-form textarea {
+    padding: 14px 12px;
+  }
+  .back-button {
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  .contact-section {
+    margin: 40px auto;
+    padding: 16px 12px 20px 12px;
+    width: min(100%, calc(100vw - 24px));
+  }
+  .contact-section h2 {
+    font-size: 22px;
+  }
+  .contact-section p {
+    font-size: 14px;
+  }
+}
+
 @media (min-width: 901px) {
   .hamburger { display: none; }
   
   .company-logo-desktop {
     display: block !important;
   }
+}
+
+/* Contact Screen Styles */
+.contact-screen {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.contact-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.static-jungle {
+  position: absolute !important;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: translateY(40vh) !important;
 }
 
 h1, h2, h3, h4, h5, h6 {

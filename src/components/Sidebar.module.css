@@ -92,7 +92,9 @@
 @media (max-width: 900px) {
   .sidebar {
     width: 60px;
+    max-width: 60px;
     padding: 15px 0;
+    box-sizing: border-box;
   }
   .logoCircle, .sidebarButton {
     width: 40px;
@@ -100,5 +102,28 @@
   }
   .firstItemOffset {
     margin-top: 70px; /* extra espacio para no chocar con el hamburger */
+  }
+  .verticalLabel {
+    width: 44px;
+    max-width: 44px;
+    padding: 6px 4px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .sidebar {
+    width: 56px;
+    max-width: 56px;
+  }
+  .verticalLabel {
+    width: 40px;
+    max-width: 40px;
+    padding: 4px 2px;
+    font-size: 14px;
+  }
+  .verticalLabel .letter {
+    font-size: 14px;
+    margin: 1px 0;
   }
 }
