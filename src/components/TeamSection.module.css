@@ -82,7 +82,7 @@
 
 @media (max-width: 900px) {
   .teamSection {
-    padding: 40px 15px 80px 15px;
+    padding: 66px 10px 60px 10px;
     margin-bottom: 40px;
     background: linear-gradient(to bottom, transparent 0%, rgba(0, 33, 31, 0.3) 10%, #00211f 30%);
     min-height: 100vh;
@@ -114,7 +114,7 @@
 
 @media (max-width: 600px) {
   .teamSection {
-    padding: 30px 10px 60px 10px;
+    padding: 60px 10px 60px 10px;
     margin-bottom: 30px;
     background: linear-gradient(to bottom, transparent 0%, rgba(0, 33, 31, 0.4) 5%, #00211f 25%);
     min-height: 100vh;

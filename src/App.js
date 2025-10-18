@@ -25,7 +25,8 @@ function App() {
 
   const pages = isMobile ? 2.2 : 1.9;
   const middleOffset = isMobile ? 0.34 : 0.40;
-  const teamOffset = isMobile ? 1.2 : 1.0;
+  const teamOffset = isMobile ? 1.0 : 1.0;
+  const teamFactor = isMobile ? 1.2 : 1.0;
   const bottomCoverOffset = teamOffset;
 
   return (
@@ -115,7 +116,7 @@ function App() {
         </ParallaxLayer>
 
         {/* Sección del Equipo */}
-        <ParallaxLayer offset={teamOffset} speed={0.1} style={{ zIndex: 200, width: '100%', height: '100%', overflow: 'visible' }}>
+        <ParallaxLayer offset={teamOffset} speed={0.1} factor={teamFactor} style={{ zIndex: 200, width: '100%', height: '100%', overflow: 'visible' }}>
           <div className={teamStyles.teamSection}>
             <h2 className={teamStyles.teamTitle}>Nuestro Equipo</h2>
             <div className={teamStyles.teamGrid}>
@@ -143,7 +144,7 @@ function App() {
             </div>
           </div>
         </ParallaxLayer>
-        <ParallaxLayer offset={bottomCoverOffset} speed={0} factor={1.0} style={{ zIndex: 5 }}>
+        <ParallaxLayer offset={bottomCoverOffset} speed={0} factor={teamFactor} style={{ zIndex: 5 }}>
           <div id="bottom-cover"></div>
         </ParallaxLayer>
       </Parallax>
