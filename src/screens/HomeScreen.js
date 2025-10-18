@@ -21,7 +21,7 @@ function HomeScreen({ onNavigateToContact }) {
     return () => window.removeEventListener('resize', update);
   }, []);
 
-  const pages = isMobile ? 2.2 : 1.9;
+  const pages = isMobile ? 2.2 : 2.2;
   const middleOffset = isMobile ? 0.34 : 0.40;
   const teamOffset = isMobile ? 1.0 : 1.0;
   const teamFactor = isMobile ? 1.2 : 1.0;

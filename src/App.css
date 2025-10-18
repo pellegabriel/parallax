@@ -297,11 +297,10 @@
 .hamburger {
   position: fixed;
   top: 10px;
-  right: 12px;
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  background: rgba(3, 25, 39, 0.7);
+  background: rgb(7, 0, 22);
   color: #e6eeff;
   border: 1px solid rgba(0, 0, 0, 0.4);
   display: inline-flex;
@@ -309,7 +308,7 @@
   justify-content: center;
   z-index: 10000;
 }
-.hamburger:hover { background: rgba(3, 25, 39, 0.85); }
+
 
 /* On mobile, place hamburger at left */
 @media (max-width: 900px) {
