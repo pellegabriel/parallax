@@ -17,6 +17,19 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [route, setRoute] = useState('home'); // 'home' | 'contact'
+
+  const handleContactSubmit = (e) => {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const name = data.get('name') || '';
+    const email = data.get('email') || '';
+    const message = data.get('message') || '';
+    const subject = `Nuevo mensaje de ${name}`;
+    const body = `Nombre: ${name}\nEmail: ${email}\n\nMensaje:\n${message}`;
+    const mailto = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailto;
+  };
 
   useEffect(() => {
     let timeoutId;
@@ -55,30 +68,26 @@ function App() {
         <Loader />
       ) : (
         <>
-      {/* Header horizontal - Desktop */}
-      {/* <header className="top-header">
-        <div className="header-logo">The Cave</div>
-        <nav className="header-nav">
-          <a href="#home" className="header-link">Inicio</a>
-          <a href="#about" className="header-link">Nosotros</a>
-          <a href="#services" className="header-link">Servicios</a>
-          <a href="#contact" className="header-link">Contacto</a>
-        </nav>
-      </header> */}
-      {/* Botón hamburguesa - Mobile */}
-      {/* <button className="hamburger" aria-label="Abrir menú" onClick={() => setMenuOpen((v) => !v)}>
-        ☰
-      </button> */}
+          {!isMobile && (
+            <header className="top-header">
+              <div className="header-logo">The Cave</div>
+              <nav className="header-nav">
+                <a
+                  href="#contact"
+                  className="header-link"
+                  onClick={(e) => { e.preventDefault(); setRoute('contact'); }}
+                >
+                  Contacto
+                </a>
+              </nav>
+            </header>
+          )}
+          {isMobile && route === 'home' && (
+            <button className="hamburger" aria-label="Abrir menú" onClick={() => setMenuOpen((v) => !v)}>
+              ☰
+            </button>
+          )}
   <Parallax pages={pages} style={{ top: '0', left: '0' }} class="animation">
-        <ParallaxLayer offset={0} speed={0.25}>
-          <div class="animation_layer parallax" id="artback"></div>
-        </ParallaxLayer>
-        <ParallaxLayer offset={0} speed={0.3}>
-          <div class="animation_layer parallax" id="mountain"></div>
-        </ParallaxLayer>
-        <ParallaxLayer offset={0} speed={0.3}>
-          <div class="animation_layer parallax" id="jungle1"></div>
-        </ParallaxLayer>
         <ParallaxLayer offset={0} speed={0.35}>
           <div class="animation_layer parallax" id="jungle2"></div>
         </ParallaxLayer>
@@ -172,17 +181,49 @@ function App() {
           <div id="bottom-cover"></div>
         </ParallaxLayer>
       </Parallax>
-      {/* Navbar lateral - Mobile */}
-      <div className={`${sidebarStyles.sidebar} ${menuOpen ? sidebarStyles.open : ''}`} onClick={() => setMenuOpen(false)}>
-        <div className={sidebarStyles.logoCircle}></div>
-        <button className={sidebarStyles.sidebarButton}>🏠</button>
-        <button className={sidebarStyles.sidebarButton}>📧</button>
-        <button className={sidebarStyles.sidebarButton}>📱</button>
-        <button className={sidebarStyles.sidebarButton}>ℹ️</button>
-      </div>
 
-      {/* Botones de redes sociales flotantes */}
-      <SocialButtons />
+      {route === 'contact' && (
+        <section id="contact" className="contact-section">
+          <button className="back-button" onClick={() => setRoute('home')}>← Volver</button>
+          <h2>Contacto</h2>
+          <p>¿Tenés un proyecto o consulta? Escribinos.</p>
+          <form className="contact-form" onSubmit={handleContactSubmit}>
+            <input type="text" name="name" placeholder="Tu nombre" required />
+            <input type="email" name="email" placeholder="Tu email" required />
+            <textarea name="message" placeholder="Tu mensaje" rows="5" required />
+            <button type="submit">Enviar email</button>
+          </form>
+        </section>
+      )}
+
+      {route === 'home' && (
+        <>
+        {/* Navbar lateral - Mobile */}
+        <div className={`${sidebarStyles.sidebar} ${menuOpen ? sidebarStyles.open : ''}`} onClick={() => setMenuOpen(false)}>
+          <div className={`${sidebarStyles.verticalLabel} ${sidebarStyles.firstItemOffset}`}
+            onClick={() => { setRoute('contact'); setMenuOpen(false); }}
+            aria-label="Ir a contacto"
+            title="Contacto">
+            <span className={sidebarStyles.letter}>{'>>'}</span> 
+            <span className={sidebarStyles.letter}>{''}</span> 
+            <span className={sidebarStyles.letter}>M</span>
+            <span className={sidebarStyles.letter}>E</span>
+            <span className={sidebarStyles.letter}>N</span>
+            <span className={sidebarStyles.letter}>S</span>
+            <span className={sidebarStyles.letter}>A</span>
+            <span className={sidebarStyles.letter}>J</span>
+            <span className={sidebarStyles.letter}>E</span>
+            <span className={sidebarStyles.letter}>{''}</span> 
+            <span className={sidebarStyles.letter}>{'>>'}</span> 
+
+          </div>
+
+        </div>
+
+        {/* Botones de redes sociales flotantes */}
+        <SocialButtons />
+        </>
+      )}
         </>
       )}
       <div className="page-frame" />

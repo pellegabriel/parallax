@@ -60,6 +60,35 @@
   transform: translateX(-5px);
 }
 
+.firstItemOffset {
+  margin-top: 60px;
+}
+
+.verticalLabel {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 800;
+  opacity: 0.8;
+  user-select: none;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  width: 48px;
+  border-radius: 6px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+.verticalLabel .letter {
+  display: block;
+  text-transform: uppercase;
+  color: #ffffff;
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  margin: 2px 0;
+}
+
 @media (max-width: 900px) {
   .sidebar {
     width: 60px;
@@ -68,5 +97,8 @@
   .logoCircle, .sidebarButton {
     width: 40px;
     height: 40px;
+  }
+  .firstItemOffset {
+    margin-top: 70px; /* extra espacio para no chocar con el hamburger */
   }
 }
