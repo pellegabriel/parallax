@@ -19,6 +19,21 @@ function ContactScreen({ onNavigateToHome }) {
     return () => clearTimeout(t);
   }, []);
 
+  // Lock body scroll while on contact screen
+  useEffect(() => {
+    const prevOverflow = document.body.style.overflow;
+    const prevHeight = document.body.style.height;
+    const prevHtmlOverscroll = document.documentElement.style.overscrollBehavior;
+    document.body.style.overflow = 'hidden';
+    document.body.style.height = '100vh';
+    document.documentElement.style.overscrollBehavior = 'none';
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      document.body.style.height = prevHeight;
+      document.documentElement.style.overscrollBehavior = prevHtmlOverscroll;
+    };
+  }, []);
+
 const handleContactSubmit = (e) => {
   e.preventDefault();
   const data = new FormData(e.currentTarget);

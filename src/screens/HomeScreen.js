@@ -64,7 +64,7 @@ function HomeScreen({ onNavigateToContact }) {
         </ParallaxLayer>
 
         {/* Sección 1 - Arriba */}
-        <ParallaxLayer offset={0.1} speed={0.3}>
+<ParallaxLayer offset={0.1} speed={0.3}>
           <div className={`${companyStyles.companyInfo} ${companyStyles.sectionTop}`}>
             <div className={companyStyles.companyLogo}>
               <img src={logoImage} alt="The Cave Logo" />
@@ -74,12 +74,11 @@ function HomeScreen({ onNavigateToContact }) {
             </div>
             <div className={companyStyles.companyText}>
               <h2 className={companyStyles.companyTitle}>
-                BIenvenid<span style={{ color: '#031927' }}>x</span> a
+                BIenvenid<span style={{ color: '#00211F' }}>x</span> a
               </h2>
               <span className={companyStyles.brandLarge}>the cave </span>
               <p className={companyStyles.companyDescription}>
-                La innovación encuentra su hogar en cada idea que se transforma en experiencia digital. Creamos soluciones que impulsan el cambio y conectan personas con tecnología.
-                Nuestro propósito es convertir la creatividad en impacto real, superando los límites del presente.
+                Hey, que tal? Llegaste a <span style={{ color: '#00211F', fontWeight: 'bold' }}>The Cave</span>, tu <span style={{ color: '#00211F', fontWeight: 'bold' }}>aliado digital</span>. Nos encargamos de todo: <span style={{ color: '#00211F', fontWeight: 'bold' }}>desarrollo de software</span>, <span style={{ color: '#00211F', fontWeight: 'bold' }}>marketing digital</span>, <span style={{ color: '#00211F', fontWeight: 'bold' }}>diseño de marca y logos</span>. El paquete completo para que tu proyecto brille desde el primer momento.
               </p>
             </div>
           </div>
@@ -91,7 +90,7 @@ function HomeScreen({ onNavigateToContact }) {
             <div className={companyStyles.companyMiddleRow}>
               <div className={companyStyles.companyMiddleText}>
                 <p className={companyStyles.companyDescription}>
-                  Creemos que cada proyecto es una oportunidad para superar límites. Nuestro equipo combina estrategia, diseño y tecnología para convertir desafíos en soluciones que dejan huella.
+                  En esta seccion podes <span style={{ color: '#00211F', fontWeight: 'bold' }}>conocer a todo el equipo</span> que va a trabajar en tu proyecto. Queres charlar? <span style={{ color: '#00211F', fontWeight: 'bold' }}>Usa nuestras redes sociales</span> o <span style={{ color: '#00211F', fontWeight: 'bold' }}>escribinos directamente</span> desde la <span style={{ color: '#00211F', fontWeight: 'bold' }}>seccion de contacto</span>. Estamos aca para lo que necesites!
                 </p>
                 <p className={companyStyles.companyTagline}>
                   ATTE: EQUIPO DE THE CAVE
