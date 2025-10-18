@@ -238,6 +238,18 @@
   padding-top: 64px;
 }
 
+/* Fixed page frame border */
+.page-frame {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border: 6px solid #000000;
+  pointer-events: none;
+  z-index: 10001;
+}
+
 @media (min-width: 901px) {
   .hamburger { display: none; }
   

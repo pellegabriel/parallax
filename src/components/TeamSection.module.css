@@ -116,7 +116,7 @@
   .teamSection {
     padding: 60px 10px 60px 10px;
     margin-bottom: 30px;
-    background: linear-gradient(to bottom, transparent 0%, rgba(0, 33, 31, 0.4) 5%, #00211f 25%);
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 33, 31, 0.4) 5%, #00211f 15%);
     min-height: 100vh;
   }
   .teamTitle { font-size: 28px; margin-bottom: 30px; padding-top: 0; }

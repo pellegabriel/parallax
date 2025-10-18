@@ -11,10 +11,30 @@ import tomyImage from './images/tomy.jpg';
 import lucasImage from './images/lucas.jpg';
 import SocialButtons from './SocialButtons';
 import sidebarStyles from './components/Sidebar.module.css';
+import Loader from './components/loader/Loader';
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    let timeoutId;
+    const MIN_DELAY = 6000; // ms
+    const done = () => {
+      // ensure a minimum delay so the loader is perceptible
+      timeoutId = setTimeout(() => setIsLoading(false), MIN_DELAY);
+    };
+    if (document.readyState === 'complete') {
+      done();
+    } else {
+      window.addEventListener('load', done);
+    }
+    return () => {
+      window.removeEventListener('load', done);
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  }, []);
 
   useEffect(() => {
     const update = () => setIsMobile(window.innerWidth <= 900);
@@ -31,6 +51,10 @@ function App() {
 
   return (
     <div className="App">
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
       {/* Header horizontal - Desktop */}
       {/* <header className="top-header">
         <div className="header-logo">The Cave</div>
@@ -159,9 +183,13 @@ function App() {
 
       {/* Botones de redes sociales flotantes */}
       <SocialButtons />
+        </>
+      )}
+      <div className="page-frame" />
     </div>
     
   );
 }
 
 export default App;
+
