@@ -476,3 +476,14 @@
 h1, h2, h3, h4, h5, h6 {
   font-family: inherit;
 }
+
+/* Overlay backdrop when sidebar is open */
+.overlay-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1400; /* below sidebar (1500), above content */
+}

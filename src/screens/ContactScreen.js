@@ -19,17 +19,22 @@ function ContactScreen({ onNavigateToHome }) {
     return () => clearTimeout(t);
   }, []);
 
-  const handleContactSubmit = (e) => {
-    e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    const name = data.get('name') || '';
-    const email = data.get('email') || '';
-    const message = data.get('message') || '';
-    const subject = `Nuevo mensaje de ${name}`;
-    const body = `Nombre: ${name}\nEmail: ${email}\n\nMensaje:\n${message}`;
-    const mailto = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailto;
-  };
+const handleContactSubmit = (e) => {
+  e.preventDefault();
+  const data = new FormData(e.currentTarget);
+  const name = data.get('name') || '';
+  const email = data.get('email') || '';
+  const message = data.get('message') || '';
+  
+  const subject = `Nuevo mensaje de ${name} - The Cave`;
+  const body = `Nombre: ${name}\nEmail: ${email}\n\nMensaje:\n${message}`;
+  
+  // dirección a la que se enviará el correo
+  const mailto = `mailto:thecave.ar.contac@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  
+  window.location.href = mailto;
+};
+
 
   return (
     <div className="contact-screen">
@@ -48,6 +53,10 @@ function ContactScreen({ onNavigateToHome }) {
       {/* Mobile hamburger */}
       {isMobile && (
         <button className="hamburger" aria-label="Abrir menú" onClick={() => setMenuOpen((v) => !v)}>☰</button>
+      )}
+
+      {menuOpen && (
+        <div className="overlay-backdrop" onClick={() => setMenuOpen(false)}></div>
       )}
 
       {/* Static background trees */}

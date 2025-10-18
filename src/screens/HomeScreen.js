@@ -143,6 +143,10 @@ function HomeScreen({ onNavigateToContact }) {
         </ParallaxLayer>
       </Parallax>
 
+      {menuOpen && (
+        <div className="overlay-backdrop" onClick={() => setMenuOpen(false)}></div>
+      )}
+
       {/* Sidebar móvil */}
       <div className={`${sidebarStyles.sidebar} ${menuOpen ? sidebarStyles.open : ''}`} onClick={() => setMenuOpen(false)}>
         <div className={`${sidebarStyles.verticalLabel} ${sidebarStyles.firstItemOffset}`}

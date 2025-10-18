@@ -8,7 +8,7 @@ export function SocialButtons({ inline = false }) {
     {
       id: "linkedin",
       icon: Linkedin,
-      href: "https://linkedin.com",
+      href: "https://www.linkedin.com/in/gabrielpelle/",
       label: "LinkedIn",
       color: "from-blue-600 to-blue-700",
       hoverColor: "from-blue-700 to-blue-800",
@@ -16,7 +16,7 @@ export function SocialButtons({ inline = false }) {
     {
       id: "whatsapp",
       icon: MessageCircle,
-      href: "https://wa.me/",
+      href: "https://wa.me/542966305853?text=Hola%21%20Tengo%20inter%C3%A9s%20en%20trabajar%20con%20ustedes%20y%20quer%C3%ADa%20saber%20c%C3%B3mo%20podemos%20avanzar.",
       label: "WhatsApp",
       color: "from-emerald-500 to-emerald-600",
       hoverColor: "from-emerald-600 to-emerald-700",
@@ -24,7 +24,7 @@ export function SocialButtons({ inline = false }) {
     {
       id: "instagram",
       icon: Instagram,
-      href: "https://instagram.com",
+      href: "https://www.instagram.com/thecave.ar/",
       label: "Instagram",
       color: "from-pink-500 via-rose-500 to-orange-500",
       hoverColor: "from-pink-600 via-rose-600 to-orange-600",
