@@ -1,11 +1,11 @@
-import './App.css';
+import styles from './components/TextBlock.module.css';
 
 function TextBlock() {
     return (
-        <div id="textblock">
-            <div id="textblock-container">
-                <h1 id="textblock-title">Parallax with @react-spring/parallax</h1>
-                <p id="textblock-content">
+        <div className={styles.textblock}>
+            <div className={styles.textblockContainer}>
+                <h1 className={styles.textblockTitle}>Parallax with @react-spring/parallax</h1>
+                <p className={styles.textblockContent}>
               
                 React Spring is a spring-physics based animation library that gives all the necessary tools to make simple,<br/> yet powerful, animations and interactions via the different interpolations and transitions provided to us.
                 <br/><br/>Why Springs?<br/><br/>

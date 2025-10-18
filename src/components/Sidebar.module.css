@@ -1,0 +1,140 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20vw;
+  max-width: 320px;
+  height: 100vh;
+  background: rgb(7, 0, 22);
+  backdrop-filter: blur(10px);
+  z-index: 1500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100px 12px;
+  border-right: 2px solid rgba(59, 106, 247, 0.3);
+  transform: translateX(-100%);
+  transition: transform 280ms ease;
+}
+
+.open {
+  transform: translateX(0);
+}
+
+.logoCircle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(59, 106, 247, 0.2);
+  border: 2px solid rgba(59, 106, 247, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  transition: all 0.3s ease;
+}
+.logoCircle:hover {
+  background: rgba(59, 106, 247, 0.4);
+  border-color: rgba(59, 106, 247, 0.8);
+  transform: scale(1.1);
+}
+
+.sidebarButton {
+  width: 52px;
+  height: 52px;
+  background: transparent;
+  border: 2px solid rgba(174, 192, 248, 0.3);
+  border-radius: 10px;
+  color: #aec0f8;
+  font-size: 18px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sidebarButton:hover {
+  background: rgba(59, 106, 247, 0.2);
+  border-color: rgba(59, 106, 247, 0.6);
+  transform: translateX(-5px);
+}
+
+.firstItemOffset {
+  margin-top: 60px;
+}
+
+.verticalLabel {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 800;
+  opacity: 0.8;
+  user-select: none;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  width: 48px;
+  border-radius: 6px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 1); /* borde blanco fino */
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+/* Hover effect */
+.verticalLabel:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+}
+
+.verticalLabel .letter {
+  display: block;
+  text-transform: uppercase;
+  color: #ffffff;
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  margin: 2px 0;
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    width: 60px;
+    max-width: 60px;
+    padding: 15px;
+    box-sizing: border-box;
+  }
+  .logoCircle, .sidebarButton {
+    width: 40px;
+    height: 40px;
+  }
+  .firstItemOffset {
+    margin-top: 70px; /* extra espacio para no chocar con el hamburger */
+  }
+  .verticalLabel {
+    width: 44px;
+    max-width: 44px;
+    padding: 6px 4px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .sidebar {
+    padding: 30px;
+    width: 56px;
+    max-width: 56px;
+  }
+  .verticalLabel {
+    width: 40px;
+    max-width: 40px;
+    padding: 4px 2px;
+    font-size: 14px;
+  }
+  .verticalLabel .letter {
+    font-size: 14px;
+    margin: 1px 0;
+  }
+}

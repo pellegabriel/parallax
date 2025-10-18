@@ -1,0 +1,95 @@
+.textblock {
+  background-color: transparent;
+  min-height: 100vh;
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.textblockContainer {
+  width: 50%;
+  margin: 120px auto 0 auto;
+  padding: 40px 20px 60px 20px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 20px;
+  box-shadow: 0 4px 24px 0 rgba(0,0,0,0.2);
+  z-index: 21;
+  position: relative;
+}
+
+.textblockTitle2 {
+  color: #aec0f8;
+  font-size: 80px;
+  font-weight: 300;
+  font-family: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 140px;
+  z-index: 22;
+  position: relative;
+}
+
+.textblockTitle {
+  color: #3b6af7;
+  font-size: 46px;
+  font-weight: 600;
+  font-family: inherit;
+}
+
+.textblockContent {
+  color: #3b6af7;
+  font-size: 24px;
+}
+
+.textblockFooter {
+  color: #3b6af7;
+  font-size: 15px;
+  font-weight: 400;
+  position: fixed;
+  width: 100%;
+  bottom: 0px;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  margin-bottom: 20px;
+}
+
+.textblockDevsense {
+  text-decoration: none;
+  color: #3b6af7;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .textblockContainer {
+    width: 80%;
+    margin-top: 80px;
+    padding: 30px 10px 40px 10px;
+  }
+  .textblockTitle2 {
+    font-size: 56px;
+    padding-top: 60px;
+  }
+}
+
+@media (max-width: 600px) {
+  .textblockContainer {
+    width: 98%;
+    margin-top: 40px;
+    padding: 15px 2vw 25px 2vw;
+  }
+  .textblockTitle2 {
+    font-size: 40px;
+    padding-top: 30px;
+  }
+  .textblockTitle {
+    font-size: 30px;
+  }
+  .textblockContent {
+    font-size: 18px;
+  }
+}
