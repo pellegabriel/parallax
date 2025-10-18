@@ -10,7 +10,7 @@ function App() {
 
   useEffect(() => {
     let timeoutId;
-    const MIN_DELAY = 6000; // ms
+    const MIN_DELAY = 0; // ms
     const done = () => {
       // ensure a minimum delay so the loader is perceptible
       timeoutId = setTimeout(() => setIsLoading(false), MIN_DELAY);

@@ -13,18 +13,23 @@ import SocialButtons from '../SocialButtons';
 function HomeScreen({ onNavigateToContact }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isSmallMobile, setIsSmallMobile] = useState(false);
 
   useEffect(() => {
-    const update = () => setIsMobile(window.innerWidth <= 900);
+    const update = () => {
+      setIsMobile(window.innerWidth <= 900);
+      setIsSmallMobile(window.innerWidth <= 600);
+    };
     update();
     window.addEventListener('resize', update);
     return () => window.removeEventListener('resize', update);
   }, []);
 
-  const pages = isMobile ? 2.2 : 2.2;
-  const middleOffset = isMobile ? 0.34 : 0.40;
-  const teamOffset = isMobile ? 1.0 : 1.0;
-  const teamFactor = isMobile ? 1.2 : 1.0;
+  // Valores ajustados para diferentes resoluciones
+  const pages = isSmallMobile ? 4.5 : isMobile ? 3.2 : 2.2;
+  const middleOffset = isSmallMobile ? 0.6 : isMobile ? 0.34 : 0.40;
+  const teamOffset = isSmallMobile ? 1.5 : isMobile ? 1.0 : 1.0;
+  const teamFactor = isSmallMobile ? 2.5 : isMobile ? 1.8 : 1.0;
   const bottomCoverOffset = teamOffset;
 
   return (
@@ -108,7 +113,7 @@ function HomeScreen({ onNavigateToContact }) {
         </ParallaxLayer>
 
         {/* Sección del Equipo */}
-        <ParallaxLayer offset={teamOffset} speed={0.1} factor={teamFactor} style={{ zIndex: 200, width: '100%', height: '100%', overflow: 'visible' }}>
+        <ParallaxLayer offset={teamOffset} speed={0.1} style={{ zIndex: 200, width: '100%', height: 'auto', minHeight: '100vh' }}>
           <div className={teamStyles.teamSection}>
             <h2 className={teamStyles.teamTitle}>Nuestro Equipo</h2>
             <div className={teamStyles.teamGrid}>
@@ -137,7 +142,7 @@ function HomeScreen({ onNavigateToContact }) {
           </div>
         </ParallaxLayer>
 
-        <ParallaxLayer offset={bottomCoverOffset} speed={0} factor={teamFactor} style={{ zIndex: 5 }}>
+        <ParallaxLayer offset={bottomCoverOffset + 0.8} speed={0} factor={1} style={{ zIndex: 5 }}>
           <div id="bottom-cover"></div>
         </ParallaxLayer>
       </Parallax>

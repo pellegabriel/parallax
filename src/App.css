@@ -235,11 +235,12 @@
 }
 
 .App {
-  padding-top: 64px;
   width: 100%;
   max-width: 100vw;
   overflow-x: hidden;
+  overflow-y: auto;
   box-sizing: border-box;
+  min-height: 100vh;
 }
 
 /* Fixed page frame border */
@@ -249,9 +250,15 @@
   right: 0;
   bottom: 0;
   left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh; /* Dynamic viewport height for mobile browsers */
   border: 6px solid #000000;
   pointer-events: none;
   z-index: 10001;
+  /* Prevent frame from moving on mobile scroll */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 /* Header */
