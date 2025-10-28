@@ -21,16 +21,15 @@ function HomeScreen({ onNavigateToContact }) {
           const scrolled = window.pageYOffset;
           const parallaxElements = document.querySelectorAll('.parallax-layer');
           
-          // More parallax movement
           const isMobileDevice = window.innerWidth <= 900;
           const speeds = isMobileDevice 
-            ? [0.005, 0.01, 0.015, 0.02, 0.025, 0.03, 0.035] // Mobile movement (unchanged)
-            : [0.003, 0.006, 0.009, 0.012, 0.015, 0.018, 0.021]; // Slower desktop movement
+            ? [0.005, 0.01, 0.015, 0.02, 0.025, 0.03, 0.035]
+            : [0.003, 0.006, 0.009, 0.012, 0.015, 0.018, 0.021];
           
           parallaxElements.forEach((element, index) => {
             const speed = speeds[index] || 0.01;
             const yPos = -(scrolled * speed);
-            element.style.transform = `translate3d(0, ${yPos}px, 0)`; // Use translate3d for hardware acceleration
+            element.style.transform = `translate3d(0, ${yPos}px, 0)`; 
           });
           
           ticking = false;
@@ -39,17 +38,14 @@ function HomeScreen({ onNavigateToContact }) {
       }
     };
 
-    // Use passive listener for better performance
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
     <>
-      {/* Hamburger button for all screen sizes */}
       <button className="hamburger" aria-label="Abrir menú" onClick={() => setMenuOpen((v) => !v)}>☰</button>
 
-      {/* Fondo parallax decorativo que responde al scroll */}
       <div className="parallax-background">
         <div className="parallax-layer animation_layer parallax" id="artback"></div>
         <div className="parallax-layer animation_layer parallax" id="mountain"></div>
@@ -60,9 +56,7 @@ function HomeScreen({ onNavigateToContact }) {
         <div className="parallax-layer animation_layer parallax" id="jungle5"></div>
       </div>
 
-      {/* Contenido principal scrolleable */}
       <div className="main-content" style={{ position: 'relative', zIndex: 10 }}>
-        {/* Sección 1 - Bienvenida */}
         <section className={`${companyStyles.companyInfo} ${companyStyles.sectionTop}`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', margin: '0 auto' }}>
           <div className={companyStyles.companyLogo} style={{ display: 'block', order: -1 }}>
             <img src={logoImage} alt="The Cave Logo" />
@@ -81,7 +75,6 @@ function HomeScreen({ onNavigateToContact }) {
           </div>
         </section>
 
-        {/* Sección 2 - Información */}
         <section className={`${companyStyles.companyInfo} ${companyStyles.sectionMiddle}`}>
           <div className={companyStyles.companyMiddleRow}>
             <div className={companyStyles.companyMiddleText}>
@@ -101,7 +94,6 @@ function HomeScreen({ onNavigateToContact }) {
           </div>
         </section>
 
-        {/* Sección 3 - Equipo */}
         <section className={teamStyles.teamSection}>
           <h2 className={teamStyles.teamTitle}>Nuestro Equipo</h2>
           <div className={teamStyles.teamGrid}>
@@ -134,7 +126,6 @@ function HomeScreen({ onNavigateToContact }) {
         <div className="overlay-backdrop" onClick={() => setMenuOpen(false)}></div>
       )}
 
-      {/* Sidebar móvil */}
       <div className={`${sidebarStyles.sidebar} ${menuOpen ? sidebarStyles.open : ''}`} onClick={() => setMenuOpen(false)}>
         <div className={`${sidebarStyles.verticalLabel} ${sidebarStyles.firstItemOffset}`}
           onClick={() => { onNavigateToContact(); setMenuOpen(false); }}
@@ -154,7 +145,6 @@ function HomeScreen({ onNavigateToContact }) {
         </div>
       </div>
 
-      {/* Botones de redes sociales flotantes */}
       <SocialButtons />
     </>
   );

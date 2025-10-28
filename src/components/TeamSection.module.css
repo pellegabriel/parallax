@@ -109,7 +109,6 @@
   font-style: italic;
 }
 
-/* Desktop improvements for team members */
 @media (min-width: 901px) {
   .teamMember {
     flex: 1;
@@ -134,7 +133,6 @@
   }
 }
 
-/* Large desktop improvements */
 @media (min-width: 1400px) {
   .teamSection {
     padding: 60px 60px 140px 60px;
@@ -171,7 +169,6 @@
   }
 }
 
-/* Ultra-wide desktop improvements */
 @media (min-width: 1800px) {
   .teamSection {
     padding: 80px 80px 160px 80px;

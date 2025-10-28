@@ -78,12 +78,11 @@
   width: 48px;
   border-radius: 6px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
-  border: 1px solid rgba(255, 255, 255, 1); /* borde blanco fino */
+  border: 1px solid rgba(255, 255, 255, 1);
   transition: all 0.25s ease;
   cursor: pointer;
 }
 
-/* Hover effect */
 .verticalLabel:hover {
   opacity: 1;
   transform: translateY(-2px);
@@ -111,7 +110,7 @@
     height: 40px;
   }
   .firstItemOffset {
-    margin-top: 70px; /* extra espacio para no chocar con el hamburger */
+    margin-top: 70px;
   }
   .verticalLabel {
     width: 44px;

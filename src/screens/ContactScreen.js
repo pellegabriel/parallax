@@ -53,10 +53,8 @@ const handleContactSubmit = (e) => {
 
   return (
     <div className="contact-screen">
-      {/* Hamburger button for all screen sizes */}
       <button className="hamburger" aria-label="Abrir menú" onClick={() => setMenuOpen((v) => !v)}>☰</button>
       
-      {/* Desktop header */}
       {!isMobile && (
         <header className="top-header">
           <div className="header-logo">The Cave</div>
@@ -72,7 +70,6 @@ const handleContactSubmit = (e) => {
         <div className="overlay-backdrop" onClick={() => setMenuOpen(false)}></div>
       )}
 
-      {/* Static background trees */}
       <div className="contact-background">
         <div className="animation_layer parallax static-jungle" id="jungle2"></div>
         <div className="animation_layer parallax static-jungle" id="jungle3"></div>
@@ -81,7 +78,6 @@ const handleContactSubmit = (e) => {
         <div className="animation_layer parallax static-jungle" id="jungle5"></div>
       </div>
 
-      {/* Contact form */}
       <section id="contact" className="contact-section">
         <button className="back-button" onClick={onNavigateToHome}>←</button>
         <h3>Contacto</h3>
@@ -104,7 +100,6 @@ const handleContactSubmit = (e) => {
         )}
       </section>
 
-      {/* Sidebar móvil */}
       <div className={`${sidebarStyles.sidebar} ${menuOpen ? sidebarStyles.open : ''}`} onClick={() => setMenuOpen(false)}>
         <div className={`${sidebarStyles.verticalLabel} ${sidebarStyles.firstItemOffset}`}
           onClick={() => { onNavigateToHome(); setMenuOpen(false); }}
