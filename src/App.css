@@ -243,23 +243,32 @@
   min-height: 100vh;
 }
 
-/* Fixed page frame border - always visible */
+/* Fixed page frame border - optimized for performance */
 .page-frame {
   position: fixed;
-  inset: 0; /* Modern way to set top: 0, right: 0, bottom: 0, left: 0 */
-  width: 100vw;
-  height: 100vh;
-  height: 100dvh; /* Dynamic viewport height for mobile browsers */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   border: 6px solid #000000;
   pointer-events: none;
   z-index: 10001;
-  /* Prevent frame from moving on mobile scroll */
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  /* Ensure border is always within viewport */
-  box-sizing: border-box;
-  /* Force hardware acceleration for better performance */
-  will-change: transform;
+  /* Performance optimizations */
+  transform: translate3d(0, 0, 0); /* Force GPU acceleration */
+  backface-visibility: hidden;
+  perspective: 1000px;
+  /* Prevent layout shifts */
+  contain: layout style paint;
+  /* Optimize for animations */
+  will-change: auto; /* Don't force will-change always */
+}
+
+/* Mobile optimizations for border */
+@media (max-width: 900px) {
+  .page-frame {
+    /* Reduce border on mobile for better performance */
+    border-width: 4px;
+  }
 }
 
 /* Header - hidden by default to prevent mobile flash */
@@ -518,18 +527,32 @@ h1, h2, h3, h4, h5, h6 {
   overflow: hidden;
 }
 
-/* Parallax layers */
+/* Parallax layers - optimized for performance */
 .parallax-layer {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 110vh; /* Normal viewport height */
+  height: 110vh;
   background-position: bottom center;
   background-size: auto 1038px;
   background-repeat: repeat-x;
-  will-change: transform; /* Optimize for animations */
-  opacity: 0.8; /* Make layers slightly transparent to reduce harsh overlapping */
+  /* Performance optimizations */
+  transform: translate3d(0, 0, 0); /* Force GPU layer */
+  backface-visibility: hidden;
+  perspective: 1000px;
+  opacity: 0.8;
+  /* Containment for better performance */
+  contain: layout style paint;
+}
+
+/* Reduce parallax complexity on mobile */
+@media (max-width: 900px) {
+  .parallax-layer {
+    /* Simplify background on mobile */
+    background-size: auto 900px; /* Slightly smaller images but still visible */
+    opacity: 0.8; /* Keep original opacity */
+  }
 }
 
 .main-content {
@@ -556,15 +579,33 @@ h1, h2, h3, h4, h5, h6 {
   animation: syncedFadeInUp 1.5s ease-out forwards;
 }
 
-/* Synchronized fade in animation for all sections */
+/* Synchronized fade in animation - optimized for performance */
 @keyframes syncedFadeInUp {
   0% {
     opacity: 0;
-    transform: translateY(50px);
+    transform: translate3d(0, 50px, 0); /* Use translate3d for GPU acceleration */
   }
   100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Reduce motion on mobile for better performance */
+@media (max-width: 900px) and (prefers-reduced-motion: no-preference) {
+  @keyframes syncedFadeInUp {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 20px, 0); /* Smaller movement on mobile */
+    }
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+  
+  .main-content section {
+    animation-duration: 0.8s; /* Faster animations on mobile */
   }
 }
 

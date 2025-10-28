@@ -26,21 +26,34 @@ function HomeScreen({ onNavigateToContact }) {
   }, []);
 
   useEffect(() => {
+    let ticking = false;
+    
     const handleScroll = () => {
-      const scrolled = window.pageYOffset;
-      const parallaxElements = document.querySelectorAll('.parallax-layer');
-      
-      // Define specific speeds for each layer (slower = further away)
-      const speeds = [0.005, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06]; // artback, mountain, jungle2, jungle3, jungle4, manonmountain, jungle5
-      
-      parallaxElements.forEach((element, index) => {
-        const speed = speeds[index] || 0.02;
-        const yPos = -(scrolled * speed);
-        element.style.transform = `translateY(${yPos}px)`;
-      });
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrolled = window.pageYOffset;
+          const parallaxElements = document.querySelectorAll('.parallax-layer');
+          
+          // More parallax movement
+          const isMobileDevice = window.innerWidth <= 900;
+          const speeds = isMobileDevice 
+            ? [0.005, 0.01, 0.015, 0.02, 0.025, 0.03, 0.035] // More mobile movement
+            : [0.012, 0.025, 0.04, 0.055, 0.07, 0.085, 0.1]; // More desktop movement
+          
+          parallaxElements.forEach((element, index) => {
+            const speed = speeds[index] || 0.01;
+            const yPos = -(scrolled * speed);
+            element.style.transform = `translate3d(0, ${yPos}px, 0)`; // Use translate3d for hardware acceleration
+          });
+          
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    // Use passive listener for better performance
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
