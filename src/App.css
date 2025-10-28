@@ -248,11 +248,13 @@
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
+  /* Fallback for browsers that don't support dvh/dvw */
+  width: 100vw;
+  height: 100vh;
   border: 6px solid #000000;
   pointer-events: none;
   z-index: 10001;
+  box-sizing: border-box;
   /* Performance optimizations */
   transform: translate3d(0, 0, 0); /* Force GPU acceleration */
   backface-visibility: hidden;
@@ -261,6 +263,14 @@
   contain: layout style paint;
   /* Optimize for animations */
   will-change: auto; /* Don't force will-change always */
+}
+
+/* Use dynamic viewport units when supported for responsive border */
+@supports (height: 100dvh) {
+  .page-frame {
+    width: 100dvw; /* Dynamic viewport width */
+    height: 100dvh; /* Dynamic viewport height */
+  }
 }
 
 /* Mobile optimizations for border */
