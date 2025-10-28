@@ -11,8 +11,9 @@ import SocialButtons from '../SocialButtons';
 
 function HomeScreen({ onNavigateToContact }) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const [isSmallMobile, setIsSmallMobile] = useState(false);
+  // Initialize mobile states correctly to prevent desktop header flash
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' ? window.innerWidth <= 900 : true);
+  const [isSmallMobile, setIsSmallMobile] = useState(() => typeof window !== 'undefined' ? window.innerWidth <= 600 : false);
 
   useEffect(() => {
     const update = () => {
