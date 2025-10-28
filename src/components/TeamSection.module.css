@@ -6,7 +6,6 @@
   opacity: 1;
   transform: translateY(0);
   margin-bottom: 40px;
-  background: #00211f;
   min-height: 100vh;
 }
 
@@ -84,7 +83,6 @@
   .teamSection {
     padding: 66px 10px 60px 10px;
     margin-bottom: 40px;
-    background: linear-gradient(to bottom, transparent 0%, rgba(0, 33, 31, 0.3) 10%, #00211f 30%);
     min-height: auto;
     display: flex;
     flex-direction: column;
@@ -113,7 +111,6 @@
   .teamSection {
     padding: 60px 10px 100px 10px;
     margin-bottom: 30px;
-    background: linear-gradient(to bottom, transparent 0%, rgba(0, 33, 31, 0.4) 5%, #00211f 15%);
     min-height: auto;
   }
   .teamTitle { font-size: 28px; margin-bottom: 30px; padding-top: 0; }

@@ -243,13 +243,10 @@
   min-height: 100vh;
 }
 
-/* Fixed page frame border */
+/* Fixed page frame border - always visible */
 .page-frame {
   position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0; /* Modern way to set top: 0, right: 0, bottom: 0, left: 0 */
   width: 100vw;
   height: 100vh;
   height: 100dvh; /* Dynamic viewport height for mobile browsers */
@@ -259,6 +256,10 @@
   /* Prevent frame from moving on mobile scroll */
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
+  /* Ensure border is always within viewport */
+  box-sizing: border-box;
+  /* Force hardware acceleration for better performance */
+  will-change: transform;
 }
 
 /* Header */
@@ -499,4 +500,92 @@ h1, h2, h3, h4, h5, h6 {
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: 1400; /* below sidebar (1500), above content */
+}
+
+/* New scrollable layout styles */
+.parallax-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Parallax layers */
+.parallax-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 110vh; /* Normal viewport height */
+  background-position: bottom center;
+  background-size: auto 1038px;
+  background-repeat: repeat-x;
+  will-change: transform; /* Optimize for animations */
+  opacity: 0.8; /* Make layers slightly transparent to reduce harsh overlapping */
+}
+
+.main-content {
+  position: relative;
+  z-index: 10;
+  background: transparent;
+}
+
+/* Layout adjustments for scrollable sections */
+.main-content section {
+  width: 100%;
+  box-sizing: border-box;
+  position: relative !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 60px 20px;
+  top: auto !important;
+  left: auto !important;
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
+}
+
+/* Center company info content - force vertical layout with higher specificity */
+.main-content section .companyInfo,
+.main-content section div[class*="CompanySection_companyInfo"],
+.main-content section div[class*="companyInfo"] {
+  margin: 0 auto !important;
+  text-align: center !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  max-width: 500px !important;
+  gap: 0 !important;
+}
+
+.main-content section .companyLogo,
+.main-content section div[class*="CompanySection_companyLogo"],
+.main-content section div[class*="companyLogo"] {
+  display: block !important;
+  order: -1 !important; /* Ensure logo appears first */
+}
+
+.main-content section .companyLogoDesktop,
+.main-content section div[class*="CompanySection_companyLogoDesktop"],
+.main-content section div[class*="companyLogoDesktop"] {
+  display: none !important; /* Hide desktop logo in new layout */
+}
+
+/* Mobile adjustments for new layout */
+@media (max-width: 900px) {
+  .main-content section {
+    padding: 40px 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .main-content section {
+    padding: 30px 15px;
+  }
 }
