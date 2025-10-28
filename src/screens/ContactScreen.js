@@ -53,6 +53,9 @@ const handleContactSubmit = (e) => {
 
   return (
     <div className="contact-screen">
+      {/* Hamburger button for all screen sizes */}
+      <button className="hamburger" aria-label="Abrir menú" onClick={() => setMenuOpen((v) => !v)}>☰</button>
+      
       {/* Desktop header */}
       {!isMobile && (
         <header className="top-header">
@@ -63,11 +66,6 @@ const handleContactSubmit = (e) => {
             </a>
           </nav>
         </header>
-      )}
-      
-      {/* Mobile hamburger */}
-      {isMobile && (
-        <button className="hamburger" aria-label="Abrir menú" onClick={() => setMenuOpen((v) => !v)}>☰</button>
       )}
 
       {menuOpen && (

@@ -139,7 +139,7 @@
 }
 
 #logoland {
-  background-image: url(./images/logo.png);
+  background-image: url(./images/logo.svg);
 }
 
 #jungle1 {
@@ -281,51 +281,6 @@
   }
 }
 
-/* Header - hidden by default to prevent mobile flash */
-.top-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 56px;
-  display: none; /* Hidden by default */
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 16px 0 16px;
-  background: rgba(3, 25, 39, 0.6);
-  backdrop-filter: blur(6px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-  z-index: 10000;
-  box-sizing: border-box;
-  width: 100%;
-  max-width: 100vw;
-}
-
-/* Show header only on desktop */
-@media (min-width: 901px) {
-  .top-header {
-    display: flex;
-  }
-}
-.header-logo {
-  font-weight: 800;
-  color: #e6eeff;
-  letter-spacing: 1px;
-  font-size: clamp(16px, 3vw, 20px);
-}
-.header-nav { 
-  display: flex; 
-  gap: 16px; 
-}
-.header-link {
-  color: #e6eeff;
-  text-decoration: none;
-  font-weight: 600;
-  opacity: 0.9;
-  font-size: clamp(14px, 2.5vw, 16px);
-  white-space: nowrap;
-}
-.header-link:hover { opacity: 1; text-decoration: underline; }
 
 /* Hamburger - visible by default on mobile */
 .hamburger {
@@ -344,12 +299,6 @@
   z-index: 10000;
 }
 
-/* Hide hamburger on desktop */
-@media (min-width: 901px) {
-  .hamburger {
-    display: none;
-  }
-}
 
 /* Back button in contact page */
 .back-button {
@@ -589,11 +538,64 @@ h1, h2, h3, h4, h5, h6 {
   animation: syncedFadeInUp 1.5s ease-out forwards;
 }
 
-/* Synchronized fade in animation - optimized for performance */
+/* Desktop layout improvements */
+@media (min-width: 901px) {
+  .main-content section {
+    padding: 80px 40px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* First section - welcome */
+  .main-content section:nth-child(1) {
+    padding: 120px 40px 80px 40px;
+  }
+  
+  /* Second section - info */
+  .main-content section:nth-child(2) {
+    padding: 80px 40px;
+  }
+  
+  /* Third section - team */
+  .main-content section:nth-child(3) {
+    padding: 80px 40px 120px 40px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .main-content section {
+    padding: 100px 60px;
+  }
+  
+  .main-content section:nth-child(1) {
+    padding: 140px 60px 100px 60px;
+  }
+  
+  .main-content section:nth-child(3) {
+    padding: 100px 60px 140px 60px;
+  }
+}
+
+@media (min-width: 1800px) {
+  .main-content section {
+    padding: 120px 80px;
+  }
+  
+  .main-content section:nth-child(1) {
+    padding: 160px 80px 120px 80px;
+  }
+  
+  .main-content section:nth-child(3) {
+    padding: 120px 80px 160px 80px;
+  }
+}
+
 @keyframes syncedFadeInUp {
   0% {
     opacity: 0;
-    transform: translate3d(0, 50px, 0); /* Use translate3d for GPU acceleration */
+    transform: translate3d(0, 50px, 0);
   }
   100% {
     opacity: 1;
@@ -601,12 +603,11 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* Reduce motion on mobile for better performance */
 @media (max-width: 900px) and (prefers-reduced-motion: no-preference) {
   @keyframes syncedFadeInUp {
     0% {
       opacity: 0;
-      transform: translate3d(0, 20px, 0); /* Smaller movement on mobile */
+      transform: translate3d(0, 20px, 0);
     }
     100% {
       opacity: 1;
@@ -615,11 +616,10 @@ h1, h2, h3, h4, h5, h6 {
   }
   
   .main-content section {
-    animation-duration: 0.8s; /* Faster animations on mobile */
+    animation-duration: 0.8s; 
   }
 }
 
-/* Staggered animation delays for each section */
 .main-content section:nth-child(1) {
   animation-delay: 0.2s;
 }
@@ -632,7 +632,6 @@ h1, h2, h3, h4, h5, h6 {
   animation-delay: 0.6s;
 }
 
-/* Center company info content - force vertical layout with higher specificity */
 .main-content section .companyInfo,
 .main-content section div[class*="CompanySection_companyInfo"],
 .main-content section div[class*="companyInfo"] {
@@ -641,15 +640,12 @@ h1, h2, h3, h4, h5, h6 {
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
-  max-width: 500px !important;
   gap: 0 !important;
-  /* Disable individual animations in favor of synchronized ones */
   animation: none !important;
   opacity: 1 !important;
   transform: none !important;
 }
 
-/* Disable individual element animations */
 .main-content section *[class*="companyLogo"],
 .main-content section *[class*="companyTitle"],
 .main-content section *[class*="brandLarge"],

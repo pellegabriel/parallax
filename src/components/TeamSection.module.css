@@ -6,6 +6,7 @@
   opacity: 1;
   transform: translateY(0);
   margin-bottom: 40px;
+      flex-direction: column;
   min-height: 100vh;
 }
 
@@ -29,6 +30,26 @@
   max-width: 900px;
   margin: 0 auto;
   flex-wrap: wrap;
+}
+
+/* Desktop improvements for team section */
+@media (min-width: 901px) {
+  .teamSection {
+    padding: 40px 40px 120px 40px;
+    max-width: 1200px;
+    margin: 0 auto 40px auto;
+  }
+  
+  .teamTitle {
+    font-size: 48px;
+    margin-bottom: 80px;
+  }
+  
+  .teamGrid {
+    gap: 80px;
+    max-width: 1000px;
+    flex-wrap: nowrap;
+  }
 }
 
 .teamMember {
@@ -67,7 +88,7 @@
   font-size: 24px;
   font-weight: 600;
   font-family: inherit;
-  margin-bottom: 8px;
+  margin-bottom: 0px;
   letter-spacing: 0.5px;
 }
 
@@ -77,6 +98,106 @@
   font-weight: 400;
   font-family: inherit;
   font-style: italic;
+}
+
+/* Desktop improvements for team members */
+@media (min-width: 901px) {
+  .teamMember {
+    flex: 1;
+    max-width: 280px;
+  }
+  
+  .teamAvatar {
+    width: 180px;
+    height: 180px;
+    margin-bottom: 30px;
+    border-width: 4px;
+  }
+  
+  .teamName {
+    font-size: 26px;
+    margin-bottom: 0px;
+  }
+  
+  .teamPosition {
+    font-size: 18px;
+    line-height: 1.4;
+  }
+}
+
+/* Large desktop improvements */
+@media (min-width: 1400px) {
+  .teamSection {
+    padding: 60px 60px 140px 60px;
+    max-width: 1400px;
+  }
+  
+  .teamTitle {
+    font-size: 52px;
+    margin-bottom: 100px;
+  }
+  
+  .teamGrid {
+    gap: 100px;
+    max-width: 1200px;
+  }
+  
+  .teamMember {
+    max-width: 320px;
+  }
+  
+  .teamAvatar {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 35px;
+  }
+  
+  .teamName {
+    font-size: 28px;
+    margin-bottom: 0px;
+  }
+  
+  .teamPosition {
+    font-size: 19px;
+  }
+}
+
+/* Ultra-wide desktop improvements */
+@media (min-width: 1800px) {
+  .teamSection {
+    padding: 80px 80px 160px 80px;
+    max-width: 1600px;
+  }
+  
+  .teamTitle {
+    font-size: 56px;
+    margin-bottom: 120px;
+  }
+  
+  .teamGrid {
+    gap: 120px;
+    max-width: 1400px;
+  }
+  
+  .teamMember {
+    max-width: 360px;
+  }
+  
+  .teamAvatar {
+    width: 220px;
+    height: 220px;
+    margin-bottom: 40px;
+    border-width: 5px;
+  }
+  
+  .teamName {
+    font-size: 30px;
+    margin-bottom: 0px;
+  }
+  
+  .teamPosition {
+    font-size: 20px;
+  }
 }
 
 @media (max-width: 900px) {
@@ -103,7 +224,7 @@
     height: 120px;
     margin-bottom: 20px;
   }
-  .teamName { font-size: 20px; margin-bottom: 6px; }
+  .teamName { font-size: 20px; margin-bottom: 0px; }
   .teamPosition { font-size: 14px; margin-bottom: 20px; }
 }
 

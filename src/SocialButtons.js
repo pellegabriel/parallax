@@ -5,14 +5,7 @@ export function SocialButtons({ inline = false }) {
   const [hoveredButton, setHoveredButton] = useState(null)
 
   const buttons = [
-    {
-      id: "linkedin",
-      icon: Linkedin,
-      href: "https://www.linkedin.com/in/gabrielpelle/",
-      label: "LinkedIn",
-      color: "from-blue-600 to-blue-700",
-      hoverColor: "from-blue-700 to-blue-800",
-    },
+
     {
       id: "whatsapp",
       icon: MessageCircle,
@@ -28,6 +21,14 @@ export function SocialButtons({ inline = false }) {
       label: "Instagram",
       color: "from-pink-500 via-rose-500 to-orange-500",
       hoverColor: "from-pink-600 via-rose-600 to-orange-600",
+    },
+        {
+      id: "linkedin",
+      icon: Linkedin,
+      href: "https://www.linkedin.com/in/gabrielpelle/",
+      label: "LinkedIn",
+      color: "from-blue-600 to-blue-700",
+      hoverColor: "from-blue-700 to-blue-800",
     },
   ]
 
