@@ -251,7 +251,6 @@
   /* Fallback for browsers that don't support dvh/dvw */
   width: 100vw;
   height: 100vh;
-  border: 6px solid #000000;
   pointer-events: none;
   z-index: 10001;
   box-sizing: border-box;
@@ -273,11 +272,10 @@
   }
 }
 
-/* Mobile optimizations for border */
+/* Mobile optimizations */
 @media (max-width: 900px) {
   .page-frame {
-    /* Reduce border on mobile for better performance */
-    border-width: 4px;
+    /* No additional styles needed for mobile */
   }
 }
 
