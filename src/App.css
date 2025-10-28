@@ -272,12 +272,6 @@
   }
 }
 
-/* Mobile optimizations */
-@media (max-width: 900px) {
-  .page-frame {
-    /* No additional styles needed for mobile */
-  }
-}
 
 
 /* Hamburger - visible by default on mobile */
