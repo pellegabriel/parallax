@@ -25,7 +25,7 @@ export function SocialButtons({ inline = false }) {
         {
       id: "linkedin",
       icon: Linkedin,
-      href: "https://www.linkedin.com/in/gabrielpelle/",
+      href: "https://www.linkedin.com/company/thecaves-a/?viewAsMember=true",
       label: "LinkedIn",
       color: "from-blue-600 to-blue-700",
       hoverColor: "from-blue-700 to-blue-800",
