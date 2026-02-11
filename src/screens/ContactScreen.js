@@ -59,17 +59,6 @@ const handleContactSubmit = (e) => {
         ]}
         footer="© 2026 — Todos los derechos"
       />
-      
-      {!isMobile && (
-        <header className="top-header">
-          <div className="header-logo">The Cave</div>
-          <nav className="header-nav">
-            <a href="#home" className="header-link" onClick={(e) => { e.preventDefault(); onNavigateToHome(); }}>
-              Inicio
-            </a>
-          </nav>
-        </header>
-      )}
 
       <div className="contact-background">
         <div className="animation_layer parallax static-jungle" id="jungle2"></div>

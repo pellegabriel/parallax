@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import companyStyles from '../components/CompanySection.module.css';
 import teamStyles from '../components/TeamSection.module.css';
 import LiquidSidebar from '../components/LiquidSidebar';
 import LiquidLogo from '../components/LiquidLogo';
+import LiquidFormBackground from '../components/LiquidFormBackground';
 import logoImage from '../images/logo.svg';
 import missionImage from '../images/manos.jpg';
 import gabiImage from '../images/gabi.jpg';
@@ -10,7 +11,65 @@ import tomyImage from '../images/tomy.jpg';
 import lucasImage from '../images/lucas.jpg';
 import SocialButtons from '../SocialButtons';
 
-function HomeScreen({ onNavigateToContact }) {
+function HomeScreen() {
+  const [isContactOpen, setIsContactOpen] = useState(false);
+  const [contactLoading, setContactLoading] = useState(false);
+
+  const openContact = useCallback(() => {
+    setIsContactOpen(true);
+    setContactLoading(true);
+  }, []);
+
+  const closeContact = useCallback(() => {
+    setIsContactOpen(false);
+  }, []);
+
+  useEffect(() => {
+    if (!isContactOpen) return;
+    const t = setTimeout(() => setContactLoading(false), 800);
+    return () => clearTimeout(t);
+  }, [isContactOpen]);
+
+  useEffect(() => {
+    if (!isContactOpen) return;
+
+    const prevOverflow = document.body.style.overflow;
+    const prevHeight = document.body.style.height;
+    const prevHtmlOverscroll = document.documentElement.style.overscrollBehavior;
+    document.body.style.overflow = 'hidden';
+    document.body.style.height = '100vh';
+    document.documentElement.style.overscrollBehavior = 'none';
+
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      document.body.style.height = prevHeight;
+      document.documentElement.style.overscrollBehavior = prevHtmlOverscroll;
+    };
+  }, [isContactOpen]);
+
+  useEffect(() => {
+    if (!isContactOpen) return;
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') closeContact();
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [closeContact, isContactOpen]);
+
+  const handleContactSubmit = useCallback((e) => {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const name = data.get('name') || '';
+    const email = data.get('email') || '';
+    const message = data.get('message') || '';
+
+    const subject = `Nuevo mensaje de ${name} - The Cave`;
+    const body = `Nombre: ${name}\nEmail: ${email}\n\nMensaje:\n${message}`;
+
+    const mailto = `mailto:thecave.ar.contac@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailto;
+  }, []);
+
   useEffect(() => {
     let ticking = false;
     
@@ -22,8 +81,8 @@ function HomeScreen({ onNavigateToContact }) {
           
           const isMobileDevice = window.innerWidth <= 900;
           const speeds = isMobileDevice 
-            ? [0.005, 0.01, 0.015, 0.02, 0.025, 0.03, 0.035]
-            : [0.003, 0.006, 0.009, 0.012, 0.015, 0.018, 0.021];
+            ? [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07]
+            : [0.006, 0.012, 0.018, 0.024, 0.03, 0.036, 0.042];
           
           parallaxElements.forEach((element, index) => {
             const speed = speeds[index] || 0.01;
@@ -46,7 +105,7 @@ function HomeScreen({ onNavigateToContact }) {
       <LiquidSidebar
         title="Navegación"
         items={[
-          { number: '01', label: 'Contacto', onClick: onNavigateToContact },
+          { number: '01', label: 'Contacto', onClick: openContact },
         ]}
         footer="© 2026 — Todos los derechos"
       />
@@ -67,7 +126,7 @@ function HomeScreen({ onNavigateToContact }) {
             <LiquidLogo src={logoImage} alt="The Cave Logo" size={130} border={16} waveAmp={5} />
           </div>
           <div className={companyStyles.companyLogoDesktop} style={{ display: 'none' }}>
-            <LiquidLogo src={logoImage} alt="The Cave Logo Desktop" size={180} border={18} waveAmp={6} />
+            <LiquidLogo src={logoImage} alt="The Cave Logo Desktop" size={280} border={22} waveAmp={6} />
           </div>
           <div className={companyStyles.companyText}>
             <h2 className={companyStyles.companyTitle}>
@@ -128,6 +187,49 @@ function HomeScreen({ onNavigateToContact }) {
       </div>
 
       <SocialButtons />
+
+      {isContactOpen && (
+        <div className="contact-modal-root" role="presentation">
+          <div className="contact-modal-overlay" onClick={closeContact} />
+          <div
+            className="contact-modal contact-modal-liquid"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="contact-modal-title"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <LiquidFormBackground width={900} height={650} waveAmp={22} className="contact-modal-blob" />
+
+            <button type="button" className="contact-modal-close" aria-label="Cerrar" onClick={closeContact}>
+              ×
+            </button>
+
+            <div className="contact-modal-header">
+              <div className="contact-modal-titleWrap">
+                <h3 id="contact-modal-title">Contacto</h3>
+                <p>¿Algun proyecto o consulta? Escribinos.</p>
+              </div>
+            </div>
+
+            {contactLoading ? (
+              <div className="contact-skeleton">
+                <div className="skeleton skeleton-line" style={{ width: '50%', height: 18 }}></div>
+                <div className="skeleton skeleton-line" style={{ width: '100%', height: 44, marginTop: 12 }}></div>
+                <div className="skeleton skeleton-line" style={{ width: '100%', height: 44, marginTop: 10 }}></div>
+                <div className="skeleton skeleton-block" style={{ width: '100%', height: 120, marginTop: 10 }}></div>
+                <div className="skeleton skeleton-line" style={{ width: 140, height: 44, marginTop: 14 }}></div>
+              </div>
+            ) : (
+              <form className="contact-form" onSubmit={handleContactSubmit}>
+                <input type="text" name="name" placeholder="Tu nombre" required />
+                <input type="email" name="email" placeholder="Tu email" required />
+                <textarea name="message" placeholder="Tu mensaje" rows="5" required />
+                <button type="submit">Enviar email</button>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
     </>
   );
 }

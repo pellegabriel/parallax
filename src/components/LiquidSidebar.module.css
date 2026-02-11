@@ -123,7 +123,7 @@
  
  .navItem {
    display: block;
-   width: 100%;
+   width: 65%;
    text-align: left;
    font-size: 28px;
    font-weight: 800;
@@ -178,12 +178,10 @@
    left: 0;
    width: 0;
    height: 2px;
-   background: linear-gradient(90deg, var(--lava1), var(--lava2));
-   transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1);
  }
  
  .navItem:hover {
-   color: #00477d;
+   color: var(--lava2);
  }
  
  .navItem:hover::before {

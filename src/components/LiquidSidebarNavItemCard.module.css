@@ -1,0 +1,19 @@
+.navItemCard {
+  overflow: hidden;
+  border-radius: 50% 35% 60% 42% / 98% 146% 102% 100%;
+  box-shadow: 0 18px 48px rgba(0,0,0,0.45);
+  background: #08151a;
+  box-sizing: border-box;
+  padding: 14px 16px;
+  margin: 10px 0;
+  transition: box-shadow 220ms ease;
+}
+
+.navItemCard.navItemCard {
+  background: #08151a;
+  padding: 14px 16px;
+}
+
+.navItemCard.navItemCard:hover {
+  box-shadow: 0 26px 64px rgba(3,25,39,0.45), 0 8px 22px rgba(59,106,247,0.12);
+}

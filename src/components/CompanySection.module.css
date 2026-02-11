@@ -62,10 +62,15 @@
     margin: 0 auto;
   }
   
+  .companyInfo.sectionTop .companyLogoDesktop {
+    margin: 0 auto 10px auto;
+  }
+  
   .companyInfo.sectionMiddle {
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
+    top: 0;
   }
   
   .companyLogo { display: none !important; }
@@ -109,7 +114,7 @@
   border-radius: 50%;
   overflow: visible;
   border: none;
-  margin: 0 10px 40px 150px;
+  margin: 0 auto 40px auto;
   transition: all 0.3s ease;
   box-shadow: none;
   opacity: 0;
@@ -123,7 +128,7 @@
   color: #d3e4ff;
   font-size: 54px;
   font-weight: 300;
-  margin-bottom: 0px;
+  margin: 0;
   letter-spacing: -1px;
   line-height: 0.9;
   text-shadow: 0 2px 20px rgba(59, 106, 247, 0.3);
@@ -299,7 +304,6 @@
   
   .companyLogoDesktop {
     width: 350px;
-    height: 350px;
   }
   
   .companyRectImage {
