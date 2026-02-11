@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import companyStyles from '../components/CompanySection.module.css';
 import teamStyles from '../components/TeamSection.module.css';
 import LiquidSidebar from '../components/LiquidSidebar';
+import LiquidLogo from '../components/LiquidLogo';
 import logoImage from '../images/logo.svg';
 import missionImage from '../images/manos.jpg';
 import gabiImage from '../images/gabi.jpg';
@@ -63,10 +64,10 @@ function HomeScreen({ onNavigateToContact }) {
       <div className="main-content" style={{ position: 'relative', zIndex: 10 }}>
         <section className={`${companyStyles.companyInfo} ${companyStyles.sectionTop}`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', margin: '0 auto' }}>
           <div className={companyStyles.companyLogo} style={{ display: 'block', order: -1 }}>
-            <img src={logoImage} alt="The Cave Logo" />
+            <LiquidLogo src={logoImage} alt="The Cave Logo" size={130} border={16} waveAmp={5} />
           </div>
           <div className={companyStyles.companyLogoDesktop} style={{ display: 'none' }}>
-            <img src={logoImage} alt="The Cave Logo Desktop" />
+            <LiquidLogo src={logoImage} alt="The Cave Logo Desktop" size={180} border={18} waveAmp={6} />
           </div>
           <div className={companyStyles.companyText}>
             <h2 className={companyStyles.companyTitle}>

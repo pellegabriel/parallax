@@ -87,37 +87,37 @@
 /* Logo mobile */
 .companyLogo {
   display: none;
-  width: 110px;
-  height: 110px;
+  width: auto;
+  height: auto;
   margin: 0 auto 0px auto;
   border-radius: 50%;
-  overflow: hidden;
-  border: 8px solid #031927;
-  box-shadow: 0 8px 32px rgba(59, 106, 247, 0.2);
+  overflow: visible;
+  border: none;
+  box-shadow: none;
   opacity: 0;
   transform: translateY(30px);
   animation: fadeInUpText 1.2s ease-out forwards;
   animation-delay: calc(var(--delay, 0s) + 0.1s);
 }
-.companyLogo img { width: 100%; height: 100%; object-fit: cover; }
+.companyLogo > img { width: 100%; height: 100%; object-fit: cover; }
 
 /* Logo desktop */
 .companyLogoDesktop {
   display: none;
-  width: 350px;
-  height: 350px;
+  width: auto;
+  height: auto;
   border-radius: 50%;
-  overflow: hidden;
-  border: 10px solid #031927;
+  overflow: visible;
+  border: none;
   margin: 0 10px 40px 150px;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 32px rgba(59, 106, 247, 0.2);
+  box-shadow: none;
   opacity: 0;
   transform: translateY(30px);
   animation: fadeInUpText 1.2s ease-out forwards;
   animation-delay: calc(var(--delay, 0s) + 0.1s);
 }
-.companyLogoDesktop img { width: 100%; height: 100%; object-fit: cover; }
+.companyLogoDesktop > img { width: 100%; height: 100%; object-fit: cover; }
 
 .companyTitle {
   color: #d3e4ff;

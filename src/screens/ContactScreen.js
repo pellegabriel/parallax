@@ -78,9 +78,7 @@ const handleContactSubmit = (e) => {
         <div className="animation_layer parallax static-jungle" id="manonmountain"></div>
         <div className="animation_layer parallax static-jungle" id="jungle5"></div>
       </div>
-
       <section id="contact" className="contact-section">
-        <button className="back-button" onClick={onNavigateToHome}>←</button>
         <h3>Contacto</h3>
         <p>¿Algun proyecto o consulta? Escribinos.</p>
         {contactLoading ? (

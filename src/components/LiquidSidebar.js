@@ -307,7 +307,6 @@ export default function LiquidSidebar({
       </svg>
 
       <nav className={`${styles.sidebarContent} ${isOpen ? styles.sidebarContentVisible : ''}`}>
-        <p className={styles.sidebarTitle}>{title}</p>
         {items.map((item, idx) => (
           <button
             key={`${item.number ?? idx}-${item.label ?? idx}`}
@@ -315,7 +314,6 @@ export default function LiquidSidebar({
             className={styles.navItem}
             onClick={() => onItemClick(item)}
           >
-            {item.number != null && <span className={styles.navNumber}>{item.number}</span>}
             {item.label}
           </button>
         ))}
