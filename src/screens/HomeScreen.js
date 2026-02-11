@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import companyStyles from '../components/CompanySection.module.css';
 import teamStyles from '../components/TeamSection.module.css';
-import sidebarStyles from '../components/Sidebar.module.css';
+import LiquidSidebar from '../components/LiquidSidebar';
 import logoImage from '../images/logo.svg';
 import missionImage from '../images/manos.jpg';
 import gabiImage from '../images/gabi.jpg';
@@ -10,8 +10,6 @@ import lucasImage from '../images/lucas.jpg';
 import SocialButtons from '../SocialButtons';
 
 function HomeScreen({ onNavigateToContact }) {
-  const [menuOpen, setMenuOpen] = useState(false);
-
   useEffect(() => {
     let ticking = false;
     
@@ -44,7 +42,13 @@ function HomeScreen({ onNavigateToContact }) {
 
   return (
     <>
-      <button className="hamburger" aria-label="Abrir menú" onClick={() => setMenuOpen((v) => !v)}>☰</button>
+      <LiquidSidebar
+        title="Navegación"
+        items={[
+          { number: '01', label: 'Contacto', onClick: onNavigateToContact },
+        ]}
+        footer="© 2026 — Todos los derechos"
+      />
 
       <div className="parallax-background">
         <div className="parallax-layer animation_layer parallax" id="artback"></div>
@@ -120,29 +124,6 @@ function HomeScreen({ onNavigateToContact }) {
             </div>
           </div>
         </section>
-      </div>
-
-      {menuOpen && (
-        <div className="overlay-backdrop" onClick={() => setMenuOpen(false)}></div>
-      )}
-
-      <div className={`${sidebarStyles.sidebar} ${menuOpen ? sidebarStyles.open : ''}`} onClick={() => setMenuOpen(false)}>
-        <div className={`${sidebarStyles.verticalLabel} ${sidebarStyles.firstItemOffset}`}
-          onClick={() => { onNavigateToContact(); setMenuOpen(false); }}
-          aria-label="Ir a contacto"
-          title="Contacto">
-          <span className={sidebarStyles.letter}>{'>>'}</span> 
-          <span className={sidebarStyles.letter}>{''}</span> 
-          <span className={sidebarStyles.letter}>M</span>
-          <span className={sidebarStyles.letter}>E</span>
-          <span className={sidebarStyles.letter}>N</span>
-          <span className={sidebarStyles.letter}>S</span>
-          <span className={sidebarStyles.letter}>A</span>
-          <span className={sidebarStyles.letter}>J</span>
-          <span className={sidebarStyles.letter}>E</span>
-          <span className={sidebarStyles.letter}>{''}</span> 
-          <span className={sidebarStyles.letter}>{'>>'}</span> 
-        </div>
       </div>
 
       <SocialButtons />

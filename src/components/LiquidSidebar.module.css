@@ -1,0 +1,235 @@
+ .root {
+   --liquid1: #031927;
+   --liquid2: #031927;
+   --liquid3: #031927;
+   --liquid4: #031927;
+
+   --lava1: #3b6af7;
+   --lava2: #aec0f8;
+   --lava3: #1b71ff;
+   --lava4: #d3e4ff;
+   --dark: #0d0d0d;
+   --light: #fdf0e8;
+ }
+ 
+ .hamburger {
+   position: fixed;
+   top: 32px;
+   left: 32px;
+   z-index: 12000;
+   width: 52px;
+   height: 52px;
+   cursor: pointer;
+   background: none;
+   border: none;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   gap: 6px;
+   padding: 8px;
+ }
+ 
+ .hamburger span {
+   display: block;
+   width: 28px;
+   height: 2px;
+   background: var(--lava2);
+   border-radius: 2px;
+   transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+   transform-origin: center;
+ }
+ 
+ .hamburgerOpen span:nth-child(1) {
+   transform: translateY(8px) rotate(45deg);
+   background: var(--light);
+ }
+ 
+ .hamburgerOpen span:nth-child(2) {
+   opacity: 0;
+   transform: scaleX(0);
+ }
+ 
+ .hamburgerOpen span:nth-child(3) {
+   transform: translateY(-8px) rotate(-45deg);
+   background: var(--light);
+ }
+ 
+ .hamburger::after {
+   content: '';
+   position: absolute;
+   inset: -4px;
+   border-radius: 50%;
+   background: radial-gradient(circle, rgba(255, 107, 53, 0.2) 0%, transparent 70%);
+   opacity: 0;
+   transition: opacity 0.3s;
+ }
+ 
+ .hamburger:hover::after {
+   opacity: 1;
+ }
+ 
+ .blobSvg {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 340px;
+   height: 100vh;
+   z-index: 11000;
+   pointer-events: none;
+   overflow: visible;
+ }
+ 
+ .lavaBlob {
+   transition: none;
+ }
+ 
+ .gooFilter {
+   position: absolute;
+   width: 0;
+   height: 0;
+ }
+ 
+ .sidebarContent {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 300px;
+   height: 100vh;
+   z-index: 11500;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   padding: 80px 40px 60px;
+   pointer-events: none;
+   opacity: 0;
+   transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+ }
+ 
+ .sidebarContentVisible {
+   opacity: 1;
+   pointer-events: all;
+   transition: opacity 0.45s cubic-bezier(0, 0, 0.2, 1) 0.18s;
+ }
+ 
+ .sidebarTitle {
+   font-size: 11px;
+   font-family: 'Space Mono', monospace;
+   color: rgba(253, 240, 232, 0.45);
+   text-transform: uppercase;
+   letter-spacing: 3px;
+   margin-bottom: 48px;
+ }
+ 
+ .navItem {
+   display: block;
+   width: 100%;
+   text-align: left;
+   font-size: 28px;
+   font-weight: 800;
+   font-family: 'Syne', sans-serif;
+   color: var(--light);
+   background: transparent;
+   border: none;
+   padding: 10px 0;
+   line-height: 1;
+   cursor: pointer;
+   position: relative;
+   overflow: hidden;
+   transform: translateX(-16px);
+   opacity: 0;
+   transition:
+     transform 0.28s cubic-bezier(0.4, 0, 1, 1),
+     opacity 0.22s cubic-bezier(0.4, 0, 1, 1);
+ }
+ 
+ .sidebarContentVisible .navItem {
+   transform: translateX(0);
+   opacity: 1;
+   transition:
+     transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+     opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+ }
+ 
+ .sidebarContentVisible .navItem:nth-of-type(1) {
+   transition-delay: 0.2s;
+ }
+ 
+ .sidebarContentVisible .navItem:nth-of-type(2) {
+   transition-delay: 0.27s;
+ }
+ 
+ .sidebarContentVisible .navItem:nth-of-type(3) {
+   transition-delay: 0.34s;
+ }
+ 
+ .sidebarContentVisible .navItem:nth-of-type(4) {
+   transition-delay: 0.41s;
+ }
+ 
+ .sidebarContentVisible .navItem:nth-of-type(5) {
+   transition-delay: 0.48s;
+ }
+ 
+ .navItem::before {
+   content: '';
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   width: 0;
+   height: 2px;
+   background: linear-gradient(90deg, var(--lava1), var(--lava2));
+   transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+ }
+ 
+ .navItem:hover {
+   color: var(--lava2);
+ }
+ 
+ .navItem:hover::before {
+   width: 100%;
+ }
+ 
+ .navNumber {
+   font-family: 'Space Mono', monospace;
+   font-size: 11px;
+   color: rgba(255, 107, 53, 0.6);
+   margin-right: 10px;
+ }
+ 
+ .sidebarFooter {
+   margin-top: auto;
+   padding-top: 40px;
+   font-family: 'Space Mono', monospace;
+   font-size: 10px;
+   color: rgba(253, 240, 232, 0.25);
+   letter-spacing: 1px;
+   transform: translateY(8px);
+   opacity: 0;
+   transition: transform 0.25s ease, opacity 0.2s ease;
+ }
+ 
+ .sidebarContentVisible .sidebarFooter {
+   transform: translateY(0);
+   opacity: 1;
+   transition:
+     transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.55s,
+     opacity 0.5s ease 0.55s;
+ }
+ 
+ .overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10500;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s;
+  background: rgba(10, 10, 10, 0.35);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.overlayActive {
+  opacity: 1;
+  pointer-events: all;
+}

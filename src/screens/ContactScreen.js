@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import sidebarStyles from '../components/Sidebar.module.css';
+import LiquidSidebar from '../components/LiquidSidebar';
 
 function ContactScreen({ onNavigateToHome }) {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [contactLoading, setContactLoading] = useState(true);
 
@@ -53,7 +52,13 @@ const handleContactSubmit = (e) => {
 
   return (
     <div className="contact-screen">
-      <button className="hamburger" aria-label="Abrir menú" onClick={() => setMenuOpen((v) => !v)}>☰</button>
+      <LiquidSidebar
+        title="Navegación"
+        items={[
+          { number: '01', label: 'Inicio', onClick: onNavigateToHome },
+        ]}
+        footer="© 2026 — Todos los derechos"
+      />
       
       {!isMobile && (
         <header className="top-header">
@@ -64,10 +69,6 @@ const handleContactSubmit = (e) => {
             </a>
           </nav>
         </header>
-      )}
-
-      {menuOpen && (
-        <div className="overlay-backdrop" onClick={() => setMenuOpen(false)}></div>
       )}
 
       <div className="contact-background">
@@ -99,24 +100,6 @@ const handleContactSubmit = (e) => {
           </form>
         )}
       </section>
-
-      <div className={`${sidebarStyles.sidebar} ${menuOpen ? sidebarStyles.open : ''}`} onClick={() => setMenuOpen(false)}>
-        <div className={`${sidebarStyles.verticalLabel} ${sidebarStyles.firstItemOffset}`}
-          onClick={() => { onNavigateToHome(); setMenuOpen(false); }}
-          aria-label="Ir a inicio"
-          title="Inicio">
-          <span className={sidebarStyles.letter}>{'>>'}</span> 
-          <span className={sidebarStyles.letter}>{''}</span> 
-          <span className={sidebarStyles.letter}>I</span>
-          <span className={sidebarStyles.letter}>N</span>
-          <span className={sidebarStyles.letter}>I</span>
-          <span className={sidebarStyles.letter}>C</span>
-          <span className={sidebarStyles.letter}>I</span>
-          <span className={sidebarStyles.letter}>O</span>
-          <span className={sidebarStyles.letter}>{''}</span> 
-          <span className={sidebarStyles.letter}>{'>>'}</span> 
-        </div>
-      </div>
     </div>
   );
 }
