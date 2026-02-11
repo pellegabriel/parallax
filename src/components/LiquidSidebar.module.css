@@ -183,7 +183,7 @@
  }
  
  .navItem:hover {
-   color: var(--lava2);
+   color: #f5d6a0;
  }
  
  .navItem:hover::before {
