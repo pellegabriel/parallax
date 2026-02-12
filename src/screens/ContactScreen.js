@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import sidebarStyles from '../components/Sidebar.module.css';
+import LiquidSidebar from '../components/LiquidSidebar';
+import { sendEmail } from '../services/emailService';
 
 function ContactScreen({ onNavigateToHome }) {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [contactLoading, setContactLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | null
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const update = () => setIsMobile(window.innerWidth <= 900);
@@ -34,41 +37,46 @@ function ContactScreen({ onNavigateToHome }) {
     };
   }, []);
 
-const handleContactSubmit = (e) => {
+const handleContactSubmit = async (e) => {
   e.preventDefault();
+  setSubmitting(true);
+  setSubmitStatus(null);
+  setErrorMessage('');
+
   const data = new FormData(e.currentTarget);
   const name = data.get('name') || '';
   const email = data.get('email') || '';
   const message = data.get('message') || '';
   
   const subject = `Nuevo mensaje de ${name} - The Cave`;
-  const body = `Nombre: ${name}\nEmail: ${email}\n\nMensaje:\n${message}`;
-  
-  // dirección a la que se enviará el correo
-  const mailto = `mailto:thecave.ar.contac@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  
-  window.location.href = mailto;
+  const fullMessage = `Nombre: ${name}\nEmail: ${email}\n\nMensaje:\n${message}`;
+
+  try {
+    await sendEmail({
+      email,
+      subject,
+      message: fullMessage,
+    });
+    setSubmitStatus('success');
+    e.target.reset();
+  } catch (error) {
+    setSubmitStatus('error');
+    setErrorMessage(error.message || 'Error al enviar el mensaje');
+  } finally {
+    setSubmitting(false);
+  }
 };
 
 
   return (
     <div className="contact-screen">
-      <button className="hamburger" aria-label="Abrir menú" onClick={() => setMenuOpen((v) => !v)}>☰</button>
-      
-      {!isMobile && (
-        <header className="top-header">
-          <div className="header-logo">The Cave</div>
-          <nav className="header-nav">
-            <a href="#home" className="header-link" onClick={(e) => { e.preventDefault(); onNavigateToHome(); }}>
-              Inicio
-            </a>
-          </nav>
-        </header>
-      )}
-
-      {menuOpen && (
-        <div className="overlay-backdrop" onClick={() => setMenuOpen(false)}></div>
-      )}
+      <LiquidSidebar
+        title="Navegación"
+        items={[
+          { number: '01', label: 'Inicio', onClick: onNavigateToHome },
+        ]}
+        footer="© 2026 — Todos los derechos"
+      />
 
       <div className="contact-background">
         <div className="animation_layer parallax static-jungle" id="jungle2"></div>
@@ -77,9 +85,7 @@ const handleContactSubmit = (e) => {
         <div className="animation_layer parallax static-jungle" id="manonmountain"></div>
         <div className="animation_layer parallax static-jungle" id="jungle5"></div>
       </div>
-
       <section id="contact" className="contact-section">
-        <button className="back-button" onClick={onNavigateToHome}>←</button>
         <h3>Contacto</h3>
         <p>¿Algun proyecto o consulta? Escribinos.</p>
         {contactLoading ? (
@@ -92,31 +98,21 @@ const handleContactSubmit = (e) => {
           </div>
         ) : (
           <form className="contact-form" onSubmit={handleContactSubmit}>
-            <input type="text" name="name" placeholder="Tu nombre" required />
-            <input type="email" name="email" placeholder="Tu email" required />
-            <textarea name="message" placeholder="Tu mensaje" rows="5" required />
-            <button type="submit">Enviar email</button>
+            <input type="text" name="name" placeholder="Tu nombre" required disabled={submitting} />
+            <input type="email" name="email" placeholder="Tu email" required disabled={submitting} />
+            <textarea name="message" placeholder="Tu mensaje" rows="5" required disabled={submitting} />
+            <button type="submit" disabled={submitting}>
+              {submitting ? 'Enviando...' : 'Enviar mensaje'}
+            </button>
+            {submitStatus === 'success' && (
+              <p className="form-success">¡Mensaje enviado correctamente!</p>
+            )}
+            {submitStatus === 'error' && (
+              <p className="form-error">{errorMessage}</p>
+            )}
           </form>
         )}
       </section>
-
-      <div className={`${sidebarStyles.sidebar} ${menuOpen ? sidebarStyles.open : ''}`} onClick={() => setMenuOpen(false)}>
-        <div className={`${sidebarStyles.verticalLabel} ${sidebarStyles.firstItemOffset}`}
-          onClick={() => { onNavigateToHome(); setMenuOpen(false); }}
-          aria-label="Ir a inicio"
-          title="Inicio">
-          <span className={sidebarStyles.letter}>{'>>'}</span> 
-          <span className={sidebarStyles.letter}>{''}</span> 
-          <span className={sidebarStyles.letter}>I</span>
-          <span className={sidebarStyles.letter}>N</span>
-          <span className={sidebarStyles.letter}>I</span>
-          <span className={sidebarStyles.letter}>C</span>
-          <span className={sidebarStyles.letter}>I</span>
-          <span className={sidebarStyles.letter}>O</span>
-          <span className={sidebarStyles.letter}>{''}</span> 
-          <span className={sidebarStyles.letter}>{'>>'}</span> 
-        </div>
-      </div>
     </div>
   );
 }

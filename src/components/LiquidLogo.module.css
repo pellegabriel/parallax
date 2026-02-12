@@ -1,0 +1,28 @@
+.root {
+  --liquid1: #031927;
+  --liquid2: #0a1a2f;
+  --liquid3: #031927;
+
+  position: relative;
+  display: inline-block;
+  overflow: visible;
+}
+
+.svg {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.liquidRing {
+  transform-origin: 50% 50%;
+}
+
+.image {
+  position: absolute;
+  border-radius: 50%;
+  object-fit: contain;
+  background: transparent;
+  z-index: 2;
+}
