@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import HomeScreen from './screens/HomeScreen';
-import ContactScreen from './screens/ContactScreen';
+import ProyectScreen from './screens/ProyectScreen';
 import Loader from './components/loader/Loader';
 
 function App() {
@@ -39,7 +39,7 @@ function App() {
             <HomeScreen onNavigateToContact={handleNavigateToContact} />
           )}
           {route === 'contact' && (
-            <ContactScreen onNavigateToHome={handleNavigateToHome} />
+            <ProyectScreen onNavigateToHome={handleNavigateToHome} />
           )}
         </>
       )}

@@ -11,7 +11,7 @@ import tomyImage from '../images/tomy.jpg';
 import lucasImage from '../images/lucas.jpg';
 import SocialButtons from '../SocialButtons';
 
-function HomeScreen() {
+function HomeScreen({ onNavigateToContact, onNavigateToProyectos }) {
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [contactLoading, setContactLoading] = useState(false);
 
@@ -106,6 +106,7 @@ function HomeScreen() {
         title="Navegación"
         items={[
           { number: '01', label: 'Contacto', onClick: openContact },
+          { number: '02', label: 'Proyectos', onClick: onNavigateToProyectos },
           { number: '02', label: 'Equipo', onClick: () => {
             const teamSection = document.querySelector('[class*="teamSection"]');
             if (teamSection) teamSection.scrollIntoView({ behavior: 'smooth' });

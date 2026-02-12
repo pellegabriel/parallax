@@ -2,9 +2,14 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import HomeScreen from './screens/HomeScreen';
 import Loader from './components/loader/Loader';
+import ProyectScreen from './screens/ProyectScreen';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true); // Reactivado el loader
+  const [route, setRoute] = useState('home'); // 'home' | 'contact' | 'proyectos'
+
+  const handleNavigateToHome = () => setRoute('home');
+  const handleNavigateToProyectos = () => setRoute('proyectos');
 
   useEffect(() => {
     let timeoutId;
@@ -64,8 +69,20 @@ function App() {
       {isLoading ? (
         <Loader />
       ) : (
-        <HomeScreen />
-      )}
+<>
+          {route === 'home' && (
+            <HomeScreen 
+              onNavigateToProyectos={handleNavigateToProyectos}
+            />
+          )}
+          {route === 'proyectos' && (
+            <div style={{ padding: 40, textAlign: 'center' }}>
+              <h1>Proyectos</h1>
+              <p>Próximamente...</p>
+              <button onClick={handleNavigateToHome}>Volver al inicio</button>
+            </div>
+          )}
+        </>      )}
       <div className="page-frame" />
     </div>
   );
