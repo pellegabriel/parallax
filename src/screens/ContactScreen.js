@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import LiquidSidebar from '../components/LiquidSidebar';
+import { sendEmail } from '../services/emailService';
 
 function ContactScreen({ onNavigateToHome }) {
   const [isMobile, setIsMobile] = useState(false);
   const [contactLoading, setContactLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | null
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const update = () => setIsMobile(window.innerWidth <= 900);
@@ -33,20 +37,34 @@ function ContactScreen({ onNavigateToHome }) {
     };
   }, []);
 
-const handleContactSubmit = (e) => {
+const handleContactSubmit = async (e) => {
   e.preventDefault();
+  setSubmitting(true);
+  setSubmitStatus(null);
+  setErrorMessage('');
+
   const data = new FormData(e.currentTarget);
   const name = data.get('name') || '';
   const email = data.get('email') || '';
   const message = data.get('message') || '';
   
   const subject = `Nuevo mensaje de ${name} - The Cave`;
-  const body = `Nombre: ${name}\nEmail: ${email}\n\nMensaje:\n${message}`;
-  
-  // dirección a la que se enviará el correo
-  const mailto = `mailto:thecave.ar.contac@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  
-  window.location.href = mailto;
+  const fullMessage = `Nombre: ${name}\nEmail: ${email}\n\nMensaje:\n${message}`;
+
+  try {
+    await sendEmail({
+      email,
+      subject,
+      message: fullMessage,
+    });
+    setSubmitStatus('success');
+    e.target.reset();
+  } catch (error) {
+    setSubmitStatus('error');
+    setErrorMessage(error.message || 'Error al enviar el mensaje');
+  } finally {
+    setSubmitting(false);
+  }
 };
 
 
@@ -80,10 +98,18 @@ const handleContactSubmit = (e) => {
           </div>
         ) : (
           <form className="contact-form" onSubmit={handleContactSubmit}>
-            <input type="text" name="name" placeholder="Tu nombre" required />
-            <input type="email" name="email" placeholder="Tu email" required />
-            <textarea name="message" placeholder="Tu mensaje" rows="5" required />
-            <button type="submit">Enviar email</button>
+            <input type="text" name="name" placeholder="Tu nombre" required disabled={submitting} />
+            <input type="email" name="email" placeholder="Tu email" required disabled={submitting} />
+            <textarea name="message" placeholder="Tu mensaje" rows="5" required disabled={submitting} />
+            <button type="submit" disabled={submitting}>
+              {submitting ? 'Enviando...' : 'Enviar mensaje'}
+            </button>
+            {submitStatus === 'success' && (
+              <p className="form-success">¡Mensaje enviado correctamente!</p>
+            )}
+            {submitStatus === 'error' && (
+              <p className="form-error">{errorMessage}</p>
+            )}
           </form>
         )}
       </section>

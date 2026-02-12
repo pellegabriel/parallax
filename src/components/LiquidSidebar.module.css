@@ -125,7 +125,7 @@
    display: block;
    width: 65%;
    text-align: left;
-   font-size: 28px;
+   font-size: 22px;
    font-weight: 800;
    font-family: inherit;
    color: var(--light);
@@ -230,4 +230,41 @@
 .overlayActive {
   opacity: 1;
   pointer-events: all;
+}
+
+.socialRow {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  margin-top: 24px;
+  transform: translateX(-16px);
+  opacity: 0;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+.sidebarContentVisible .socialRow {
+  transform: translateX(0);
+  opacity: 1;
+  transition:
+    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.4s,
+    opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.4s;
+}
+
+.socialBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  border: 3px solid #031927;
+  color: #fff;
+  transition: transform 0.2s ease, background 0.2s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.socialBtn:hover {
+  transform: scale(1.1);
+  background: linear-gradient(135deg, #2563eb, #1e40af);
 }

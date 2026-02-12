@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import styles from './LiquidSidebar.module.css';
 import navItemCardStyles from './LiquidSidebarNavItemCard.module.css';
+import { Linkedin, MessageCircle, Instagram } from 'lucide-react';
 
 function easeInOutElastic(t) {
   if (t === 0) return 0;
@@ -318,6 +319,35 @@ export default function LiquidSidebar({
             {item.label}
           </button>
         ))}
+        <div className={styles.socialRow}>
+          <a
+            href="https://wa.me/542966305853?text=Hola%21%20Tengo%20inter%C3%A9s%20en%20trabajar%20con%20ustedes%20y%20quer%C3%ADa%20saber%20c%C3%B3mo%20podemos%20avanzar."
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="WhatsApp"
+            className={styles.socialBtn}
+          >
+            <MessageCircle size={24} />
+          </a>
+          <a
+            href="https://www.instagram.com/thecave.ar/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+            className={styles.socialBtn}
+          >
+            <Instagram size={24} />
+          </a>
+          <a
+            href="https://www.linkedin.com/company/thecaves-a/?viewAsMember=true"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+            className={styles.socialBtn}
+          >
+            <Linkedin size={24} />
+          </a>
+        </div>
         <div className={styles.sidebarFooter}>{footer}</div>
       </nav>
     </div>

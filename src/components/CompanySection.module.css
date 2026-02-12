@@ -261,7 +261,7 @@
 
   .companyInfo.sectionMiddle {
     width: calc(100vw - 24px);
-    margin: 0 12px;
+    margin: -30px 12px 0 12px;
     padding: 0;
     left: 0;
     right: 0;

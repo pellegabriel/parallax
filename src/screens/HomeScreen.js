@@ -106,6 +106,10 @@ function HomeScreen() {
         title="Navegación"
         items={[
           { number: '01', label: 'Contacto', onClick: openContact },
+          { number: '02', label: 'Equipo', onClick: () => {
+            const teamSection = document.querySelector('[class*="teamSection"]');
+            if (teamSection) teamSection.scrollIntoView({ behavior: 'smooth' });
+          }},
         ]}
         footer="© 2026 — Todos los derechos"
       />

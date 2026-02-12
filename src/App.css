@@ -367,6 +367,26 @@
   transform: translateY(-2px);
 }
 
+.contact-form button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.form-success {
+  color: #4ade80;
+  font-size: 14px;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.form-error {
+  color: #f87171;
+  font-size: 14px;
+  margin-top: 8px;
+  text-align: center;
+}
+
 .contact-skeleton { 
   display: grid; 
   gap: 8px; 
@@ -669,7 +689,7 @@ h1, h2, h3, h4, h5, h6 {
   }
   
   .main-content section:nth-child(1) {
-    padding: 110px 60px 40px 60px;
+    padding: 50px 60px 40px 60px;
   }
   
   .main-content section:nth-child(3) {
