@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import styles from './LiquidSidebar.module.css';
-import navItemCardStyles from './LiquidSidebarNavItemCard.module.css';
 import { Linkedin, MessageCircle, Instagram } from 'lucide-react';
+import BlobButton from './BlobButton';
 
 function easeInOutElastic(t) {
   if (t === 0) return 0;
@@ -310,14 +310,13 @@ export default function LiquidSidebar({
 
       <nav className={`${styles.sidebarContent} ${isOpen ? styles.sidebarContentVisible : ''}`}>
         {items.map((item, idx) => (
-          <button
+          <BlobButton
             key={`${item.number ?? idx}-${item.label ?? idx}`}
-            type="button"
-            className={`${styles.navItem} ${navItemCardStyles.navItemCard}`}
             onClick={() => onItemClick(item)}
+            className={styles.navItem}
           >
             {item.label}
-          </button>
+          </BlobButton>
         ))}
         <div className={styles.socialRow}>
           <a

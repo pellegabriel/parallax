@@ -10,6 +10,7 @@ import gabiImage from '../images/gabi.jpg';
 import tomyImage from '../images/tomy.jpg';
 import lucasImage from '../images/lucas.jpg';
 import SocialButtons from '../SocialButtons';
+import BlobButton from '../components/BlobButton';
 
 function HomeScreen() {
   const [isContactOpen, setIsContactOpen] = useState(false);
@@ -138,8 +139,13 @@ function HomeScreen() {
             </h2>
             <span className={companyStyles.brandLarge}>the cave </span>
             <p className={companyStyles.companyDescription}>
-              Hey, que tal? Llegaste a <span style={{ color: '#000000', fontWeight: 'bold' }}>The Cave</span>, tu <span style={{ color: '#000000', fontWeight: 'bold' }}>aliado digital</span>. Nos encargamos de todo: <span style={{ color: '#000000', fontWeight: 'bold' }}>desarrollo de software</span>, <span style={{ color: '#000000', fontWeight: 'bold' }}>marketing digital</span>, <span style={{ color: '#000000', fontWeight: 'bold' }}>diseño de marca y logos</span>. El paquete completo para que tu proyecto brille desde el primer momento.
+              Hey, que tal? Llegaste a The Cave, tu aliado digital. Nos encargamos de todo: desarrollo de software, marketing digital, diseño de marca y logos. El paquete completo para que tu proyecto brille desde el primer momento.
             </p>
+                          <div className={companyStyles.blobButtonWrapper}>
+                <BlobButton onClick={() => window.open('/servicios.pdf', '_blank')}>
+                  Agenda una llamada
+                </BlobButton>
+              </div>
           </div>
         </section>
 
@@ -147,14 +153,17 @@ function HomeScreen() {
           <div className={companyStyles.companyMiddleRow}>
             <div className={companyStyles.companyMiddleText}>
               <p className={companyStyles.companyDescription}>
-                En esta seccion podes <span style={{ color: '#000000', fontWeight: 'bold' }}>conocer a todo el equipo</span> que va a trabajar en tu proyecto. Queres charlar? <span style={{ color: '#000000', fontWeight: 'bold' }}>Usa nuestras redes sociales</span> o <span style={{ color: '#000000', fontWeight: 'bold' }}>escribinos directamente</span> desde la <span style={{ color: '#000000', fontWeight: 'bold' }}>seccion de contacto</span>. Estamos aca para lo que necesites!
+                En esta seccion podes conocer a todo el equipo que va a trabajar en tu proyecto. Queres charlar? Usa nuestras redes sociales o escribinos directamente desde la seccion de contacto. Estamos aca para lo que necesites!
               </p>
-              <p className={companyStyles.companyTagline}>
+ 
+              <div className={companyStyles.blobButtonWrapper}>
+                <BlobButton onClick={() => window.open('/servicios.pdf', '_blank')}>
+                 Conoce nuestros servicios
+                </BlobButton>
+              </div>
+                           <p className={companyStyles.companyTagline}>
                 ATTE: EQUIPO DE THE CAVE
               </p>
-              <div style={{ marginTop: 18 }} className={companyStyles.companyMiddleSocial}>
-                <SocialButtons inline={true} />
-              </div>
             </div>
             <div className={companyStyles.companyRectImage}>
               <img src={missionImage} alt="Nuestra misión" />

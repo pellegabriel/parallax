@@ -1,0 +1,123 @@
+.blobBtn {
+  z-index: 1;
+  position: relative;
+  padding: 14px 46px;
+  margin: 10px 0;
+  text-align: start;
+  text-transform: uppercase;
+  color: #ffffff;
+  font-size: 18px;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  transition: color 0.5s;
+  cursor: pointer;
+  box-sizing: border-box;
+  font-family: inherit;
+  min-width: 180px;
+}
+
+.blobBtn:before {
+  content: "";
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.blobBtn:after {
+  transition: all 0.3s 0.2s;
+    overflow: hidden;
+  border-radius: 50% 35% 60% 42% / 98% 146% 102% 100%;
+  box-shadow: 0 18px 48px rgba(0,0,0,0.45);
+  background: #08151a;
+  box-sizing: border-box;
+  padding: 14px 16px;
+  margin: 10px 0;
+}
+
+.blobBtn:hover {
+  color: #FFFFFF;
+}
+
+.blobBtn:hover:after {
+  transition: all 0.3s;
+  left: 0;
+  top: 0;
+}
+
+.blobBtnInner {
+  z-index: -1;
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50% 35% 60% 42% / 98% 146% 102% 100%;
+  background: #08151a;
+}
+
+.blobBtnBlobs {
+  position: relative;
+  display: block;
+  height: 100%;
+  filter: url("#blobGoo");
+}
+
+.blobBtnBlob {
+  position: absolute;
+  top: 2px;
+  width: 25%;
+  height: 100%;
+  background: #3b82f6;
+  border-radius: 100%;
+  transform: translate3d(0, 150%, 0) scale(1.7);
+  transition: transform 0.45s;
+}
+
+@supports (filter: url("#blobGoo")) {
+  .blobBtnBlob {
+    transform: translate3d(0, 150%, 0) scale(1.4);
+  }
+}
+
+.blobBtnBlob:nth-child(1) {
+  left: 0%;
+  transition-delay: 0s;
+}
+
+.blobBtnBlob:nth-child(2) {
+  left: 30%;
+  transition-delay: 0.08s;
+}
+
+.blobBtnBlob:nth-child(3) {
+  left: 60%;
+  transition-delay: 0.16s;
+}
+
+.blobBtnBlob:nth-child(4) {
+  left: 90%;
+  transition-delay: 0.24s;
+}
+
+.blobBtn:hover .blobBtnBlob {
+  transform: translateZ(0) scale(1.7);
+}
+
+@supports (filter: url("#blobGoo")) {
+  .blobBtn:hover .blobBtnBlob {
+    transform: translateZ(0) scale(1.4);
+  }
+}
+
+.blobSvg {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}

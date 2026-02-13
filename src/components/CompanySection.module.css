@@ -149,7 +149,7 @@
 }
 
 .companyDescription {
-  color: #000000;
+  color: #ffffff;
   font-size: 30px;
   line-height: 1.7;
   font-weight: 100;
@@ -349,6 +349,17 @@
   
   .companyMiddleRow {
     gap: 100px;
+  }
+}
+
+.blobButtonWrapper {
+  display: flex;
+  justify-content: flex-start;
+}
+
+@media (max-width: 900px) {
+  .blobButtonWrapper {
+    justify-content: center;
   }
 }
 
