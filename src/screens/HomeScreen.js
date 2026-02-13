@@ -142,7 +142,7 @@ function HomeScreen() {
               Hey, que tal? Llegaste a The Cave, tu aliado digital. Nos encargamos de todo: desarrollo de software, marketing digital, diseño de marca y logos. El paquete completo para que tu proyecto brille desde el primer momento.
             </p>
                           <div className={companyStyles.blobButtonWrapper}>
-                <BlobButton onClick={() => window.open('/servicios.pdf', '_blank')}>
+                <BlobButton onClick={() => window.open('https://wa.me/542966305853?text=Hola%21%20Tengo%20inter%C3%A9s%20en%20trabajar%20con%20ustedes%20y%20quer%C3%ADa%20saber%20c%C3%B3mo%20podemos%20avanzar.', '_blank')}>
                   Agenda una llamada
                 </BlobButton>
               </div>
