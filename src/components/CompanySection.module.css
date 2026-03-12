@@ -62,6 +62,14 @@
     margin: 0 auto;
   }
   
+  .companyInfo.sectionTop .blobButtonWrapper {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 40px;
+    box-sizing: border-box;
+  }
+  
   .companyInfo.sectionTop .companyLogoDesktop {
     margin: 0 auto 10px auto;
   }
