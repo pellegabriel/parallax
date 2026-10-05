@@ -8,13 +8,48 @@ import logoImage from '../images/logo.svg';
 import missionImage from '../images/manos.jpg';
 import gabiImage from '../images/gabi.jpg';
 import tomyImage from '../images/tomy.jpg';
-import lucasImage from '../images/lucas.jpg';
-import SocialButtons from '../SocialButtons';
 import BlobButton from '../components/BlobButton';
+import useMediaQuery from '../components/useMediaQuery';
+import ProjectsSection from '../components/ProjectsSection';
+import LiquidFooter from '../components/LiquidFooter';
 
-function HomeScreen() {
+const copy = {
+  es: {
+    language: 'Idioma', navigation: 'Navegación', menu: 'Menú', contact: 'Contacto', projects: 'Proyectos', team: 'Equipo', teamRegion: 'Nuestro Equipo', rights: 'Todos los derechos',
+    welcome: 'Bienvenid', welcomeEnd: ' a', description: 'Tu negocio necesita soluciones que trabajen juntas. En The Cave conectamos estrategia, diseño y tecnología para fortalecer tu marca, simplificar procesos y abrir nuevas oportunidades de crecimiento. Te acompañamos desde la primera idea hasta su puesta en marcha.',
+    call: 'Agendá una llamada', services: 'Conocé nuestros servicios', approach: 'Nos involucramos en lo que hace avanzar a tu negocio.', approachDescription: 'Trabajamos con vos para entender los desafíos, definir prioridades y llevar las ideas a la práctica. Cada decisión de diseño y tecnología responde a una necesidad concreta, con un equipo que acompaña la implementación y su evolución.',
+    missionAlt: 'Nuestra misión', contactPrompt: '¿Algun proyecto o consulta? Escribinos.', name: 'Tu nombre', email: 'Tu email', message: 'Tu mensaje', send: 'Enviar email',
+    emailSubject: (name) => `Nuevo mensaje de ${name} - The Cave`, emailBody: (name, email, message) => `Nombre: ${name}\nEmail: ${email}\n\nMensaje:\n${message}`,
+  },
+  en: {
+    language: 'Language', navigation: 'Navigation', menu: 'Menu', contact: 'Contact', projects: 'Projects', team: 'Team', teamRegion: 'Our Team', rights: 'All rights reserved',
+    welcome: 'Welcom', welcomeEnd: ' to', description: 'Your business needs solutions that work together. At The Cave, we bring strategy, design, and technology together to strengthen your brand, streamline processes, and create new opportunities for growth. We support you from the first idea through launch.',
+    call: 'Schedule a call', services: 'Explore our services', approach: 'We get involved in what moves your business forward.', approachDescription: 'We work with you to understand challenges, set priorities, and turn ideas into action. Every design and technology decision addresses a real need, with a team that supports implementation and what comes next.',
+    missionAlt: 'Our mission', contactPrompt: 'Have a project or a question? Get in touch.', name: 'Your name', email: 'Your email', message: 'Your message', send: 'Send email',
+    emailSubject: (name) => `New message from ${name} - The Cave`, emailBody: (name, email, message) => `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
+  },
+};
+
+function HomeScreen({ language: selectedLanguage, onLanguageChange }) {
+  const [localLanguage, setLocalLanguage] = useState('es');
+  const language = selectedLanguage ?? localLanguage;
+  const changeLanguage = onLanguageChange ?? setLocalLanguage;
+  const t = copy[language];
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [contactLoading, setContactLoading] = useState(false);
+  const isDesktop = useMediaQuery('(min-width: 901px)');
+  const isWideDesktop = useMediaQuery('(min-width: 1280px)');
+  const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
+
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
+
+  const navigateTo = (id) => {
+    const section = document.getElementById(id);
+    section?.focus({ preventScroll: true });
+    section?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' });
+  };
 
   const openContact = useCallback(() => {
     setIsContactOpen(true);
@@ -64,56 +99,61 @@ function HomeScreen() {
     const email = data.get('email') || '';
     const message = data.get('message') || '';
 
-    const subject = `Nuevo mensaje de ${name} - The Cave`;
-    const body = `Nombre: ${name}\nEmail: ${email}\n\nMensaje:\n${message}`;
+    const subject = t.emailSubject(name);
+    const body = t.emailBody(name, email, message);
 
     const mailto = `mailto:thecave.ar.contac@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     window.location.href = mailto;
-  }, []);
+  }, [t]);
 
   useEffect(() => {
-    let ticking = false;
-    
+    const layers = document.querySelectorAll('.parallax-layer');
+    if (reducedMotion) {
+      layers.forEach((element) => { element.style.transform = 'none'; });
+      return;
+    }
+    let frame;
     const handleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          const scrolled = window.pageYOffset;
-          const parallaxElements = document.querySelectorAll('.parallax-layer');
-          
-          const isMobileDevice = window.innerWidth <= 900;
-          const speeds = isMobileDevice 
-            ? [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07]
-            : [0.006, 0.012, 0.018, 0.024, 0.03, 0.036, 0.042];
-          
-          parallaxElements.forEach((element, index) => {
-            const speed = speeds[index] || 0.01;
-            const yPos = -(scrolled * speed);
-            element.style.transform = `translate3d(0, ${yPos}px, 0)`; 
-          });
-          
-          ticking = false;
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        const speeds = isDesktop
+          ? [0.006, 0.012, 0.018, 0.024, 0.03, 0.036, 0.042]
+          : [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07];
+        layers.forEach((element, index) => {
+          const speed = speeds[index] || 0.01;
+          const maxY = Math.max(0, element.offsetHeight - window.innerHeight);
+          const y = Math.min(window.pageYOffset * speed, maxY);
+          element.style.transform = `translate3d(0, ${-y}px, 0)`;
         });
-        ticking = true;
-      }
+        frame = null;
+      });
     };
-
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      cancelAnimationFrame(frame);
+    };
+  }, [isDesktop, reducedMotion]);
 
   return (
     <>
       <LiquidSidebar
-        title="Navegación"
+        title={t.navigation}
+        toggleLabel={t.menu}
         items={[
-          { number: '01', label: 'Contacto', onClick: openContact },
-          { number: '02', label: 'Equipo', onClick: () => {
-            const teamSection = document.querySelector('[class*="teamSection"]');
-            if (teamSection) teamSection.scrollIntoView({ behavior: 'smooth' });
-          }},
+          { number: '01', label: t.contact, onClick: openContact },
+          { number: '02', label: t.projects, onClick: () => navigateTo('proyectos') },
+          { number: '03', label: t.team, onClick: () => navigateTo('equipo') },
         ]}
-        footer="© 2026 — Todos los derechos"
+        footer={`© 2026 — ${t.rights}`}
       />
+
+      <div className="language-switch" role="group" aria-label={t.language}>
+        <button type="button" lang="es" aria-label={language === 'es' ? 'Español, seleccionado' : 'Español'} aria-pressed={language === 'es'} onClick={() => changeLanguage('es')}>ES</button>
+        <span aria-hidden="true">|</span>
+        <button type="button" lang="en" aria-label={language === 'en' ? 'English, selected' : 'English'} aria-pressed={language === 'en'} onClick={() => changeLanguage('en')}>EN</button>
+      </div>
 
       <div className="parallax-background">
         <div className="parallax-layer animation_layer parallax" id="artback"></div>
@@ -125,81 +165,60 @@ function HomeScreen() {
         <div className="parallax-layer animation_layer parallax" id="jungle5"></div>
       </div>
 
-      <div className="main-content" style={{ position: 'relative', zIndex: 10 }}>
-        <section className={`${companyStyles.companyInfo} ${companyStyles.sectionTop}`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', margin: '0 auto' }}>
-          <div className={companyStyles.companyLogo} style={{ display: 'block', order: -1 }}>
-            <LiquidLogo src={logoImage} alt="The Cave Logo" size={130} border={16} waveAmp={5} />
-          </div>
-          <div className={companyStyles.companyLogoDesktop} style={{ display: 'none' }}>
-            <LiquidLogo src={logoImage} alt="The Cave Logo Desktop" size={280} border={22} waveAmp={6} />
+      <main className="main-content">
+        <section className={`page-section intro-section ${companyStyles.companyInfo} ${companyStyles.sectionTop}`} style={isWideDesktop ? undefined : { display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', margin: '0 auto' }}>
+          <div className={isDesktop ? companyStyles.companyLogoDesktop : companyStyles.companyLogo}>
+            <LiquidLogo src={logoImage} alt="The Cave Logo" size={isWideDesktop ? 210 : isDesktop ? 280 : 130} border={isDesktop ? 22 : 16} waveAmp={isDesktop ? 6 : 5} />
           </div>
           <div className={companyStyles.companyText}>
-            <h2 className={companyStyles.companyTitle}>
-              BIenvenid<span style={{ color: '#000000' }}>x</span> a
-            </h2>
-            <span className={companyStyles.brandLarge}>the cave </span>
-            <p className={companyStyles.companyDescription}>
-              Hey, que tal? Llegaste a The Cave, tu aliado digital. Nos encargamos de todo: desarrollo de software, marketing digital, diseño de marca y logos. El paquete completo para que tu proyecto brille desde el primer momento.
-            </p>
+            <h1 className={companyStyles.companyTitle}>
+              {t.welcome}<span style={{ color: '#000000' }}>x</span>{t.welcomeEnd}
+              <span className={companyStyles.brandLarge}>the cave</span>
+            </h1>
+            <p className={companyStyles.companyDescription}>{t.description}</p>
             <div className={companyStyles.blobButtonWrapper}>
-              <BlobButton onClick={() => window.open('https://wa.me/542966305853?text=Hola%21%20Tengo%20inter%C3%A9s%20en%20trabajar%20con%20ustedes%20y%20quer%C3%ADa%20saber%20c%C3%B3mo%20podemos%20avanzar.', '_blank')}>
-                Agenda una llamada
+              <BlobButton className={companyStyles.primaryAction} onClick={() => window.open('https://wa.me/542966305853?text=Hola%21%20Tengo%20inter%C3%A9s%20en%20trabajar%20con%20ustedes%20y%20quer%C3%ADa%20saber%20c%C3%B3mo%20podemos%20avanzar.', '_blank', 'noopener,noreferrer')}>
+                {t.call}
+              </BlobButton>
+              <BlobButton className={companyStyles.secondaryAction} onClick={() => window.open('/servicios.pdf', '_blank', 'noopener,noreferrer')}>
+                {t.services}
               </BlobButton>
             </div>
           </div>
         </section>
 
-        <section className={`${companyStyles.companyInfo} ${companyStyles.sectionMiddle}`}>
+        <section id="equipo" tabIndex={-1} aria-label={t.teamRegion} className={`page-section services-section ${companyStyles.companyInfo} ${companyStyles.sectionMiddle}`}>
           <div className={companyStyles.companyMiddleRow}>
             <div className={companyStyles.companyMiddleText}>
-              <p className={companyStyles.companyDescription}>
-                En esta seccion podes conocer a todo el equipo que va a trabajar en tu proyecto. Queres charlar? Usa nuestras redes sociales o escribinos directamente desde la seccion de contacto. Estamos aca para lo que necesites!
-              </p>
- 
-              <div className={companyStyles.blobButtonWrapper}>
-                <BlobButton onClick={() => window.open('/servicios.pdf', '_blank')}>
-                 Conoce nuestros servicios
-                </BlobButton>
+              <h2 className={companyStyles.approachTitle}>{t.approach}</h2>
+              <p className={companyStyles.companyDescription}>{t.approachDescription}</p>
+              <div className={`${teamStyles.teamGrid} ${teamStyles.compactTeam}`}>
+                <div className={teamStyles.teamMember}>
+                  <div className={teamStyles.teamAvatar}>
+                    <img src={gabiImage} alt="Gabriel Pelle - CEO" />
+                  </div>
+                  <h3 className={teamStyles.teamName}>Gabriel Pelle</h3>
+                  <p className={teamStyles.teamPosition}>CEO</p>
+                </div>
+                <div className={teamStyles.teamMember}>
+                  <div className={teamStyles.teamAvatar}>
+                    <img src={tomyImage} alt="Tomas Montesinos - CTO" />
+                  </div>
+                  <h3 className={teamStyles.teamName}>Tomas Montesinos</h3>
+                  <p className={teamStyles.teamPosition}>CTO</p>
+                </div>
               </div>
-                           <p className={companyStyles.companyTagline}>
-                ATTE: EQUIPO DE THE CAVE
-              </p>
             </div>
             <div className={companyStyles.companyRectImage}>
-              <img src={missionImage} alt="Nuestra misión" />
+              <img src={missionImage} alt={t.missionAlt} />
             </div>
           </div>
         </section>
 
-        <section className={teamStyles.teamSection}>
-          <h2 className={teamStyles.teamTitle}>Nuestro Equipo</h2>
-          <div className={teamStyles.teamGrid}>
-            <div className={teamStyles.teamMember}>
-              <div className={teamStyles.teamAvatar}>
-                <img src={gabiImage} alt="Gabi - CEO" />
-              </div>
-              <h3 className={teamStyles.teamName}>Gabriel Pelle</h3>
-              <p className={teamStyles.teamPosition}>Chief Executive Officer</p>
-            </div>
-            <div className={teamStyles.teamMember}>
-              <div className={teamStyles.teamAvatar}>
-                <img src={tomyImage} alt="Tomy - CTO" />
-              </div>
-              <h3 className={teamStyles.teamName}>Tomas Montesinos</h3>
-              <p className={teamStyles.teamPosition}>Chief Technology Officer</p>
-            </div>
-            <div className={teamStyles.teamMember}>
-              <div className={teamStyles.teamAvatar}>
-                <img src={lucasImage} alt="Lucas - CMO" />
-              </div>
-              <h3 className={teamStyles.teamName}>Lucas Martin</h3>
-              <p className={teamStyles.teamPosition}>Chief Marketing Officer</p>
-            </div>
-          </div>
-        </section>
-      </div>
+        <ProjectsSection language={language} />
+      </main>
 
-      <SocialButtons />
+      <LiquidFooter language={language} onNavigate={navigateTo} />
 
       {isContactOpen && (
         <div className="contact-modal-root" role="presentation">
@@ -213,14 +232,14 @@ function HomeScreen() {
           >
             <LiquidFormBackground width={900} height={650} waveAmp={22} className="contact-modal-blob" />
 
-            <button type="button" className="contact-modal-close" aria-label="Cerrar" onClick={closeContact}>
+            <button type="button" className="contact-modal-close" aria-label={language === 'en' ? 'Close' : 'Cerrar'} onClick={closeContact}>
               ×
             </button>
 
             <div className="contact-modal-header">
               <div className="contact-modal-titleWrap">
-                <h3 id="contact-modal-title">Contacto</h3>
-                <p>¿Algun proyecto o consulta? Escribinos.</p>
+                <h3 id="contact-modal-title">{t.contact}</h3>
+                <p>{t.contactPrompt}</p>
               </div>
             </div>
 
@@ -234,10 +253,10 @@ function HomeScreen() {
               </div>
             ) : (
               <form className="contact-form" onSubmit={handleContactSubmit}>
-                <input type="text" name="name" placeholder="Tu nombre" required />
-                <input type="email" name="email" placeholder="Tu email" required />
-                <textarea name="message" placeholder="Tu mensaje" rows="5" required />
-                <button type="submit">Enviar email</button>
+                <input type="text" name="name" placeholder={t.name} required />
+                <input type="email" name="email" placeholder={t.email} required />
+                <textarea name="message" placeholder={t.message} rows="5" required />
+                <button type="submit">{t.send}</button>
               </form>
             )}
           </div>

@@ -1,10 +1,8 @@
 import { Linkedin, MessageCircle, Instagram } from "lucide-react"
 import { useState } from "react"
+import useMediaQuery from './components/useMediaQuery'
 
-export function SocialButtons({ inline = false }) {
-  const [hoveredButton, setHoveredButton] = useState(null)
-
-  const buttons = [
+export const SOCIAL_LINKS = [
 
     {
       id: "whatsapp",
@@ -32,17 +30,25 @@ export function SocialButtons({ inline = false }) {
     },
   ]
 
-  const containerStyle = inline
-    ? { position: 'relative', display: 'flex', flexDirection: 'row', gap: 20, marginTop: 28, alignItems: 'center' }
-    : { position: 'fixed', right: 16, bottom: 32, zIndex: 50, display: 'flex', flexDirection: 'column', gap: 12 }
+export function SocialButtons({ inline = false, compact = false }) {
+  const [hoveredButton, setHoveredButton] = useState(null)
+  const isMobile = useMediaQuery('(max-width: 900px)')
+  const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
+  const isInline = inline || compact || isMobile
 
-  const size = inline ? 64 : 56
+  const containerStyle = compact
+    ? { position: 'relative', zIndex: 1, display: 'flex', justifyContent: 'center', gap: 20, padding: '0 16px', alignItems: 'center' }
+    : isInline
+      ? { position: 'relative', zIndex: 10, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 20, padding: '24px 16px 40px', alignItems: 'center' }
+      : { position: 'fixed', right: 16, bottom: 32, zIndex: 50, display: 'flex', flexDirection: 'column', gap: 12 }
+
+  const size = 56
 
   return (
-    <div style={containerStyle}>
-      {buttons.map((button, index) => {
+    <div className="social-buttons" style={containerStyle}>
+      {SOCIAL_LINKS.map((button, index) => {
         const Icon = button.icon
-        const isHovered = hoveredButton === button.id
+        const isHovered = !reducedMotion && hoveredButton === button.id
 
         return (
           <a
@@ -55,7 +61,7 @@ export function SocialButtons({ inline = false }) {
             onMouseLeave={() => setHoveredButton(null)}
             className="group"
             style={{
-              animation: `slideIn 0.4s ease-out ${index * 0.1}s both`,
+              animation: reducedMotion ? 'none' : `slideIn 0.3s ease-out ${index * 0.1}s both`,
               position: 'relative',
               display: 'inline-block'
             }}
@@ -85,7 +91,7 @@ export function SocialButtons({ inline = false }) {
                 borderRadius: 12,
                 boxSizing: 'border-box',
                 border: '5px solid #031927',
-                background: isHovered ? 'linear-gradient(135deg, #2563eb, #1e40af)' : 'linear-gradient(135deg, #3b82f6, #2563eb)',
+                background: isHovered ? 'linear-gradient(135deg, #022163, #021041)' : 'linear-gradient(135deg, #042c6c, #021743)',
                 boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
                 transition: 'all 300ms',
                 transform: isHovered ? 'scale(1.05)' : 'scale(1)'
@@ -98,6 +104,7 @@ export function SocialButtons({ inline = false }) {
             <div
               style={{
                 position: 'absolute',
+                display: isInline ? 'none' : 'block',
                 right: '100%',
                 top: '50%',
                 marginRight: 12,
@@ -121,7 +128,7 @@ export function SocialButtons({ inline = false }) {
         )
       })}
 
-      <style>{`@keyframes slideIn { from { opacity: 0; transform: translateX(100px);} to { opacity: 1; transform: translateX(0);} }`}</style>
+      <style>{`@keyframes slideIn { from { opacity: 0; transform: translateY(8px);} to { opacity: 1; transform: translateX(0);} }`}</style>
     </div>
   )
 }

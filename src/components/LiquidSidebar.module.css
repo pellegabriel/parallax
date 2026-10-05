@@ -73,13 +73,18 @@
    position: fixed;
    top: 0;
    left: 0;
-   width: 340px;
+   width: min(340px, 100%);
+   visibility: hidden;
    height: 100vh;
    z-index: 11000;
    pointer-events: none;
    overflow: visible;
  }
  
+ .blobSvgActive {
+   visibility: visible;
+ }
+
  .lavaBlob {
    transition: none;
  }
@@ -94,8 +99,10 @@
    position: fixed;
    top: 0;
    left: 0;
-   width: 300px;
-   height: 100vh;
+   width: min(300px, 100%);
+   height: 100dvh;
+   overflow-y: auto;
+   visibility: hidden;
    z-index: 11500;
    display: flex;
    flex-direction: column;
@@ -107,6 +114,7 @@
  }
  
  .sidebarContentVisible {
+   visibility: visible;
    opacity: 1;
    pointer-events: all;
    transition: opacity 0.45s cubic-bezier(0, 0, 0.2, 1) 0.18s;
@@ -142,6 +150,13 @@
      transform 0.28s cubic-bezier(0.4, 0, 1, 1),
      opacity 0.22s cubic-bezier(0.4, 0, 1, 1);
   }
+
+ .sidebarContent .navItem {
+   font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+   font-size: 18px;
+   font-weight: 500;
+   padding: 10px 18px;
+ }
  
  .sidebarContentVisible .navItem {
    transform: translateX(0);

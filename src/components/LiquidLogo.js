@@ -1,5 +1,6 @@
-import React, { useEffect, useId, useMemo, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styles from './LiquidLogo.module.css';
+import useMediaQuery from './useMediaQuery';
 
 function catmullRomToBezierPath(points, closed = true) {
   if (!points.length) return 'M 0 0 Z';
@@ -46,10 +47,6 @@ function buildOuterPath({ cx, cy, rBase, amp, timeMs, steps }) {
   return catmullRomToBezierPath(pts, true);
 }
 
-function buildInnerCirclePath({ cx, cy, r }) {
-  return `M ${cx + r} ${cy} A ${r} ${r} 0 1 0 ${cx - r} ${cy} A ${r} ${r} 0 1 0 ${cx + r} ${cy} Z`;
-}
-
 export default function LiquidLogo({
   src,
   alt,
@@ -62,19 +59,14 @@ export default function LiquidLogo({
   const pathRef = useRef(null);
   const rafRef = useRef(null);
   const startTimeRef = useRef(null);
-
-  const rawUid = useId();
-  const uid = useMemo(() => rawUid.replace(/[^a-zA-Z0-9_-]/g, ''), [rawUid]);
-
-  const ids = useMemo(
-    () => ({
-      grad: `${uid}-liquidGrad`,
-      glow: `${uid}-liquidGlow`,
-    }),
-    [uid],
-  );
+  const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
+  const staticPath = buildOuterPath({ cx: size / 2, cy: size / 2, rBase: size / 2, amp: waveAmp, timeMs: 0, steps: 72 });
 
   useEffect(() => {
+    if (reducedMotion) {
+      pathRef.current?.setAttribute('d', staticPath);
+      return;
+    }
     const steps = 72;
 
     const animate = (ts) => {
@@ -84,13 +76,11 @@ export default function LiquidLogo({
       const cx = size / 2;
       const cy = size / 2;
       const outerR = size / 2;
-      const innerR = Math.max(0, size / 2 - border);
 
       const outer = buildOuterPath({ cx, cy, rBase: outerR, amp: waveAmp, timeMs, steps });
-      const inner = buildInnerCirclePath({ cx, cy, r: innerR });
 
       if (pathRef.current) {
-        pathRef.current.setAttribute('d', `${outer} ${inner}`);
+        pathRef.current.setAttribute('d', outer);
       }
 
       rafRef.current = requestAnimationFrame(animate);
@@ -100,38 +90,19 @@ export default function LiquidLogo({
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [border, size, waveAmp]);
+  }, [size, waveAmp, reducedMotion, staticPath]);
 
-  const innerSize = Math.max(0, size - border * 2);
+  const logoSize = Math.max(0, size - border * 2) * 0.65;
+  const logoOffset = (size - logoSize) / 2;
 
   return (
     <div className={`${styles.root} ${className ?? ''}`} style={{ width: size, height: size }}>
       <svg className={styles.svg} width={size} height={size} viewBox={`0 0 ${size} ${size}`} xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id={ids.grad} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="var(--liquid1)" stopOpacity="1" />
-            <stop offset="45%" stopColor="var(--liquid2)" stopOpacity="1" />
-            <stop offset="100%" stopColor="var(--liquid3)" stopOpacity="1" />
-          </linearGradient>
-          <filter id={ids.glow}>
-            <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
-            <feColorMatrix
-              in="blur"
-              mode="matrix"
-              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -6"
-              result="goo"
-            />
-            <feBlend in="SourceGraphic" in2="goo" mode="screen" />
-          </filter>
-        </defs>
-
         <path
           ref={pathRef}
           className={styles.liquidRing}
-          fill={`url(#${ids.grad})`}
-          fillRule="evenodd"
-          filter={`url(#${ids.glow})`}
-          d="M 0 0 Z"
+          fill="var(--liquid-color)"
+          d={staticPath}
         />
       </svg>
 
@@ -140,10 +111,10 @@ export default function LiquidLogo({
         alt={alt}
         className={styles.image}
         style={{
-          width: innerSize,
-          height: innerSize,
-          left: border,
-          top: border,
+          width: logoSize,
+          height: logoSize,
+          left: logoOffset,
+          top: logoOffset,
           ...imageStyle,
         }}
       />

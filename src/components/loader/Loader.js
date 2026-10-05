@@ -1,7 +1,7 @@
 import React from 'react';
 import './loader.css';
 
-function Loader() {
+function Loader({ language = 'es' }) {
   return (
     <div style={{
       position: 'fixed',
@@ -15,7 +15,7 @@ function Loader() {
       gap: '24px'
     }}>
       <div className="loadingText">
-        CARGANDO<span className="dots"><span>.</span><span>.</span><span>.</span></span>
+        {language === 'en' ? 'LOADING' : 'CARGANDO'}<span className="dots"><span>.</span><span>.</span><span>.</span></span>
       </div>
       <div className="loader">
         <svg

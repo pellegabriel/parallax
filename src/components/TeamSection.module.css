@@ -55,7 +55,8 @@
   }
   
   .teamGrid {
-    gap: 80px;
+    gap: clamp(24px, 5vw, 80px);
+    width: 100%;
     max-width: 1000px;
     flex-wrap: nowrap;
   }
@@ -110,13 +111,14 @@
   color: rgba(174, 192, 248, 0.8);
   font-size: 16px;
   font-weight: 400;
-  font-family: inherit;
   font-style: italic;
+  max-width: 28ch;
 }
 
 @media (min-width: 901px) {
   .teamMember {
     flex: 1;
+    min-width: 0;
     max-width: 280px;
   }
   
@@ -250,6 +252,65 @@
   .teamAvatar { width: 100px; height: 100px; margin-bottom: 16px; }
   .teamName { font-size: 18px; }
   .teamPosition { font-size: 13px; margin-bottom: 15px; }
+}
+
+.teamPosition {
+  font-size: max(1rem, 16px);
+}
+
+.teamGrid.compactTeam {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: clamp(12px, 3vw, 24px);
+  width: min(100%, 300px);
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.compactTeam .teamMember {
+  min-width: 0;
+  max-width: none;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.compactTeam .teamAvatar {
+  width: clamp(72px, 18vw, 112px);
+  height: auto;
+  max-width: 100%;
+  aspect-ratio: 1;
+  margin: 0 0 7px;
+  border-width: 3px;
+}
+
+.compactTeam .teamAvatar img {
+  display: block;
+}
+
+.compactTeam .teamName {
+  margin: 0;
+  font-size: clamp(15px, 1.4vw, 18px);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+}
+
+.compactTeam .teamPosition {
+  margin: 1px 0 0;
+  font-family: system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .teamAvatar:hover {
+    transform: none;
+  }
 }
 
 @keyframes fadeInUp {

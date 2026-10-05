@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { forwardRef, useId } from 'react';
 import styles from './BlobButton.module.css';
 
-export default function BlobButton({ children, onClick, className = '' }) {
+const BlobButton = forwardRef(function BlobButton({ children, onClick, className = '', ...props }, ref) {
+  const filterId = `blob-${useId().replace(/:/g, '')}`;
   return (
     <>
-      <svg className={styles.blobSvg} xmlns="http://www.w3.org/2000/svg" version="1.1">
+      <svg className={styles.blobSvg} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1">
         <defs>
-          <filter id="blobGoo">
+          <filter id={filterId}>
             <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="10" />
             <feColorMatrix
               in="blur"
@@ -20,13 +21,15 @@ export default function BlobButton({ children, onClick, className = '' }) {
       </svg>
 
       <button
+        {...props}
+        ref={ref}
         type="button"
         className={`${styles.blobBtn} ${className}`}
         onClick={onClick}
       >
         {children}
-        <span className={styles.blobBtnInner}>
-          <span className={styles.blobBtnBlobs}>
+        <span className={styles.blobBtnInner} aria-hidden="true">
+          <span className={styles.blobBtnBlobs} style={{ filter: `url(#${filterId})` }}>
             <span className={styles.blobBtnBlob}></span>
             <span className={styles.blobBtnBlob}></span>
             <span className={styles.blobBtnBlob}></span>
@@ -36,4 +39,6 @@ export default function BlobButton({ children, onClick, className = '' }) {
       </button>
     </>
   );
-}
+});
+
+export default BlobButton;

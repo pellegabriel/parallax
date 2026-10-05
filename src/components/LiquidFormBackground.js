@@ -1,4 +1,5 @@
 import React, { useEffect, useId, useMemo, useRef } from 'react';
+import useMediaQuery from './useMediaQuery';
 
 function catmullRomToBezierPath(points, closed = true) {
   if (!points.length) return 'M 0 0 Z';
@@ -56,6 +57,7 @@ export default function LiquidFormBackground({
   const pathRef = useRef(null);
   const rafRef = useRef(null);
   const startTimeRef = useRef(null);
+  const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
 
   const rawUid = useId();
   const uid = useMemo(() => rawUid.replace(/[^a-zA-Z0-9_-]/g, ''), [rawUid]);
@@ -86,14 +88,14 @@ export default function LiquidFormBackground({
         pathRef.current.setAttribute('d', blobD);
       }
 
-      rafRef.current = requestAnimationFrame(animate);
+      if (!reducedMotion) rafRef.current = requestAnimationFrame(animate);
     };
 
-    rafRef.current = requestAnimationFrame(animate);
+    animate(0);
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [width, height, waveAmp]);
+  }, [width, height, waveAmp, reducedMotion]);
 
   return (
     <svg

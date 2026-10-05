@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from 
 import styles from './LiquidSidebar.module.css';
 import { Linkedin, MessageCircle, Instagram } from 'lucide-react';
 import BlobButton from './BlobButton';
+import useMediaQuery from './useMediaQuery';
 
 function easeInOutElastic(t) {
   if (t === 0) return 0;
@@ -96,11 +97,14 @@ function updateDrips(t, time, height, drips) {
 
 export default function LiquidSidebar({
   title = 'Navegación',
+  toggleLabel = 'Menú',
   items = [],
   footer = '© 2026 — Todos los derechos',
   initialOpen = false,
 }) {
   const [isOpen, setIsOpen] = useState(initialOpen);
+  const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
+  const toggleRef = useRef(null);
 
   const blobSvgRef = useRef(null);
   const mainBlobRef = useRef(null);
@@ -164,15 +168,30 @@ export default function LiquidSidebar({
   }, [resizeSVG]);
 
   useEffect(() => {
+    if (!isOpen) return;
     const onKeyDown = (e) => {
-      if (e.key === 'Escape') closeMenu();
+      if (e.key === 'Escape') {
+        closeMenu();
+        toggleRef.current?.focus();
+      }
     };
 
     document.addEventListener('keydown', onKeyDown);
     return () => document.removeEventListener('keydown', onKeyDown);
-  }, [closeMenu]);
+  }, [closeMenu, isOpen]);
 
   useEffect(() => {
+    if (reducedMotion) {
+      progressRef.current = isOpen ? 1 : 0;
+      velocityRef.current = 0;
+      const draw = () => {
+        mainBlobRef.current?.setAttribute('d', getBlobPath(progressRef.current, 0, heightRef.current));
+        updateDrips(progressRef.current, 0, heightRef.current, dripRefs);
+      };
+      draw();
+      window.addEventListener('resize', draw);
+      return () => window.removeEventListener('resize', draw);
+    }
     const animate = (ts) => {
       if (!startTimeRef.current) startTimeRef.current = ts;
       const time = ts - startTimeRef.current;
@@ -200,7 +219,7 @@ export default function LiquidSidebar({
         blobSvgRef.current.style.pointerEvents = progressRef.current > 0.01 ? 'all' : 'none';
       }
 
-      animFrameRef.current = requestAnimationFrame(animate);
+      if (isOpen || progressRef.current !== 0) animFrameRef.current = requestAnimationFrame(animate);
     };
 
     animFrameRef.current = requestAnimationFrame(animate);
@@ -208,7 +227,7 @@ export default function LiquidSidebar({
     return () => {
       if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
     };
-  }, [dripRefs]);
+  }, [dripRefs, isOpen, reducedMotion]);
 
   const onHamburgerClick = useCallback(() => {
     if (isOpen) closeMenu();
@@ -243,7 +262,9 @@ export default function LiquidSidebar({
       <button
         type="button"
         className={`${styles.hamburger} ${isOpen ? styles.hamburgerOpen : ''}`}
-        aria-label="Menu"
+        ref={toggleRef}
+        aria-label={toggleLabel}
+        aria-controls={`${uid}-navigation`}
         aria-expanded={isOpen}
         onClick={onHamburgerClick}
       >
@@ -259,7 +280,7 @@ export default function LiquidSidebar({
 
       <svg
         ref={blobSvgRef}
-        className={styles.blobSvg}
+        className={`${styles.blobSvg} ${isOpen ? styles.blobSvgActive : ''}`}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 340 800"
         preserveAspectRatio="none"
@@ -308,7 +329,7 @@ export default function LiquidSidebar({
         </g>
       </svg>
 
-      <nav className={`${styles.sidebarContent} ${isOpen ? styles.sidebarContentVisible : ''}`}>
+      <nav id={`${uid}-navigation`} aria-label={title} aria-hidden={!isOpen} className={`${styles.sidebarContent} ${isOpen ? styles.sidebarContentVisible : ''}`}>
         {items.map((item, idx) => (
           <BlobButton
             key={`${item.number ?? idx}-${item.label ?? idx}`}

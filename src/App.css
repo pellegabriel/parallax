@@ -236,9 +236,6 @@
 
 .App {
   width: 100%;
-  max-width: 100vw;
-  overflow-x: hidden;
-  overflow-y: auto;
   box-sizing: border-box;
   min-height: 100vh;
 }
@@ -644,8 +641,17 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   z-index: 10;
   background: transparent;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
 }
-.main-content section {
+
+@media (min-width: 901px) {
+  .main-content {
+    padding-inline: 80px;
+  }
+}
+.main-content > .page-section {
   width: 100%;
   box-sizing: border-box;
   position: relative !important;
@@ -656,13 +662,13 @@ h1, h2, h3, h4, h5, h6 {
   padding: 60px 20px;
   top: auto !important;
   left: auto !important;
-  opacity: 0;
-  transform: translateY(50px);
-  animation: syncedFadeInUp 1.5s ease-out forwards;
+  opacity: 1;
+  scroll-margin-top: 80px;
+  animation: syncedFadeInUp 300ms ease-out backwards;
 }
 
 @media (min-width: 901px) {
-  .main-content section {
+  .main-content > .page-section {
     padding: 60px 40px;
     min-height: auto;
     display: flex;
@@ -670,43 +676,43 @@ h1, h2, h3, h4, h5, h6 {
     justify-content: center;
   }
   
-  .main-content section:nth-child(1) {
+  .main-content > .intro-section {
     padding: 90px 40px 30px 40px;
   }
   
-  .main-content section:nth-child(2) {
+  .main-content > .services-section {
     padding: 30px 40px;
   }
   
-  .main-content section:nth-child(3) {
+  .main-content > .team-section {
     padding: 30px 40px 70px 40px;
   }
 }
 
 @media (min-width: 1400px) {
-  .main-content section {
+  .main-content > .page-section {
     padding: 70px 60px;
   }
   
-  .main-content section:nth-child(1) {
+  .main-content > .intro-section {
     padding: 50px 60px 40px 60px;
   }
   
-  .main-content section:nth-child(3) {
+  .main-content > .team-section {
     padding: 40px 60px 90px 60px;
   }
 }
 
 @media (min-width: 1800px) {
-  .main-content section {
+  .main-content > .page-section {
     padding: 80px 80px;
   }
   
-  .main-content section:nth-child(1) {
+  .main-content > .intro-section {
     padding: 130px 80px 50px 80px;
   }
   
-  .main-content section:nth-child(3) {
+  .main-content > .team-section {
     padding: 50px 80px 110px 80px;
   }
 }
@@ -734,26 +740,26 @@ h1, h2, h3, h4, h5, h6 {
     }
   }
   
-  .main-content section {
-    animation-duration: 0.8s; 
+  .main-content > .page-section {
+    animation-duration: 300ms; 
   }
 }
 
-.main-content section:nth-child(1) {
+.main-content > .intro-section {
   animation-delay: 0.2s;
 }
 
-.main-content section:nth-child(2) {
+.main-content > .services-section {
   animation-delay: 0.4s;
 }
 
-.main-content section:nth-child(3) {
+.main-content > .team-section {
   animation-delay: 0.6s;
 }
 
-.main-content section .companyInfo,
-.main-content section div[class*="CompanySection_companyInfo"],
-.main-content section div[class*="companyInfo"] {
+.main-content > .page-section .companyInfo,
+.main-content > .page-section div[class*="CompanySection_companyInfo"],
+.main-content > .page-section div[class*="companyInfo"] {
   margin: 0 auto !important;
   text-align: center !important;
   display: flex !important;
@@ -765,46 +771,46 @@ h1, h2, h3, h4, h5, h6 {
   transform: none !important;
 }
 
-.main-content section *[class*="companyLogo"],
-.main-content section *[class*="companyTitle"],
-.main-content section *[class*="brandLarge"],
-.main-content section *[class*="companyDescription"],
-.main-content section *[class*="teamTitle"],
-.main-content section *[class*="teamMember"] {
+.main-content > .page-section *[class*="companyLogo"],
+.main-content > .page-section *[class*="companyTitle"],
+.main-content > .page-section *[class*="brandLarge"],
+.main-content > .page-section *[class*="companyDescription"],
+.main-content > .page-section *[class*="teamTitle"],
+.main-content > .page-section *[class*="teamMember"] {
   animation: none !important;
   opacity: 1 !important;
   transform: none !important;
 }
 
-.main-content section .companyLogo,
-.main-content section div[class*="CompanySection_companyLogo"],
-.main-content section div[class*="companyLogo"] {
+.main-content > .page-section .companyLogo,
+.main-content > .page-section div[class*="CompanySection_companyLogo"],
+.main-content > .page-section div[class*="companyLogo"] {
   display: block !important;
   order: -1 !important; 
 }
 
-.main-content section .companyLogoDesktop,
-.main-content section div[class*="CompanySection_companyLogoDesktop"],
-.main-content section div[class*="companyLogoDesktop"] {
+.main-content > .page-section .companyLogoDesktop,
+.main-content > .page-section div[class*="CompanySection_companyLogoDesktop"],
+.main-content > .page-section div[class*="companyLogoDesktop"] {
   display: none !important;
 }
 
 @media (min-width: 901px) {
-  .main-content section .companyLogoDesktop,
-  .main-content section div[class*="CompanySection_companyLogoDesktop"],
-  .main-content section div[class*="companyLogoDesktop"] {
+  .main-content > .page-section .companyLogoDesktop,
+  .main-content > .page-section div[class*="CompanySection_companyLogoDesktop"],
+  .main-content > .page-section div[class*="companyLogoDesktop"] {
     display: block !important;
   }
   
-  .main-content section .companyLogo,
-  .main-content section div[class*="CompanySection_companyLogo"]:not([class*="Desktop"]),
-  .main-content section div[class*="companyLogo"]:not([class*="Desktop"]) {
+  .main-content > .page-section .companyLogo,
+  .main-content > .page-section div[class*="CompanySection_companyLogo"]:not([class*="Desktop"]),
+  .main-content > .page-section div[class*="companyLogo"]:not([class*="Desktop"]) {
     display: none !important;
   }
   
-  .main-content section:nth-child(3),
-  .main-content section div[class*="teamSection"],
-  .main-content section[class*="teamSection"] {
+  .main-content > .team-section,
+  .main-content > .page-section div[class*="teamSection"],
+  .main-content > .page-section[class*="teamSection"] {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
@@ -815,13 +821,130 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 900px) {
-  .main-content section {
+  .main-content > .page-section {
     padding: 40px 20px;
   }
 }
 
+@media (max-width: 900px) {
+  .main-content > .page-section#proyectos {
+    padding-bottom: calc(160px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .main-content :focus-visible {
+    scroll-margin-bottom: calc(150px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
 @media (max-width: 600px) {
-  .main-content section {
-    padding: 30px 15px;
+  .main-content > .page-section {
+    padding: 0px 15px;
+  }
+
+  .main-content > .page-section#proyectos {
+    padding: 100px 15px calc(160px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .main-content > .intro-section {
+    padding-bottom: 28px;
+  }
+
+  .main-content > .services-section {
+    padding-top: 20px;
+  }
+}
+
+.language-switch {
+  position: fixed;
+  z-index: 1000;
+  top: calc(16px + env(safe-area-inset-top, 0px));
+  right: calc(20px + env(safe-area-inset-right, 0px));
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(3, 25, 39, 0.75);
+  backdrop-filter: blur(10px);
+  color: #bfcee8;
+  font-family: system-ui, sans-serif;
+  font-size: 12px;
+}
+
+.language-switch button {
+  min-height: 44px;
+  padding: 0 7px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.language-switch button[aria-pressed="true"] {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+@media (min-width: 1280px) {
+  .main-content {
+    --desktop-content-inset: clamp(32px, 3.5vw, 48px);
+    display: grid;
+    grid-template-columns: minmax(0, 55fr) minmax(400px, 45fr);
+    column-gap: clamp(32px, 3vw, 48px);
+    align-items: start;
+  }
+
+  .main-content > .intro-section {
+    grid-column: 1;
+    grid-row: 1;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 32px 0 24px;
+    text-align: left;
+  }
+
+  .main-content > .intro-section[class*="sectionTop"] [class*="companyText"] {
+    width: 100%;
+    padding-inline-start: var(--desktop-content-inset);
+    text-align: left;
+  }
+
+  .main-content > .intro-section[class*="sectionTop"] [class*="companyText"] [class*="blobButtonWrapper"] {
+    max-width: 400px;
+    margin-inline: 0;
+  }
+
+  .main-content > .intro-section[class*="sectionTop"] [class*="companyTitle"],
+  .main-content > .intro-section[class*="sectionTop"] [class*="companyDescription"] {
+    text-align: left;
+  }
+
+  .main-content > .intro-section [class*="companyLogoDesktop"] {
+    margin: 0 0 12px !important;
+  }
+
+  .main-content > .page-section#proyectos {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: stretch;
+    padding: 64px 0 24px;
+    min-width: 0;
+  }
+
+  .main-content > .page-section.services-section[class*="sectionMiddle"] {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    max-width: none;
+    margin-inline: 0;
+    padding: 48px 0 68px;
+  }
+
+  .main-content > .page-section.services-section[class*="sectionMiddle"] [class*="companyMiddleText"] {
+    padding-inline-start: var(--desktop-content-inset);
+  }
+
+  .main-content > .page-section.services-section[class*="sectionMiddle"] [class*="companyMiddleText"] [class*="companyDescription"] {
+    margin-inline: 0;
   }
 }

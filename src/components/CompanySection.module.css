@@ -63,10 +63,10 @@
   }
   
   .companyInfo.sectionTop .blobButtonWrapper {
-    max-width: 1200px;
+    max-width: 720px;
     width: 100%;
-    margin: 0 auto;
-    padding: 0 40px;
+    margin: 18px 0 0;
+    padding: 0;
     box-sizing: border-box;
   }
   
@@ -134,7 +134,7 @@
 
 .companyTitle {
   color: #d3e4ff;
-  font-size: 54px;
+  font-size: clamp(34px, 4vw, 44px);
   font-weight: 300;
   margin: 0;
   letter-spacing: -1px;
@@ -149,7 +149,7 @@
 .brandLarge {
   display: block;
   color: #000000;
-  font-size: 100px;
+  font-size: clamp(36px, 6vw, 76px);
   line-height: 0.95;
   margin: 6px 0 12px 0;
   font-weight: 700;
@@ -158,9 +158,10 @@
 
 .companyDescription {
   color: #ffffff;
-  font-size: 30px;
+  font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
   line-height: 1.7;
-  font-weight: 100;
+  font-weight: 400;
   margin-bottom: 32px;
   opacity: 0;
   transform: translateY(30px);
@@ -192,16 +193,16 @@
 }
 
 .companyRectImage {
-  flex: 0 0 320px;
-  width: 320px;
-  height: 420px;
+  position: relative;
+  flex: 0 1 42%;
+  width: 42%;
+  max-width: 100%;
+  aspect-ratio: 16 / 10;
   overflow: hidden;
-  border-radius: 48% 32% 40% 60% / 60% 40% 55% 45%;
+  border-radius: 28% 20% 26% 18% / 32% 40% 28% 38%;
   box-shadow: 0 18px 48px rgba(0,0,0,0.45);
   background: #08151a;
-  align-self: flex-end;
-  transform: translateY(12px);
-  margin-left: 12px;
+  align-self: center;
   box-sizing: border-box;
   transition: transform 220ms ease, box-shadow 220ms ease;
 }
@@ -213,20 +214,12 @@
     align-items: center;
   }
   
-  .companyRectImage {
-    flex: 0 0 380px;
-    width: 380px;
-    height: 480px;
-    margin-left: 0;
-    transform: translateY(0);
-  }
-  
   .companyMiddleText {
     flex: 1;
     max-width: none;
   }
 }
-.companyRectImage img { width: 100%; height: 100%; object-fit: cover; }
+.companyRectImage img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 54%; }
 .companyRectImage:hover { transform: translateY(8px) scale(1.02); box-shadow: 0 26px 64px rgba(3,25,39,0.45), 0 8px 22px rgba(59,106,247,0.12); }
 
 .companyMiddleText {
@@ -253,26 +246,15 @@
   .companyLogo { display: flex !important; }
 
   .companyInfo {
-    width: calc(100vw - 60px - 24px);
-    margin-left: calc(16px);
-    margin-right: 8px;
-    padding: 0 16px;
+    width: 100%;
+    margin-inline: auto;
     text-align: center;
   }
 
-  .companyInfo.sectionTop {
-    width: calc(100vw - 24px);
-    margin-left: 0;
-    margin-right: 12px;
-    top: 5vh;
-  }
-
+  .companyInfo.sectionTop,
   .companyInfo.sectionMiddle {
-    width: calc(100vw - 24px);
-    margin: -30px 12px 0 12px;
-    padding: 0;
-    left: 0;
-    right: 0;
+    width: 100%;
+    margin: 0 auto;
   }
 
   .sectionTop,
@@ -281,13 +263,13 @@
     right: 0;
   }
 
-  .companyDescription { font-size: 15px; line-height: 1.6; margin-bottom: 18px; }
-  .companyTagline { font-size: 13px; text-align: center; }
-  .brandLarge { font-size: 40px; margin: 6px 0 10px 0; }
+  .companyDescription { font-size: 16px; line-height: 1.6; margin-bottom: 18px; }
+  .companyTagline { font-size: 16px; text-align: center; }
+  .brandLarge { font-size: 34px; margin: 6px 0 10px 0; }
   .companyText .companyDescription { max-width: 100%; }
 
-  .companyMiddleRow { flex-direction: column; gap: 12px; }
-  .companyRectImage { width: 88%; height: auto; margin: 0 auto; transform: none; border-radius: 40% 30% 45% 55% / 55% 35% 45% 45%; }
+  .companyMiddleRow { flex-direction: column; gap: 24px; }
+  .companyRectImage { flex: none; width: min(100%, 640px); margin: 0 auto; }
   .companyMiddleText { transform: translateY(-16px); }
   .companyMiddleSocial { display: none; }
 }
@@ -312,12 +294,6 @@
   
   .companyLogoDesktop {
     width: 350px;
-  }
-  
-  .companyRectImage {
-    flex: 0 0 420px;
-    width: 420px;
-    height: 520px;
   }
   
   .companyMiddleRow {
@@ -349,12 +325,6 @@
     height: 400px;
   }
   
-  .companyRectImage {
-    flex: 0 0 460px;
-    width: 460px;
-    height: 560px;
-  }
-  
   .companyMiddleRow {
     gap: 100px;
   }
@@ -362,15 +332,106 @@
 
 .blobButtonWrapper {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  width: 100%;
+  max-width: 720px;
+  margin: 18px 0 0;
+}
+
+.blobButtonWrapper > button {
+  --blob-radius: 24px 20px 26px 18px;
+  flex: 1 1 220px;
+  min-width: 0;
+  min-height: 44px;
+  margin: 0;
+  padding: 11px 20px;
+  font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.primaryAction {
+  --blob-color: #f2efe6;
+  --blob-hover-color: #ffffff;
+  --blob-background: #061b30;
+  --blob-hover-background: #042c6c;
+  --blob-border: rgba(242, 239, 230, 0.22);
+}
+
+.secondaryAction {
+  --blob-color: #ffffff;
+  --blob-hover-color: #ffffff;
+  --blob-background: rgba(3, 25, 39, 0.28);
+  --blob-hover-background: #042c6c;
+  --blob-border: rgba(242, 239, 230, 0.35);
+  --blob-blur: blur(12px);
+}
+
+.approachTitle {
+  color: #d3e4ff;
+  font-size: clamp(24px, 2.5vw, 34px);
+  font-weight: 500;
+  line-height: 1.2;
+  margin: 0 0 16px;
+}
+
+.companyMiddleText .companyDescription {
+  margin: 0 0 24px;
 }
 
 @media (max-width: 900px) {
   .blobButtonWrapper {
-    justify-content: center;
+    flex-direction: column;
+    max-width: 420px;
+  }
+
+  .blobButtonWrapper > button {
+    flex: none;
+    width: 100%;
   }
 }
 
 @media (min-width: 901px) {
   .companyLogoDesktop { display: block !important; }
+}
+
+.companyText,
+.companyMiddleText {
+  min-width: 0;
+}
+
+.companyInfo .companyDescription {
+  max-width: 60ch;
+  margin-inline: auto;
+}
+
+.companyInfo.sectionTop .companyDescription {
+  max-width: 60ch;
+  margin: 18px 0 0;
+  text-align: left;
+}
+
+.companyInfo.sectionTop .companyText {
+  width: 100%;
+}
+
+.companyMiddleText {
+  transform: none;
+  text-align: left;
+}
+
+.companyTagline {
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .companyRectImage:hover {
+    transform: none;
+  }
 }

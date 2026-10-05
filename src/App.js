@@ -5,6 +5,15 @@ import Loader from './components/loader/Loader';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true); // Reactivado el loader
+  const [language, setLanguage] = useState(() => localStorage.getItem('the-cave-language') === 'en' ? 'en' : 'es');
+
+  useEffect(() => {
+    document.documentElement.lang = language;
+    document.querySelector('meta[name="description"]')?.setAttribute('content', language === 'en'
+      ? 'The Cave creates thoughtful digital solutions through strategy, design, and technology.'
+      : 'Somos The Cave S.A, una empresa dedicada a la creación de soluciones tecnológicas innovadoras.');
+    localStorage.setItem('the-cave-language', language);
+  }, [language]);
 
   useEffect(() => {
     let timeoutId;
@@ -62,9 +71,9 @@ function App() {
   return (
     <div className="App">
       {isLoading ? (
-        <Loader />
+        <Loader language={language} />
       ) : (
-        <HomeScreen />
+        <HomeScreen language={language} onLanguageChange={setLanguage} />
       )}
       <div className="page-frame" />
     </div>
