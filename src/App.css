@@ -828,7 +828,7 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (max-width: 900px) {
   .main-content > .page-section#proyectos {
-    padding-bottom: calc(160px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
   }
 
   .main-content :focus-visible {
@@ -842,7 +842,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .main-content > .page-section#proyectos {
-    padding: 100px 15px calc(160px + env(safe-area-inset-bottom, 0px));
+    padding: 100px 15px calc(80px + env(safe-area-inset-bottom, 0px));
   }
 
   .main-content > .intro-section {
