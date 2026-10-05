@@ -11,7 +11,7 @@ function App() {
     document.documentElement.lang = language;
     document.querySelector('meta[name="description"]')?.setAttribute('content', language === 'en'
       ? 'The Cave creates thoughtful digital solutions through strategy, design, and technology.'
-      : 'Somos The Cave S.A, una empresa dedicada a la creación de soluciones tecnológicas innovadoras.');
+      : 'Somos The Cave, una empresa dedicada a la creación de soluciones tecnológicas innovadoras.');
     localStorage.setItem('the-cave-language', language);
   }, [language]);
 
