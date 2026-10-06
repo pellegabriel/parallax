@@ -239,15 +239,9 @@ test.each([900, 901])('monta un solo logo y ubica las redes correctamente a %ipx
   expect(logos).toHaveLength(1);
   expect(logos[0].parentElement).toHaveStyle({ width: width === 900 ? '130px' : '280px' });
   const footer = screen.getByRole('contentinfo');
-  if (width === 900) {
-    expect(within(footer).getAllByRole('link')).toHaveLength(3);
-    expect(footer).toContainElement(container.querySelector('.social-buttons'));
-    expect(within(footer).getByText('Contacto').closest('[aria-hidden]')).toHaveAttribute('inert');
-  } else {
-    expect(within(footer).getAllByRole('link')).toHaveLength(6);
-    expect(footer).toContainElement(container.querySelector('.social-buttons'));
-    expect(within(footer).getByRole('navigation', { name: 'Explorá' })).toBeInTheDocument();
-  }
+  expect(within(footer).getAllByRole('link')).toHaveLength(6);
+  expect(footer).toContainElement(container.querySelector('.social-buttons'));
+  expect(within(footer).getByRole('navigation', { name: 'Explorá' })).toBeInTheDocument();
   expect(footer).toHaveTextContent('© 2026 The Cave');
 });
 
@@ -264,13 +258,7 @@ test.each([[1279, '280px'], [1280, '210px']])('prepara la bienvenida para la col
   expect(screen.getAllByRole('button', { name: 'Agendá una llamada' })).toHaveLength(1);
 });
 
-test('en mobile la misma superficie se despliega con el scroll sin reemplazar las redes', () => {
-  let top = 1200;
-  let height = 500;
-  jest.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(() => ({ top, height }));
-  jest.spyOn(HTMLElement.prototype, 'offsetHeight', 'get').mockImplementation(function () {
-    return this.classList.contains('socialBar') ? 130 : height;
-  });
+test('en mobile el footer es estático, muestra todo el contenido y no responde al scroll', () => {
   window.matchMedia.mockImplementation((query) => ({
     matches: query === '(max-width: 900px)' || query === '(prefers-reduced-motion: reduce)',
     addEventListener: jest.fn(),
@@ -282,34 +270,17 @@ test('en mobile la misma superficie se despliega con el scroll sin reemplazar la
   render(<HomeScreen />);
   const footer = screen.getByRole('contentinfo');
   const surface = footer.querySelector('.liquidArea');
-  const socials = footer.querySelector('.social-buttons');
-  const links = within(socials).getAllByRole('link');
-  expect(surface.style.getPropertyValue('--sheet-offset')).toBe('370px');
-  expect(footer.style.getPropertyValue('--footer-height')).toBe('500px');
-  expect(within(footer).getAllByRole('link')).toEqual(links);
-  expect(within(footer).queryByRole('navigation', { name: 'Explorá' })).not.toBeInTheDocument();
-  top = window.innerHeight - 230;
-  fireEvent.scroll(window);
-  expect(surface.style.getPropertyValue('--sheet-offset')).toBe('270px');
-  expect(footer.querySelector('.social-buttons')).toBe(socials);
-  expect(within(socials).getAllByRole('link')).toEqual(links);
+  expect(footer).toContainElement(footer.querySelector('.social-buttons'));
   expect(within(footer).getAllByRole('link')).toHaveLength(6);
-  top = window.innerHeight - height;
+  expect(within(footer).getByRole('navigation', { name: 'Explorá' })).toBeInTheDocument();
+  expect(footer.querySelector('[inert]')).toBeNull();
   fireEvent.scroll(window);
-  expect(surface.style.getPropertyValue('--sheet-offset')).toBe('0px');
+  fireEvent.resize(window);
+  expect(surface.style.getPropertyValue('--sheet-offset')).toBe('');
+  expect(footer.style.getPropertyValue('--footer-height')).toBe('');
   fireEvent.click(within(footer).getByRole('link', { name: 'Equipo' }));
   expect(screen.getByRole('region', { name: 'Nuestro Equipo' })).toHaveFocus();
   expect(scrollIntoView).toHaveBeenCalledWith({ behavior: 'auto' });
-  top = 1200;
-  fireEvent.scroll(window);
-  expect(surface.style.getPropertyValue('--sheet-offset')).toBe('370px');
-  expect(within(footer).getAllByRole('link')).toEqual(links);
-  expect(within(footer).getByText('Contacto').closest('[aria-hidden]')).toHaveAttribute('inert');
-  height = 600;
-  fireEvent.resize(window);
-  expect(surface.style.getPropertyValue('--sheet-offset')).toBe('470px');
-  expect(footer.style.getPropertyValue('--footer-height')).toBe('600px');
-  expect(footer.querySelector('.social-buttons')).toBe(socials);
   expect(requestFrame).not.toHaveBeenCalled();
   delete Element.prototype.scrollIntoView;
 });

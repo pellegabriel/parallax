@@ -1,4 +1,4 @@
-import React, { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useId, useMemo, useRef } from 'react';
 import styles from './LiquidFooter.module.css';
 import useMediaQuery from './useMediaQuery';
 import SocialButtons from '../SocialButtons';
@@ -41,16 +41,12 @@ const copyByLanguage = {
 
 export default function LiquidFooter({ copy, onNavigate, language = 'es' }) {
   const t = copyByLanguage[language];
-  const footerRef = useRef(null);
   const rootRef = useRef(null);
-  const socialRef = useRef(null);
-  const detailsRef = useRef(null);
   const svgRef = useRef(null);
   const pathRef = useRef(null);
   const dripRefs = useRef(DRIPS.map(() => React.createRef()));
   const isMobile = useMediaQuery('(max-width: 900px)');
   const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
-  const [expanded, setExpanded] = useState(false);
 
   const rawUid = useId();
   const uid = useMemo(() => rawUid.replace(/[^a-zA-Z0-9_-]/g, ''), [rawUid]);
@@ -58,46 +54,6 @@ export default function LiquidFooter({ copy, onNavigate, language = 'es' }) {
     () => ({ goo: `${uid}-footerGoo`, lavaGrad: `${uid}-footerLavaGrad` }),
     [uid],
   );
-
-  useLayoutEffect(() => {
-    const footer = footerRef.current;
-    const sheet = rootRef.current;
-    if (!isMobile) {
-      footer.style.removeProperty('--footer-height');
-      sheet.style.removeProperty('--sheet-offset');
-      return;
-    }
-    let height = 0;
-    let compactHeight = 130;
-    const update = () => {
-      if (!height) return;
-      const distance = Math.max(0, height - compactHeight);
-      const reveal = Math.min(distance, Math.max(0, window.innerHeight - compactHeight - footer.getBoundingClientRect().top));
-      sheet.style.setProperty('--sheet-offset', `${distance - reveal}px`);
-      const visible = reveal > 1;
-      if (!visible && detailsRef.current?.contains(document.activeElement)) {
-        socialRef.current?.querySelector('a')?.focus({ preventScroll: true });
-      }
-      setExpanded(visible);
-    };
-    const measure = () => {
-      height = sheet.offsetHeight;
-      compactHeight = socialRef.current?.offsetHeight || 130;
-      footer.style.setProperty('--footer-height', `${height}px`);
-      update();
-    };
-    measure();
-    const observer = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(measure);
-    observer?.observe(sheet);
-    if (socialRef.current) observer?.observe(socialRef.current);
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', measure);
-    return () => {
-      observer?.disconnect();
-      window.removeEventListener('scroll', update);
-      window.removeEventListener('resize', measure);
-    };
-  }, [isMobile]);
 
   useEffect(() => {
     let width = 1200;
@@ -154,15 +110,8 @@ export default function LiquidFooter({ copy, onNavigate, language = 'es' }) {
     };
   }, [reducedMotion, isMobile]);
 
-  const keepFocusVisible = (event) => {
-    if (!isMobile) return;
-    const { top, bottom } = event.target.getBoundingClientRect();
-    const shift = bottom > window.innerHeight - 20 ? bottom - window.innerHeight + 20 : Math.min(0, top - 20);
-    if (shift) window.scrollBy({ top: shift, behavior: 'auto' });
-  };
-
   return (
-    <footer ref={footerRef} className={styles.footer}>
+    <footer className={styles.footer}>
       <div ref={rootRef} className={styles.liquidArea}>
         <svg ref={svgRef} className={styles.svg} viewBox="0 0 1200 220" preserveAspectRatio="none" aria-hidden="true">
           <defs>
@@ -184,12 +133,12 @@ export default function LiquidFooter({ copy, onNavigate, language = 'es' }) {
             ))}
           </g>
         </svg>
-        <div className={styles.content} onFocusCapture={keepFocusVisible}>
-          <div ref={socialRef} className={styles.socialBar}>
+        <div className={styles.content}>
+          <div className={styles.socialBar}>
             <h3>{t.follow}</h3>
             <SocialButtons compact />
           </div>
-          <div ref={detailsRef} className={styles.details} aria-hidden={isMobile && !expanded ? 'true' : undefined} inert={isMobile && !expanded ? '' : undefined}>
+          <div className={styles.details}>
             <div className={styles.columns}>
               <div className={styles.brand}>
                 <h2>The Cave</h2>
