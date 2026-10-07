@@ -1,122 +1,83 @@
 import React, { useRef, useState } from 'react';
-import { ArrowLeft, ArrowRight, ExternalLink, Monitor } from 'lucide-react';
-import BlobButton from './BlobButton';
+import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, ExternalLink, Monitor } from 'lucide-react';
 import projectList from '../projects';
+import useMediaQuery from './useMediaQuery';
 import styles from './ProjectsSection.module.css';
 
 const copy = {
   es: {
     title: 'Proyectos', introduction: 'Una ventana a lo que hacemos en The Cave.', carousel: 'Visor de proyectos', previous: 'Proyecto anterior', next: 'Proyecto siguiente',
-    enter: 'Activar vista interactiva', exit: 'Salir de la vista interactiva', open: 'Abrir proyecto', newTab: ' (nueva pestaña)', frame: (title) => `Vista interactiva de ${title}`, preview: (title) => `Vista previa de ${title}`, coverMissing: 'Portada no disponible',
-    slow: 'Si el sitio tarda o no permite mostrarse aquí, podés salir de la vista interactiva para volver a la vista previa o abrir el proyecto en otra pestaña.',
-    interactiveHint: 'La web se carga únicamente al activar la vista interactiva. También podés abrirla en otra pestaña.', noEmbed: 'Este proyecto está disponible en una pestaña nueva; no tiene una vista interactiva integrada.',
-    emptyPreview: 'Acá se va a ver la vista interactiva de cada proyecto', emptyHint: 'El sitio web del proyecto se carga en este recuadro solo cuando lo actives', help: 'Usá las flechas o deslizá la vista previa. Con el foco en el carrusel, usá ←, →, Inicio o Fin.', position: (index, count) => `${index} de ${count}`,
+    open: 'Abrir proyecto', newTab: ' (nueva pestaña)', gallery: (title) => `Capturas de ${title}`, previousShot: 'Desplazar capturas hacia atrás', nextShot: 'Desplazar capturas hacia adelante',
+    shotsMissing: 'Capturas no disponibles', emptyPreview: 'Acá se van a ver las capturas de cada proyecto', emptyHint: 'Las capturas de cada proyecto se muestran en esta galería',
+    problem: 'El problema', work: 'Lo que hice', result: 'El resultado',
+    help: 'Usá las flechas para cambiar de proyecto y deslizá la galería para ver más capturas. Con el foco en el carrusel, usá ←, →, Inicio o Fin.', position: (index, count) => `${index} de ${count}`,
   },
   en: {
     title: 'Projects', introduction: 'A look at what we create at The Cave.', carousel: 'Project carousel', previous: 'Previous project', next: 'Next project',
-    enter: 'Enable interactive preview', exit: 'Exit interactive preview', open: 'Open project', newTab: ' (new tab)', frame: (title) => `Interactive preview of ${title}`, preview: (title) => `Preview of ${title}`, coverMissing: 'Cover unavailable',
-    slow: 'If the site takes a while to load or cannot be displayed here, you can exit the interactive preview or open the project in a new tab.',
-    interactiveHint: 'The website loads only when you enable the interactive preview. You can also open it in a new tab.', noEmbed: 'This project opens in a new tab and has no embedded interactive preview.',
-    emptyPreview: 'An interactive preview of each project will appear here', emptyHint: 'The project website loads in this frame only when you enable it', help: 'Use the arrows or swipe the preview. When the carousel has focus, use ←, →, Home, or End.', position: (index, count) => `${index} of ${count}`,
+    open: 'Open project', newTab: ' (new tab)', gallery: (title) => `${title} screenshots`, previousShot: 'Scroll screenshots backwards', nextShot: 'Scroll screenshots forwards',
+    shotsMissing: 'Screenshots unavailable', emptyPreview: 'Screenshots of each project will appear here', emptyHint: 'Each project shows its screenshots in this gallery',
+    problem: 'The problem', work: 'What I built', result: 'The result',
+    help: 'Use the arrows to switch projects and scroll the gallery to see more screenshots. When the carousel has focus, use ←, →, Home, or End.', position: (index, count) => `${index} of ${count}`,
   },
 };
 
-function ProjectPreview({ project, onSwipe, t }) {
-  const [interactive, setInteractive] = useState(false);
-  const [coverFailed, setCoverFailed] = useState(false);
-  const touch = useRef(null);
-  const actionRef = useRef(null);
+function imageAlt(image, language) {
+  if (typeof image.alt === 'string') return image.alt;
+  return image.alt?.[language] ?? image.alt?.es ?? '';
+}
 
-  const toggleInteractive = () => {
-    setInteractive((active) => !active);
-    actionRef.current?.focus({ preventScroll: true });
-  };
+function ProjectGallery({ project, language, reducedMotion, t }) {
+  const [failed, setFailed] = useState(() => new Set());
+  const stripRef = useRef(null);
+  const images = (project.images || []).filter((image) => !failed.has(image.src));
 
-  const startTouch = (event) => {
-    const point = event.touches[0];
-    touch.current = event.touches.length === 1 ? { x: point.clientX, y: point.clientY } : null;
-  };
-
-  const moveTouch = (event) => {
-    if (!touch.current) return;
-    const point = event.touches[0];
-    if (event.touches.length !== 1 ||
-      Math.abs(point.clientY - touch.current.y) > Math.max(12, Math.abs(point.clientX - touch.current.x))) {
-      touch.current = null;
-    }
-  };
-
-  const endTouch = (event) => {
-    const start = touch.current;
-    touch.current = null;
-    if (!start || !event.changedTouches.length) return;
-    const point = event.changedTouches[0];
-    const dx = point.clientX - start.x;
-    const dy = point.clientY - start.y;
-    if (Math.abs(dx) >= 50 && Math.abs(dx) > Math.abs(dy) * 1.5) onSwipe(dx < 0 ? 1 : -1);
+  const scrollStrip = (direction) => {
+    const strip = stripRef.current;
+    strip?.scrollBy?.({ left: direction * strip.clientWidth * 0.85, top: 0, behavior: reducedMotion ? 'auto' : 'smooth' });
   };
 
   return (
-    <article className={styles.project} aria-labelledby="project-title">
-      <h3 id="project-title" className={styles.projectTitle}>{project.title}</h3>
-      <p className={styles.description}>{project.description}</p>
-      <div className={styles.actions}>
-        {project.embedUrl && (
-          <BlobButton ref={actionRef} onClick={toggleInteractive} aria-controls="project-viewport" aria-pressed={interactive} className={styles.interactiveButton}>
-            {interactive ? t.exit : t.enter}
-          </BlobButton>
-        )}
-        <a className={styles.externalLink} href={project.publicUrl} target="_blank" rel="noopener noreferrer">
-          {t.open} <ExternalLink size={18} aria-hidden="true" />
-          <span className={styles.srOnly}>{t.newTab}</span>
-        </a>
-      </div>
-      <div id="project-viewport" className={styles.viewport}>
-        {interactive ? (
-          <iframe
-            key={project.id}
-            className={styles.iframe}
-            src={project.embedUrl}
-            title={t.frame(project.title)}
-            referrerPolicy="no-referrer"
-            sandbox={(project.embedSandbox || []).join(' ')}
-            allow={project.embedAllow?.length ? project.embedAllow.join('; ') : undefined}
-          />
+    <div className={styles.gallery}>
+      {images.length > 0 && (
+        <button type="button" className={`${styles.shotArrow} ${styles.shotPrev}`} aria-label={t.previousShot} onClick={() => scrollStrip(-1)}>
+          <ChevronLeft size={22} aria-hidden="true" />
+        </button>
+      )}
+      <div ref={stripRef} className={styles.strip} role="group" aria-label={t.gallery(project.title)} tabIndex={0}>
+        {images.length ? (
+          images.map((image) => (
+            <img
+              key={image.src}
+              className={styles.shot}
+              src={image.src}
+              alt={imageAlt(image, language)}
+              loading="lazy"
+              onError={() => setFailed((hidden) => new Set(hidden).add(image.src))}
+            />
+          ))
         ) : (
-          <div
-            className={styles.preview}
-            role="group"
-            aria-label={t.preview(project.title)}
-            onTouchStart={startTouch}
-            onTouchMove={moveTouch}
-            onTouchEnd={endTouch}
-            onTouchCancel={() => { touch.current = null; }}
-          >
-            {project.coverImage && !coverFailed ? (
-              <img className={styles.cover} src={project.coverImage} alt={project.coverAlt} onError={() => setCoverFailed(true)} loading="lazy" />
-            ) : (
-              <div className={styles.placeholder}>
-                <Monitor size={48} aria-hidden="true" />
-                <p>{project.coverAlt || t.preview(project.title)}</p>
-                <span>{t.coverMissing}</span>
-              </div>
-            )}
+          <div className={styles.placeholder}>
+            <Monitor size={40} aria-hidden="true" />
+            <p>{t.shotsMissing}</p>
           </div>
         )}
       </div>
-      <p className={styles.hint}>
-        {interactive ? t.slow : project.embedUrl ? t.interactiveHint : t.noEmbed}
-      </p>
-    </article>
+      {images.length > 0 && (
+        <button type="button" className={`${styles.shotArrow} ${styles.shotNext}`} aria-label={t.nextShot} onClick={() => scrollStrip(1)}>
+          <ChevronRight size={22} aria-hidden="true" />
+        </button>
+      )}
+    </div>
   );
 }
 
 export default function ProjectsSection({ projects = projectList, language = 'es' }) {
   const t = copy[language];
+  const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
   const [selectedId, setSelectedId] = useState(null);
   const index = Math.max(0, projects.findIndex((project) => project.id === selectedId));
   const originalProject = projects[index];
-  const project = originalProject && { ...originalProject, ...originalProject.translations?.[language] };
+  const project = originalProject && { ...originalProject, ...(originalProject.translations?.[language] ?? originalProject.translations?.es) };
 
   const navigate = (position) => {
     if (projects.length < 2) return;
@@ -151,14 +112,10 @@ export default function ProjectsSection({ projects = projectList, language = 'es
               </button>
             </div>
             <article className={styles.project}>
-              <div className={styles.viewport}>
-                <div className={styles.preview}>
-                  <div className={styles.placeholder}>
-                    <Monitor size={48} aria-hidden="true" />
-                    <p>{t.emptyPreview}</p>
-                    <span>{t.emptyHint}</span>
-                  </div>
-                </div>
+              <div className={styles.placeholder}>
+                <Monitor size={48} aria-hidden="true" />
+                <p>{t.emptyPreview}</p>
+                <span>{t.emptyHint}</span>
               </div>
             </article>
           </div>
@@ -175,8 +132,29 @@ export default function ProjectsSection({ projects = projectList, language = 'es
                 <ArrowRight size={22} aria-hidden="true" />
               </button>
             </div>
-            <p id="projects-help" className={styles.hint}>{t.help}</p>
-            <ProjectPreview key={`${project.id}:${project.embedUrl || ''}`} project={project} onSwipe={(direction) => navigate(index + direction)} t={t} />
+            <article className={styles.project} aria-labelledby="project-title">
+              <h3 id="project-title" className={styles.projectTitle}>{project.title}</h3>
+              {project.description && <p className={styles.description}>{project.description}</p>}
+              {(project.problem || project.work || project.result) && (
+                <dl className={styles.details}>
+                  {[['work', t.work], ['problem', t.problem], ['result', t.result]]
+                    .filter(([key]) => project[key])
+                    .map(([key, label]) => (
+                      <div key={key} className={styles.detail}>
+                        <dt>{label}</dt>
+                        <dd>{project[key]}</dd>
+                      </div>
+                    ))}
+                </dl>
+              )}
+              <div className={styles.actions}>
+                <a className={styles.externalLink} href={project.publicUrl} target="_blank" rel="noopener noreferrer">
+                  {t.open} <ExternalLink size={18} aria-hidden="true" />
+                  <span className={styles.srOnly}>{t.newTab}</span>
+                </a>
+              </div>
+              <ProjectGallery key={project.id} project={project} language={language} reducedMotion={reducedMotion} t={t} />
+            </article>
           </div>
         )}
       </div>

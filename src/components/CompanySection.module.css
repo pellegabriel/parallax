@@ -49,6 +49,7 @@
     max-width: 100%;
     width: 100%;
     text-align: center;
+    margin-top: -15px;
   }
   
   .companyInfo.sectionTop .companyTitle,
@@ -86,8 +87,9 @@
     display: block; 
     flex: 0 0 auto;
     width: 300px;
-    height: 300px;
+    height: auto;
     margin: 0;
+    text-align: center;
   }
   .companyText { 
     display: block; 
@@ -322,7 +324,7 @@
   
   .companyLogoDesktop {
     width: 400px;
-    height: 400px;
+    height: auto;
   }
   
   .companyMiddleRow {
@@ -428,6 +430,18 @@
   opacity: 1;
   transform: none;
   animation: none;
+}
+
+@media (min-width: 1280px) {
+  .companyInfo.sectionTop .companyText {
+    margin-top: 40px;
+  }
+}
+
+@media (min-width: 1700px) {
+  .companyInfo.sectionTop .companyText {
+    margin-top: -10px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

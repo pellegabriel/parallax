@@ -272,7 +272,7 @@
   width: 48px;
   height: 48px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  background: linear-gradient(135deg, #042c6c, #021743);
   border: 3px solid #031927;
   color: #fff;
   transition: transform 0.2s ease, background 0.2s ease;
@@ -281,5 +281,5 @@
 
 .socialBtn:hover {
   transform: scale(1.1);
-  background: linear-gradient(135deg, #2563eb, #1e40af);
+  background: linear-gradient(135deg, #022163, #021041);
 }

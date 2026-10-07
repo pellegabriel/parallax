@@ -168,7 +168,7 @@ function HomeScreen({ language: selectedLanguage, onLanguageChange }) {
       <main className="main-content">
         <section className={`page-section intro-section ${companyStyles.companyInfo} ${companyStyles.sectionTop}`} style={isWideDesktop ? undefined : { display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', margin: '0 auto' }}>
           <div className={isDesktop ? companyStyles.companyLogoDesktop : companyStyles.companyLogo}>
-            <LiquidLogo src={logoImage} alt="The Cave Logo" size={isWideDesktop ? 210 : isDesktop ? 280 : 130} border={isDesktop ? 22 : 16} waveAmp={isDesktop ? 6 : 5} />
+            <LiquidLogo src={logoImage} alt="The Cave Logo" size={isWideDesktop ? 300 : isDesktop ? 280 : 130} border={isWideDesktop ? 30 : isDesktop ? 22 : 16} waveAmp={isWideDesktop ? 8 : isDesktop ? 6 : 5} />
           </div>
           <div className={companyStyles.companyText}>
             <h1 className={companyStyles.companyTitle}>

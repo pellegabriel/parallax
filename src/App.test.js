@@ -45,7 +45,7 @@ test('el selector ES/EN traduce bienvenida, proyectos, menú, contacto y footer 
   fireEvent.click(screen.getByRole('button', { name: 'English' }));
   expect(document.documentElement).toHaveAttribute('lang', 'en');
   expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/Welcomx to.*the cave/);
-  expect(screen.getByRole('region', { name: 'Projects' })).toHaveTextContent('0 of 0');
+  expect(screen.getByRole('region', { name: 'Projects' })).toHaveTextContent('1 of 3');
   expect(screen.getByRole('button', { name: 'Schedule a call' })).toBeInTheDocument();
   expect(screen.getByRole('button', { name: 'Explore our services' })).toBeInTheDocument();
   expect(screen.getByRole('region', { name: 'Our Team' })).toHaveTextContent('We get involved in what moves your business forward.');
@@ -245,7 +245,7 @@ test.each([900, 901])('monta un solo logo y ubica las redes correctamente a %ipx
   expect(footer).toHaveTextContent('© 2026 The Cave');
 });
 
-test.each([[1279, '280px'], [1280, '210px']])('prepara la bienvenida para la columna desktop a %ipx sin duplicar proyectos', (width, logoSize) => {
+test.each([[1279, '280px'], [1280, '300px']])('prepara la bienvenida para la columna desktop a %ipx sin duplicar proyectos', (width, logoSize) => {
   window.matchMedia.mockImplementation((query) => ({
     matches: query === '(prefers-reduced-motion: reduce)' || query === '(min-width: 901px)' || (query === '(min-width: 1280px)' && width >= 1280),
     addEventListener: jest.fn(),
